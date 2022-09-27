@@ -1,1 +1,3 @@
 # NerdyGadgets
+
+een prachtige website!
