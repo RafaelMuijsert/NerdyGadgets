@@ -32,7 +32,7 @@ if (isset($_GET['page_number'])) {
 
 // code deel 1 van User story: Zoeken producten
 // <voeg hier de code in waarin de zoekcriteria worden opgebouwd>
-?> <a class="ListItem" href='view.php?id=<?php print $row['StockItemID']; ?>'><?php
+
 
 
 // <einde van de code voor zoekcriteria>
@@ -49,7 +49,9 @@ if ($CategoryID != "") {
 
 // code deel 2 van User story: Zoeken producten
 // <voeg hier de code in waarin het zoekresultaat opgehaald wordt uit de database>
-?></a><?php
+
+
+
 // <einde van de code voor zoekresultaat>
 // einde deel 2 van User story: Zoeken producten
 
@@ -117,9 +119,7 @@ if (isset($amount)) {
         foreach ($ReturnableResult as $row) {
             ?>
             <!--  coderegel 1 van User story: bekijken producten  -->
-
-
-
+            <a class="ListItem" href='view.php?id=<?php print $row['StockItemID']; ?>'>
             <!-- einde coderegel 1 van User story: bekijken producten   -->
                 <div id="ProductFrame">
                     <?php
@@ -145,7 +145,7 @@ if (isset($amount)) {
                 </div>
             <!--  coderegel 2 van User story: bekijken producten  -->
 
-
+        </a>
 
             <!--  einde coderegel 2 van User story: bekijken producten  -->
         <?php } ?>
