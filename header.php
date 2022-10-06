@@ -10,16 +10,16 @@ $databaseConnection = connectToDatabase();
     <title>NerdyGadgets</title>
 
     <!-- Javascript -->
-    <script src="Public/JS/fontawesome.js"></script>
-    <script src="Public/JS/jquery.min.js"></script>
-    <script src="Public/JS/bootstrap.min.js"></script>
-    <script src="Public/JS/popper.min.js"></script>
-    <script src="Public/JS/resizer.js"></script>
+    <script src="public/js/fontawesome.js"></script>
+    <script src="public/js/jquery.min.js"></script>
+    <script src="public/js/bootstrap.min.js"></script>
+    <script src="public/js/popper.min.js"></script>
+    <script src="public/js/resizer.js"></script>
 
     <!-- Style sheets-->
-    <link rel="stylesheet" href="Public/CSS/style.css" type="text/css">
-    <link rel="stylesheet" href="Public/CSS/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="Public/CSS/typekit.css">
+    <link rel="stylesheet" href="public/css/style.css" type="text/css">
+    <link rel="stylesheet" href="public/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="public/css/typekit.css">
 </head>
 <body>
 <div class="Background">
@@ -27,7 +27,7 @@ $databaseConnection = connectToDatabase();
         <div class="row" id="Header">
             <div class="col-2"><a href="./" id="LogoA">
                     <div id="LogoImage">
-                        <img src="Public/img/correct-format__nerdy-gadgets-logo.png" alt="">
+                        <img src="public/img/logo.png" alt="">
                     </div>
                 </a></div>
             <div class="col-8" id="CategoriesBar">
