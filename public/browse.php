@@ -262,10 +262,10 @@ if (isset($amount)) {
                     <?php
                     if (isset($row['ImagePath'])) { ?>
                         <div class="ImgFrame"
-                             style="background-image: url('<?php print "public/img/stock-item/" . $row['ImagePath']; ?>'); background-size: 230px; background-repeat: no-repeat; background-position: center;"></div>
+                             style="background-image: url('<?php print "img/stock-item/" . $row['ImagePath']; ?>'); background-size: 230px; background-repeat: no-repeat; background-position: center;"></div>
                     <?php } else if (isset($row['BackupImagePath'])) { ?>
                         <div class="ImgFrame"
-                             style="background-image: url('<?php print "public/img/stock-group/" . $row['BackupImagePath'] ?>'); background-size: cover;"></div>
+                             style="background-image: url('<?php print "img/stock-group/" . $row['BackupImagePath'] ?>'); background-size: cover;"></div>
                     <?php }
                     ?>
 

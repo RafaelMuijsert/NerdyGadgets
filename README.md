@@ -1,6 +1,10 @@
 # NerdyGadgets
 
-A beautiful webshop that Just Works™ on my machine.
+A beautiful webshop that just works™ on my machine.
+
+
+## Project structure
+Please see https://github.com/php-pds/skeleton
 
 ## Dependencies
 - A web server (apache is preferred)
@@ -11,10 +15,12 @@ A beautiful webshop that Just Works™ on my machine.
 
 Install the given database from the official Windesheim GitLab.
 Run the following commands in a mariadb shell:
-  CREATE USER IF NOT EXISTS 'nerd'@'localhost' IDENTIFIED BY 'NerdyGadgets69420!@'
-  GRANT ALL PRIVILEGES ON nerdygadgets.* TO 'nerd'@'localhost';
+```sql
+CREATE USER IF NOT EXISTS 'nerd'@'localhost' IDENTIFIED BY 'NerdyGadgets69420!@'
+GRANT ALL PRIVILEGES ON nerdygadgets.* TO 'nerd'@'localhost';
+```
+Or alternatively, run the database_user.sql file found in bin
 
-Yes that's a plaintext password.
-
+Make sure the web server is pointed to the public/ directory and not to the project root.
 
 
