@@ -23,44 +23,46 @@ $databaseConnection = connectToDatabase();
 </head>
 <body>
 <div class="Background">
-<!--    <div class="container">-->
-        <div class="row" id="Header">
-            <div class="col-2"><a href="./" id="LogoA">
-                    <div id="LogoImage">
-                        <img src="img/logo.png" alt="">
-                    </div>
-                </a></div>
-            <div class="col-8" id="CategoriesBar">
-                <ul id="ul-class">
-                    <?php
-                    $HeaderStockGroups = getHeaderStockGroups($databaseConnection);
+    <header id="Header">
+        <div class="container">
+            <div class="row">
+                <div class="col-3"><a href="./" id="LogoA">
+                        <div id="LogoImage">
+                            <img src="./img/logo.png" alt="">
+                        </div>
+                    </a></div>
+                <div class="col-9" id="CategoriesBar">
+                    <ul id="ul-class">
+                        <?php
+                        $HeaderStockGroups = getHeaderStockGroups($databaseConnection);
 
-                    foreach ($HeaderStockGroups as $HeaderStockGroup) {
+                        foreach ($HeaderStockGroups as $HeaderStockGroup) {
+                            ?>
+                            <li>
+                                <a href="browse.php?category_id=<?php print $HeaderStockGroup['StockGroupID']; ?>"
+                                   class="HrefDecoration"><?php print $HeaderStockGroup['StockGroupName']; ?></a>
+                            </li>
+                            <?php
+                        }
                         ?>
                         <li>
-                            <a href="browse.php?category_id=<?php print $HeaderStockGroup['StockGroupID']; ?>"
-                               class="HrefDecoration"><?php print $HeaderStockGroup['StockGroupName']; ?></a>
+                            <a href="categories.php" class="HrefDecoration">Alle categorieën</a>
                         </li>
-                        <?php
-                    }
-                    ?>
-                    <li>
-                        <a href="categories.php" class="HrefDecoration">Alle categorieën</a>
-                    </li>
-                </ul>
+                    </ul>
+                </div>
             </div>
-<!--        </div>-->
-<!-- code voor US3: zoeken -->
+            <!-- code voor US3: zoeken -->
 
 
 
-<!-- einde code voor US3 zoeken -->
-    </div>
-<!--    <div class="container">-->
+            <!-- einde code voor US3 zoeken -->
+        </div>
+    </header>
+    <div class="container">
         <div class="row" id="Content">
-            <div class="col-12">
-                <div id="SubContent">
-<!--                --><?php //include "./Components/filter.php"; ?>
+            <!--            <div class="col-12">-->
+            <!--                <div id="SubContent">-->
+            <!--                --><?php //include "./Components/filter.php"; ?>
 
 
 

@@ -3,13 +3,14 @@ html {
 }
 
 body {
-    overflow-x:hidden;
-    color: #FFF !important;
+    overflow-x: hidden;
+    min-height: 100vh;
+    color: #212121 !important;
     background-color: rgb(35, 35, 47) !important;
 }
 @font-face {
     font-family: MmrText;
-    src: url(/fonts/mmrtext.ttf);
+    src: url(/Public/fonts/mmrtext.ttf);
 }
 select {
     margin: 50px;
@@ -21,17 +22,24 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: url(../img/mouse-hover.jpg) 96% / 30px no-repeat #EEE;
+    background: url(../Img/mouse-hover-icon-22.jpg) 96% / 30px no-repeat #EEE;
 }
 
 a {
     text-decoration: none;
     position: relative;
-    color:#000000;
+    outline: none !important;
+    border: none !important;
+    /*color:#212121000;*/
 }
-a:hover {
-     text-decoration: none !important;
- }
+a:hover, a:active, a:focus {
+    text-decoration: none !important;
+    box-shadow: none;
+    border: none !important;
+}
+button {
+    outline: none !important;
+}
 a span {
     display: none;
     position: absolute;
@@ -45,7 +53,7 @@ a:hover span {
     min-height: 30px;
     margin-top: 25px;
     font-family: pt-sans, sans-serif;
-    color: #000;
+    color: #212121;
     font-size: 18px;
     text-transform: uppercase;
     font-weight: bold;
@@ -67,7 +75,7 @@ ul#ul-class-navigation {
     position: absolute;
 }
 ul#ul-class-navigation li {
-    color: white;
+    color: #212121;
     display: inline;
     font-family: pt-sans, sans-serif;
     font-size: 20px;
@@ -75,52 +83,31 @@ ul#ul-class-navigation li {
     text-decoration-color: currentcolor;
 }
 #Header {
-    position: fixed;
-    top:0;
-    background-color: rgb(35, 35, 47);
+    background-color: #F5F5F5;
     width: 100%;
     height: 200px;
     z-index: 1;
-    border-bottom: 1px solid rgb(36, 41, 143);
-}
-#Content {
-    margin-top: 200px;
+    border-bottom: 1px solid #607D8B;
 }
 #FilterFrame {
-    position: fixed;
-    width: 19%;
-    background-color: rgba(35, 40, 47, 0.8);
-    float: left;
-    top:216px;
-    border: 1px solid #fff;
-    margin-left: 5px;
-    margin-top: 10px;
+    background-color: white;
     padding: 20px;
 }
 #ResultsArea.Browse  {
-    width: 78%;
-    margin-left: 21%;
-    float: left;
-    position: sticky;
-}
-#ResultsArea.Browse  {
-    width: 78%;
-    margin-left: 21%;
-    float: left;
     position: sticky;
 }
 #ProductFrame {
     width: 100%;
     height: 250px;
-    margin-top: 15px;
     position: relative;
     padding: 1px;
     border-bottom: 1px solid #fff;
+    background-color: white;
 }
 .ImgFrame {
     width: 230px;
     height: 230px;
-    background-color: rgb(36, 41, 143);
+    background-color: lightgray;
     float: left;
     margin-left: 10px;
     margin-top: 10px;
@@ -153,7 +140,7 @@ ul#ul-class-navigation li {
     position: absolute;
     left: 250px;
     bottom: 2.5px;
-    color: white;
+    color: #212121;
     font-size: 15px;
 }
 #VideoFrame {
@@ -165,7 +152,7 @@ ul#ul-class-navigation li {
 #ArticleHeader {
     width: 100%;
     height: 300px;
-    position: relative
+    position: relative;
 }
 #ImageFrame {
     width: 300px;
@@ -231,10 +218,9 @@ ul#ul-class-navigation li {
     margin-right: 5px;
 }
 .Background {
-    background-color: #23232F;
+    background-color: #F5F5F5;
     width: 100%;
-    height: 100%;
-    position: absolute;
+    min-height: 100vh;
 }
 #LogoA {
     height: 200px;
@@ -242,14 +228,14 @@ ul#ul-class-navigation li {
     position: absolute;
 }
 #LogoImage {
-    background-image: url("../img/product/NerdyGadgetsLogo.png");
+    background-image: url("../ProductIMGHighRes/NerdyGadgetsLogo.png");
     width: 250px;
     height: 90px;
     margin: 55px 55px 55px 10%;
 }
 ul#ul-class li {
     display: inline;
-    color: white;
+    color: #212121;
     margin-right: 1em;
     font-size: 18px;
     text-decoration: none;
@@ -268,7 +254,7 @@ ul#ul-class-price li {
     user-select: none;
 }
 .HrefDecoration {
-    color: #ffffff;
+    color: #212121;
 }
 
 .HrefDecoration i.search {
@@ -277,10 +263,10 @@ ul#ul-class-price li {
 
 .HrefDecoration:hover, .HrefDecoration:active {
     text-decoration: none;
-    color: #ccc;
+    color: #212121;
 }
 .TextMain {
-    color: #fff;
+    color: #212121;
     font-family: vortice-concept, sans-serif;
     font-size: 50px;
     text-transform: uppercase;
@@ -289,7 +275,7 @@ ul#ul-class-price li {
     margin-left: 10%;
 }
 .HomePagePrice {
-    color: #676EFF;
+    color: #607D8B;
     font-family: vortice-concept, sans-serif;
     font-size: 50px;
     text-transform: uppercase;
@@ -297,7 +283,7 @@ ul#ul-class-price li {
     margin-left: 7%;
 }
 .HomePageStockItemPicture {
-    background-image: url("../img/product/580b57fbd9996e24bc43bf55.png");
+    background-image: url("../ProductIMGHighRes/580b57fbd9996e24bc43bf55.png");
     background-size: 100% 100%;
     width: 477px;
     height: 477px;
@@ -327,7 +313,7 @@ ul#ul-class-price li {
     float: left;
     margin-left: 1.5%;
     font-family: vortice-concept, sans-serif;
-    color: white;
+    color: #212121;
     font-size: 25px;
     text-transform: uppercase;
     font-weight: bold;
@@ -366,6 +352,7 @@ ul#ul-class-price li {
     left:0;
     right: 0;
     font-size: 25px;
+    color: #fff;
 }
 #StockGroup2 h1 {
     bottom: 0;
@@ -381,7 +368,7 @@ ul#ul-class-price li {
 }
 #Wrap a {
     text-decoration: none;
-    color: white;
+    color: #212121;
 }
 #Wrap a:hover {
     color: #ccc;
@@ -389,7 +376,7 @@ ul#ul-class-price li {
 }
 .StockItemPriceText {
     font-family: vortice-concept, sans-serif;
-    color: #676EFF;
+    color: #607D8B;
     font-size: 22px;
     text-transform: uppercase;
     font-weight: bold;
@@ -400,7 +387,7 @@ ul#ul-class-price li {
 }
 .StockItemID {
     font-family: vortice-concept, sans-serif;
-    color: #676EFF;
+    color: #607D8B;
     font-size: 10px;
     text-transform: uppercase;
     font-weight: bold;
@@ -408,7 +395,7 @@ ul#ul-class-price li {
 }
 .StockItemName {
     font-family: pt-sans, sans-serif;
-    color: #fff;
+    color: #212121;
     font-size: 20px;
     text-transform: uppercase;
     font-weight: bold;
@@ -459,28 +446,28 @@ ul#ul-class-price li {
     margin-top: 20px;
 }
 #ProductFrame h6 {
-    color: white;
-}
-#CategoriesBar {
-    position: absolute;
-    left: 280px;
+    color: #212121;
 }
 #PageSelector {
     text-align: center;
     margin: 20px;
 }
 #SelectedPage {
-    font-size: 18px;
     display: inline;
-    font-weight: bold;
-    background-color: rgb(98, 158, 255);
-    padding: 15px 22px;
-    border-radius: 50px;
+    padding: 7px 15px;
+    background-color: #3e5561;
+    border-radius: 4px;
+    color: white;
 }
 .PageNumber {
     padding: 7px 15px;
-    border-radius: 39px;
-    background: rgb(36, 41, 143);
-    border: 1px rgb(98, 158, 255) solid;
+    border-radius: 4px;
+    background: #607D8B;
     color: #fff;
+    border: none;
+    outline: none;
+    transition: 0.2s ease all;
+}
+.PageNumber:hover {
+    background-color: #3e5561;
 }
