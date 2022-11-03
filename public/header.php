@@ -10,7 +10,7 @@ $databaseConnection = connectToDatabase();
     <title>NerdyGadgets</title>
 
     <!-- Javascript -->
-    <script src="js/fontawesome.js"></script>
+    <script src="https://kit.fontawesome.com/c89a6832c4.js" crossorigin="anonymous"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -41,7 +41,7 @@ $databaseConnection = connectToDatabase();
         </div>
         <div class="header__brand">
             <div class="container">
-                <div class="row justify-content-between align-items-center">
+                <div class="row align-items-center">
                     <div class="col-3">
                         <a href="./" class="header__logo" id="LogoA">
                             <div id="LogoImage" class="header__logo-img">
@@ -49,9 +49,15 @@ $databaseConnection = connectToDatabase();
                             </div>
                         </a>
                     </div>
-                    <div class="col-2">
-                        Winkelmandje + login
+                    <div class="nav-wrapper">
+                      <a href="#" class="btn btn-info btn-lg">
+                        <i class="fa-solid fa-cart-shopping"></i> Winkelmandje
+                      </a>
+                      <a href="#" class="btn btn-info btn-lg">
+                        <i class="fa-solid fa-user"></i> Account
+                      </a>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -232,7 +232,7 @@ table tr td {
     font-weight: bold;
 }
 .HomePageStockItemPicture {
-    background-image: url("../ProductIMGHighRes/580b57fbd9996e24bc43bf55.png");
+    background-image: url("../img/product/580b57fbd9996e24bc43bf55.png");
     background-size: 100% 100%;
     width: 477px;
     height: 477px;
@@ -418,4 +418,7 @@ table tr td {
 }
 .PageNumber:hover {
     background-color: #3e5561;
+}
+.row {
+  justify-content: space-between;
 }
