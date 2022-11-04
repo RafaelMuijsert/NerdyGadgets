@@ -1,3 +1,6 @@
+* {
+    font-family: 'pt-sans, sans-serif';
+}
 html {
     box-sizing: border-box;
     width: 100vw;
@@ -11,7 +14,7 @@ body {
 }
 @font-face {
     font-family: MmrText;
-    src: url(/Public/fonts/mmrtext.ttf);
+    src: url(/fonts/mmrtext.ttf);
 }
 select {
     margin: 50px;
