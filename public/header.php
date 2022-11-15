@@ -50,7 +50,7 @@ $databaseConnection = connectToDatabase();
                         </a>
                     </div>
                     <div class="nav-wrapper">
-                      <a href="#" class="btn btn-info btn-lg">
+                      <a href="cart.php" class="btn btn-info btn-lg">
                         <i class="fa-solid fa-cart-shopping"></i> Winkelmandje
                       </a>
                       <a href="#" class="btn btn-info btn-lg">
@@ -94,7 +94,7 @@ $databaseConnection = connectToDatabase();
             <!-- einde code voor US3 zoeken -->
     </header>
     <div class="container">
-        <div class="row" id="Contentt">
+        <div class="row" id="Content">
             <!--            <div class="col-12">-->
             <!--                <div id="SubContent">-->
             <!--                --><?php //include "./Components/filter.php"; ?>
