@@ -94,7 +94,6 @@ $databaseConnection = connectToDatabase();
             <!-- einde code voor US3 zoeken -->
     </header>
     <div class="container">
-        <div class="row" id="Content">
             <!--            <div class="col-12">-->
             <!--                <div id="SubContent">-->
             <!--                --><?php //include "./Components/filter.php"; ?>

@@ -8,6 +8,8 @@ $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 ?>
 
+<div class="row">
+
 <!--<div class="col-12" id="CenteredContenttt">-->
     <?php
     if ($StockItem != null) {
@@ -152,4 +154,4 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
     } else {
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
-<!--</div>-->
+</div>
