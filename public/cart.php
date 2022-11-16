@@ -2,6 +2,7 @@
 include "header.php";
 include "cartFunctions.php";
 
+$cart = getCart();
 $total = 0;
 // kijken of er op de plusknop is gedrukt.
 if (isset($_GET['addId'])) {
@@ -24,7 +25,7 @@ if (isset($_GET['fullRemoveId'])) {
     <div class="card border-0">
         <div class="row">
             <?php
-            foreach (getCart() as $key => $item) {
+            foreach ($cart as $key => $item) {
                 print("<div class='col-8'><div class='row'><div class='row align-items-center'>");
                 //Haal item op
                 $stockItem = getStockItem($key, $databaseConnection);
@@ -46,6 +47,11 @@ if (isset($_GET['fullRemoveId'])) {
                 print("</div></div></div>");
                 $total += round($stockItem['SellPrice'], 2) * $item;
             }
+
+
+            if (empty($cart)) {
+                print("Uw winkelwagen is leeg.");
+            } else {
             ?>
             <div class="col-4">
                 <h5>
@@ -61,6 +67,7 @@ if (isset($_GET['fullRemoveId'])) {
                     <a href="https://www.ideal.nl/demo/qr/?app=ideal" class="btn btn-primary">Bestelling plaatsen</a>
                 </div>
             </div>
+            <?php } ?>
         </div>
     </div>
 </div>
