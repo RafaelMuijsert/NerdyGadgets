@@ -294,7 +294,11 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
 
                 <!-- code deel 4 van User story: Zoeken producten  -->
 
-
+                <input type="hidden" name="search_string" id="search_string"
+                       value="<?php if (isset($_GET['search_string'])) {
+                           print ($_GET['search_string']);
+                       } ?>">
+                <input type="hidden" name="sort" id="sort" value="<?php print ($_SESSION['sort']); ?>">
 
                 <!-- einde code deel 4 van User story: Zoeken producten  -->
                 <input type="hidden" name="category_id" id="category_id" value="<?php if (isset($_GET['category_id'])) {
