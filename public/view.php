@@ -29,7 +29,15 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                 <?php
                 if (isset($StockItemImage)) {
                     // één plaatje laten zien
-                    if (count($StockItemImage) == 1) {
+
+                    if(count($StockItemImage) == 0) {
+                        ?>
+                        <div id="ImageFrame"
+                             style="background-image: url('img/stock-group/<?php print $StockItem['BackupImagePath']; ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
+                        <?php
+
+                    }
+                    else if (count($StockItemImage) == 1) {
                         ?>
                         <div id="ImageFrame"
                              style="background-image: url('img/stock-item/<?php print $StockItemImage[0]['ImagePath']; ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
