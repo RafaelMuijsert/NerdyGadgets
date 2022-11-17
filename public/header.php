@@ -50,12 +50,15 @@ $databaseConnection = connectToDatabase();
                         </a>
                     </div>
                     <div class="nav-wrapper">
-                      <a href="cart.php" class="btn btn-info btn-lg">
-                        <i class="fa-solid fa-cart-shopping"></i> Winkelmandje
-                      </a>
-                      <a href="#" class="btn btn-info btn-lg">
-                        <i class="fa-solid fa-user"></i> Account
-                      </a>
+                        <a href="browse.php" class="btn btn-info btn-lg">
+                            <i class="fas fa-search search"></i> Zoeken
+                        </a>
+                        <a href="#" class="btn btn-info btn-lg">
+                            <i class="fa-solid fa-cart-shopping"></i> Winkelmandje
+                        </a>
+                        <a href="#" class="btn btn-info btn-lg">
+                            <i class="fa-solid fa-user"></i> Account
+                        </a>
                     </div>
 
                 </div>

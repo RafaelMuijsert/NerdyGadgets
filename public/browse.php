@@ -319,6 +319,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                                         name="page_number"><?php print($i); ?></button>
                             <?php }
                         }
+
                     }
                     ?>
                 </form>
