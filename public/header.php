@@ -54,7 +54,7 @@ $databaseConnection = connectToDatabase();
                             <i class="fas fa-search search"></i> Zoeken
                         </a>
                         <a href="cart.php" class="btn btn-info btn-lg">
-                            <i class="fa-solid fa-cart-shopping"></i> Winkelmandje
+                            <i class="fa-solid fa-shopping-bag"></i> Winkelmandje
                         </a>
                         <a href="#" class="btn btn-info btn-lg">
                             <i class="fa-solid fa-user"></i> Account
