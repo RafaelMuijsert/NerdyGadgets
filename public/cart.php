@@ -44,9 +44,9 @@ $total = 0;
 
                 print ("<div class='col'><div class='row'>" . $stockItem['StockItemName'] . "</div></div>");
                 print ("<div class='col'><a href='cart.php?addId=" . $key . "'>+</a> " . $item . "<a href='cart.php?removeId=" . $key . "'> -</a></div>");
-                print ("<div class='col'>&euro;" . round($stockItem['SellPrice'], 2) . "<span class='close'><a href='cart.php?fullRemoveId=" . $key . "' class='text-danger'>&#10005;</a></span></div>");
+                print ("<div class='col'>&euro;" . number_format($stockItem['SellPrice'], 2, '.') . "<span class='close'><a href='cart.php?fullRemoveId=" . $key . "' class='text-danger'>&#10005;</a></span></div>");
                 print("</div></div></div>");
-                $total += round($stockItem['SellPrice'], 2) * $item;
+                $total += round($stockItem['SellPrice'] * $item, 2);
             }
 
 
@@ -61,7 +61,7 @@ $total = 0;
                 <hr>
                 <div class="row">
                     <div class="col">Totaal</div>
-                    <div class="col text-right">&euro; <?php print(str_replace('.', ',', $total)) ?></div>
+                    <div class="col text-right">&euro; <?php print(number_format($total, 2, '.')) ?></div>
                 </div>
                 <hr>
                 <div class="text-right">
