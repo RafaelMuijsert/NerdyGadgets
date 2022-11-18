@@ -2,8 +2,6 @@
 include "header.php";
 include "cartFunctions.php";
 
-$cart = getCart();
-$total = 0;
 // kijken of er op de plusknop is gedrukt.
 if (isset($_GET['addId'])) {
     addItem($_GET['addId']);
@@ -16,6 +14,9 @@ if (isset($_GET['removeId'])) {
 if (isset($_GET['fullRemoveId'])) {
     removeItem($_GET['fullRemoveId'], true);
 }
+
+$cart = getCart();
+$total = 0;
 ?>
 <div class="row">
     <div class="col-12">
