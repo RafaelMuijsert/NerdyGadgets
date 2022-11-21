@@ -40,7 +40,7 @@ if(!empty($_GET['remove'])) {
                 <form method='post'><div class='col'>
                 <?php
                 $quantity = $_SESSION['cart'][$stockItem['StockItemID']];
-                $stock = end(explode(': ', $stockItem['QuantityOnHand'])); 
+                $stock = getItemStock($stockItem['StockItemID'], $databaseConnection)['QuantityOnHand'];
 
                 print("<input name='" . $stockItem['StockItemID'] . "'min=1 type='number' value='$quantity' max=$stock></div></form>");
                 print ("<div class='col'>&euro;" . number_format($stockItem['SellPrice'], 2, '.') . "<span class='close'><a href='cart.php?remove=" . $key . "' class='text-danger'>&#10005;</a></span></div>");
