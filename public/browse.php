@@ -260,9 +260,10 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                 foreach ($ReturnableResult as $row) {
                     ?>
                     <!--  coderegel 1 van User story: bekijken producten  -->
-                    <a class="ListItem" href='view.php?id=<?php print $row['StockItemID']; ?>'>
+<!--                    <a class="ListItem" href='view.php?id=--><?php //print $row['StockItemID']; ?><!--'>-->
                         <!-- einde coderegel 1 van User story: bekijken producten   -->
                         <div id="ProductFrame">
+                            <a class="ListItem" href='view.php?id=<?php print $row['StockItemID']; ?>'>
                             <?php
                             if (isset($row['ImagePath'])) { ?>
                                 <div class="ImgFrame"
@@ -272,12 +273,26 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                                      style="background-image: url('<?php print "/img/stock-group/" . $row['BackupImagePath'] ?>'); background-size: cover;"></div>
                             <?php }
                             ?>
-
+                            </a>
                             <div id="StockItemFrameRight">
                                 <div class="CenterPriceLeftChild">
                                     <h1 class="StockItemPriceText"><?php print sprintf(" %0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
                                     <h6>Inclusief BTW </h6>
-                                    <button>Toevoegen</button>
+                                    <form method="post">
+                                        <input type="submit" name="<?php print ("submit" . $row["StockItemID"]) ?>" value="Toevoegen aan winkelmandje">
+                                    </form>
+
+                                    <?php
+                                    if (isset($_POST[("submit" . $row["StockItemID"])])) {
+                                        if (!isset($_SESSION['cart'][$row["StockItemID"]])) {
+                                            $_SESSION['cart'][$row["StockItemID"]] = 1;
+                                            }
+                                        else {
+                                            $_SESSION['cart'][$row["StockItemID"]]++;
+                                        }
+                                        print("Product is geplaatst in het <a href='cart.php'> Winkelmandje</a>");
+                                    }
+                                    ?>
                                 </div>
                             </div>
                             <h1 class="StockItemID">Artikelnummer: <?php print $row["StockItemID"]; ?></h1>
@@ -287,7 +302,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                         </div>
                         <!--  coderegel 2 van User story: bekijken producten  -->
 
-                    </a>
+<!--                    </a>-->
 
                     <!--  einde coderegel 2 van User story: bekijken producten  -->
                 <?php } ?>
