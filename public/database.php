@@ -80,6 +80,19 @@ function getStockItem($id, $databaseConnection) {
 
     return $Result;
 }
+function getItemStock($id, $databaseConnection) {
+  $Result = null;
+  $Query = "SELECT QuantityOnHand FROM stockitemholdings WHERE StockItemID = ?";
+  $Statement = mysqli_prepare($databaseConnection, $Query);
+  mysqli_stmt_bind_param($Statement, "i", $id);
+  mysqli_stmt_execute($Statement);
+  $ReturnableResult = mysqli_stmt_get_result($Statement);
+  if ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 1) {
+      $Result = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
+  }
+
+  return $Result;
+}
 
 function getStockItemImage($id, $databaseConnection) {
 

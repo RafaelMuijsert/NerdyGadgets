@@ -10,6 +10,7 @@ $AmountOfPages = 0;
 $queryBuildResult = "";
 
 
+
 if (isset($_GET['category_id'])) {
     $CategoryID = $_GET['category_id'];
 } else {
@@ -276,6 +277,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                                 <div class="CenterPriceLeftChild">
                                     <h1 class="StockItemPriceText"><?php print sprintf(" %0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
                                     <h6>Inclusief BTW </h6>
+                                    <button>Toevoegen</button>
                                 </div>
                             </div>
                             <h1 class="StockItemID">Artikelnummer: <?php print $row["StockItemID"]; ?></h1>

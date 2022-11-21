@@ -2,8 +2,6 @@
 <?php
 include __DIR__ . "/header.php";
 
-include "cartFunctions.php";
-
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 ?>
@@ -103,8 +101,8 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
 
                             <?php
                             if (isset($_POST["submit"])) {
-                                addItem($_POST["stockItemID"]);
-                                print("Product staat in de <a href='cart.php'> Winkelmandje</a>");
+                                $_SESSION['cart'][$_GET['id']]++;
+                                print("Product staat in het <a href='cart.php'> Winkelmandje</a>");
                             }
                             ?>
                         </div>

@@ -1,22 +1,15 @@
 <?php
 include "header.php";
-include "cartFunctions.php";
-
-// kijken of er op de plusknop is gedrukt.
-if (isset($_GET['addId'])) {
-    addItem($_GET['addId']);
-}
-// kijken of er op de minknop is gedrukt.
-if (isset($_GET['removeId'])) {
-    removeItem($_GET['removeId']);
-}
-// kijken of er op de verwijderknop is gedrukt.
-if (isset($_GET['fullRemoveId'])) {
-    removeItem($_GET['fullRemoveId'], true);
-}
-
-$cart = getCart();
 $total = 0;
+foreach($_POST as $key => $value) {
+  $value = abs($value);
+  $stock = getItemStock($key, $databaseConnection)['QuantityOnHand'];
+  $value = ($value <= $stock) ? $value : $stock;
+  $_SESSION['cart'][$key] = abs($value);
+}
+if($_GET['remove']) {
+  unset($_SESSION['cart'][$_GET['remove']]);
+}
 ?>
 <div class="row">
     <div class="col-12">
@@ -26,7 +19,7 @@ $total = 0;
     <div class="card border-0">
         <div class="row">
             <?php
-            foreach ($cart as $key => $item) {
+            foreach ($_SESSION['cart'] as $key => $item) {
                 print("<div class='col-8'><div class='row'><div class='row align-items-center'>");
                 //Haal item op
                 $stockItem = getStockItem($key, $databaseConnection);
@@ -43,14 +36,21 @@ $total = 0;
                 }
 
                 print ("<div class='col'><div class='row'>" . $stockItem['StockItemName'] . "</div></div>");
-                print ("<div class='col'><a href='cart.php?addId=" . $key . "'>+</a> " . $item . "<a href='cart.php?removeId=" . $key . "'> -</a></div>");
-                print ("<div class='col'>&euro;" . number_format($stockItem['SellPrice'], 2, '.') . "<span class='close'><a href='cart.php?fullRemoveId=" . $key . "' class='text-danger'>&#10005;</a></span></div>");
+                ?>
+                <form method='post'><div class='col'>
+                <?php
+                $quantity = $_SESSION['cart'][$stockItem['StockItemID']];
+                $stock = end(explode(': ', $stockItem['QuantityOnHand'])); 
+
+                print("<input name='" . $stockItem['StockItemID'] . "'min=1 type='number' value='$quantity' max=$stock></div></form>");
+                print ("<div class='col'>&euro;" . number_format($stockItem['SellPrice'], 2, '.') . "<span class='close'><a href='cart.php?remove=" . $key . "' class='text-danger'>&#10005;</a></span></div>");
                 print("</div></div></div>");
-                $total += $stockItem['SellPrice'] * $item;
+                $price = round($stockItem['SellPrice'], 2);
+                $total += $price * $quantity;
             }
 
 
-            if (empty($cart)) {
+            if (empty($_SESSION['cart'])) {
                 print("Uw winkelwagen is leeg.");
             } else {
             ?>
