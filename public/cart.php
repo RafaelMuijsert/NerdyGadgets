@@ -7,7 +7,7 @@ foreach($_POST as $key => $value) {
   $value = ($value <= $stock) ? $value : $stock;
   $_SESSION['cart'][$key] = abs($value);
 }
-if($_GET['remove']) {
+if(!empty($_GET['remove'])) {
   unset($_SESSION['cart'][$_GET['remove']]);
 }
 ?>
