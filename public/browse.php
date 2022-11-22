@@ -253,7 +253,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
     <!-- einde zoekresultaten die links van de zoekbalk staan -->
     <!-- einde code deel 3 van User story: Zoeken producten  -->
 
-    <div class="col">
+    <div class="col search__res">
         <div id="ResultsArea" class="Browse">
             <?php
             if (isset($ReturnableResult) && count($ReturnableResult) > 0) {
