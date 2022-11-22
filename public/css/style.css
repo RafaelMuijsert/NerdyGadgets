@@ -3,6 +3,10 @@ html {
     width: 100vw;
 }
 
+.header__nav {
+  margin-bottom: 15px;
+}
+
 .header__brand {
   background-color: #25252f;
 }

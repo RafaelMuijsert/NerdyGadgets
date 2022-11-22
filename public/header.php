@@ -50,15 +50,18 @@ $databaseConnection = connectToDatabase();
                             </div>
                         </a>
                     </div>
+                    <div class="col-xs-4 search__input">
+                      <form action="browse.php">
+                        <input class="form-control" type="text" placeholder="Style mij nog even!" name="search_string" id="search_string" value="" class="form-submit">
+                      </form>
+                    </div>
                     <div class="nav-wrapper">
-                        <a href="browse.php" class="btn btn-light btn-lg">
-                            <i class="fas fa-search search"></i> Zoeken
+                        
+                        <a href="#" class="btn btn-light btn-lg">
+                            <i class="fa-solid fa-user"></i> Inloggen
                         </a>
                         <a href="cart.php" class="btn btn-light btn-lg">
-                            <i class="fa-solid fa-shopping-bag"></i> Winkelmandje
-                        </a>
-                        <a href="#" class="btn btn-light btn-lg">
-                            <i class="fa-solid fa-user"></i> Account
+                            <i class="fa-solid fa-shopping-bag"></i> 
                         </a>
                     </div>
 
