@@ -212,7 +212,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
 
                     <input type="hidden" name="category_id" id="category_id"
                            value="<?php print (isset($_GET['category_id'])) ? $_GET['category_id'] : ""; ?>">
-                    <select name="products_on_page" id="products_on_page" onchange="this.form.submit()">>
+                    <select class="btn btn-outline-dark dropdown-toggle" name="products_on_page" id="products_on_page" onchange="this.form.submit()">>
                         <option value="25" <?php if ($_SESSION['products_on_page'] == 25) {
                             print "selected";
                         } ?>>25
@@ -226,8 +226,8 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                         } ?>>75
                         </option>
                     </select>
-                    <h4 class="FilterTopMargin"><i class="fas fa-sort"></i> Sorteren</h4>
-                    <select name="sort" id="sort" onchange="this.form.submit()">>
+                    <h4 class="dropdown show FilterTopMargin"><i class="fas fa-sort"></i> Sorteren</h4>
+                    <select class="btn btn-outline-dark dropdown-toggle" name="sort" id="sort" onchange="this.form.submit()">>
                         <option value="price_low_high" <?php if ($_SESSION['sort'] == "price_low_high") {
                             print "selected";
                         } ?>>Prijs oplopend
@@ -279,7 +279,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                                     <h1 class="StockItemPriceText"><?php print sprintf(" %0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
                                     <h6>Inclusief BTW </h6>
                                     <form method="post">
-                                        <input type="submit" name="<?php print ("submit" . $row["StockItemID"]) ?>" value="Toevoegen aan winkelmandje">
+                                        <input class="btn btn-dark fa-solid fa-shopping-bag" type="submit" name="<?php print ("submit" . $row["StockItemID"]) ?>" value="+">
                                     </form>
 
                                     <?php
@@ -300,6 +300,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                             <p class="StockItemComments"><?php print $row["MarketingComments"]; ?></p>
                             <h4 class="ItemQuantity"><?php print getVoorraadTekst($row["QuantityOnHand"]); ?></h4>
                         </div>
+                            <hr>
                         <!--  coderegel 2 van User story: bekijken producten  -->
 
 <!--                    </a>-->

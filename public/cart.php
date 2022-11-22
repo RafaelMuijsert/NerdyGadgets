@@ -51,7 +51,7 @@ if(array_key_exists('remove', $_GET)) {
 
 
             if (empty($_SESSION['cart'])) {
-                print("Uw winkelwagen is leeg.");
+                print("<h2>Uw winkelmandje is leeg.</h2>");
             } else {
             ?>
             <div class="col-4">
