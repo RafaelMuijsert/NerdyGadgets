@@ -18,9 +18,10 @@ if(array_key_exists('remove', $_GET)) {
     </div>
     <div class="card border-0">
         <div class="row">
+            <div class="col">
             <?php
             foreach ($_SESSION['cart'] as $key => $item) {
-                print("<div class='col-8'><div class='row'><div class='row align-items-center'>");
+                print("<div class='col'><div class='row'><div class='row align-items-center'>");
                 //Haal item op
                 $stockItem = getStockItem($key, $databaseConnection);
 
@@ -45,10 +46,11 @@ if(array_key_exists('remove', $_GET)) {
                 print("<input name='" . $stockItem['StockItemID'] . "'min=1 type='number' value='$quantity' max=$stock></div></form>");
                 print ("<div class='col'>&euro;" . number_format($stockItem['SellPrice'], 2, '.') . "<span class='close'><a href='cart.php?remove=" . $key . "' class='text-danger'>&#10005;</a></span></div>");
                 print("</div></div></div>");
+                print("<hr>");
                 $price = round($stockItem['SellPrice'], 2);
                 $total += $price * $quantity;
             }
-
+            print ("</div>");
 
             if (empty($_SESSION['cart'])) {
                 print("<h2>Uw winkelmandje is leeg.</h2>");

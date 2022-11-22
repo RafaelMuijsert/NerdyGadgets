@@ -279,7 +279,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                                     <h1 class="StockItemPriceText"><?php print sprintf(" %0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
                                     <h6>Inclusief BTW </h6>
                                     <form method="post">
-                                        <input class="btn btn-dark fa-solid fa-shopping-bag" type="submit" name="<?php print ("submit" . $row["StockItemID"]) ?>" value="+">
+                                        <input class="btn btn-dark" type="submit" name="<?php print ("submit" . $row["StockItemID"]) ?>" value="+">
                                     </form>
 
                                     <?php
@@ -296,7 +296,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                                 </div>
                             </div>
                             <h1 class="StockItemID">Artikelnummer: <?php print $row["StockItemID"]; ?></h1>
-                            <p class="StockItemName"><?php print $row["StockItemName"]; ?></p>
+                            <p class="StockItemName" style="width: 82.5%"><?php print $row["StockItemName"]; ?></p>
                             <p class="StockItemComments"><?php print $row["MarketingComments"]; ?></p>
                             <h4 class="ItemQuantity"><?php print getVoorraadTekst($row["QuantityOnHand"]); ?></h4>
                         </div>
