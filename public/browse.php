@@ -212,7 +212,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
 
                     <input type="hidden" name="category_id" id="category_id"
                            value="<?php print (isset($_GET['category_id'])) ? $_GET['category_id'] : ""; ?>">
-                    <select class="btn btn-outline-dark dropdown-toggle" name="products_on_page" id="products_on_page" onchange="this.form.submit()">>
+                    <select class="btn btn-outline-dark btn-lg " name="products_on_page" id="products_on_page" onchange="this.form.submit()">>
                         <option value="25" <?php if ($_SESSION['products_on_page'] == 25) {
                             print "selected";
                         } ?>>25
@@ -276,7 +276,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                             </a>
                             <div id="StockItemFrameRight">
                                 <div class="CenterPriceLeftChild">
-                                    <h1 class="StockItemPriceText"><?php print sprintf(" %0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
+                                    <h1 class="StockItemPriceText"><?php print sprintf("€%0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
                                     <h6>Inclusief BTW </h6>
                                     <form method="post">
                                         <input class="btn btn-dark" type="submit" name="<?php print ("submit" . $row["StockItemID"]) ?>" value="+">
