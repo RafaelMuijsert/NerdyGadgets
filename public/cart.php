@@ -10,6 +10,9 @@ foreach($_POST as $key => $value) {
 if(array_key_exists('remove', $_GET)) {
   unset($_SESSION['cart'][$_GET['remove']]);
 }
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
 ?>
 <div class="row">
     <div class="col-12">
