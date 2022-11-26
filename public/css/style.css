@@ -10,6 +10,7 @@ html {
 .header__brand {
   background-color: #25252f;
 }
+
 body {
     overflow-x: hidden;
     min-height: 100vh;

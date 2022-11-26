@@ -109,3 +109,25 @@ function getStockItemImage($id, $databaseConnection) {
 
     return $R;
 }
+
+/*
+ *  Update shopping cart after submit with necessary checks
+ * */
+function updateShoppingCart($itemID, $connection) {
+    $stock = getItemStock($itemID, $connection)['QuantityOnHand'];
+
+    if(array_key_exists($itemID, $_SESSION['cart']) && $stock <= $_SESSION['cart'][$itemID]) {
+        $_SESSION['cart'][$itemID] = $stock;
+        print("<p style='color: red; max-width: 250px; text-align: right;'>Kan niet meer producten toevoegen dan de hoeveelheid producten in voorraad.</p>");
+        return false;
+    }
+
+    if(array_key_exists($itemID, $_SESSION['cart'])) {
+        $_SESSION['cart'][$itemID]++;
+    } else {
+        $_SESSION['cart'][$itemID] = 1;
+    }
+
+    print("<a style='color: green' href='cart.php'>Toegevoegd!</a>");
+    return true;
+}

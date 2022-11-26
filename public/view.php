@@ -94,17 +94,18 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                         <div class="CenterPriceLeftChild">
                             <p class="StockItemPriceText"><b><?php print sprintf("€%.2f", $StockItem['SellPrice']); ?></b></p>
                             <h6> Inclusief BTW </h6>
+
                             <form method="post">
                                 <input type="number" name="stockItemID" value="<?php print ($_GET['id']); ?>" hidden>
                                 <input class="btn btn-dark" type="submit" name="submit" value="Toevoegen">
                             </form>
 
                             <?php
-                            if (isset($_POST["submit"])) {
-                                $_SESSION['cart'][$_GET['id']]++;
-                                print("Product staat in het <a href='cart.php'> Winkelmandje</a>");
-                            }
+                                if (isset($_POST["submit"])) {
+                                    updateShoppingCart($_GET['id'], $databaseConnection);
+                                }
                             ?>
+
                         </div>
                     </div>
                 </div>

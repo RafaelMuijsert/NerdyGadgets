@@ -283,16 +283,11 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                                     </form>
 
                                     <?php
-                                    if (isset($_POST[("submit" . $row["StockItemID"])])) {
-                                        if (!isset($_SESSION['cart'][$row["StockItemID"]])) {
-                                            $_SESSION['cart'][$row["StockItemID"]] = 1;
-                                            }
-                                        else {
-                                            $_SESSION['cart'][$row["StockItemID"]]++;
+                                        if (isset($_POST[("submit" . $row["StockItemID"])])) {
+                                            updateShoppingCart($row["StockItemID"], $databaseConnection);
                                         }
-                                        print("Product is geplaatst in het <a href='cart.php'> Winkelmandje</a>");
-                                    }
                                     ?>
+
                                 </div>
                             </div>
                             <h1 class="StockItemID">Artikelnummer: <?php print $row["StockItemID"]; ?></h1>
