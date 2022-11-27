@@ -1,25 +1,30 @@
-<!-- dit is het bestand dat wordt geladen zodra je naar de website gaat -->
-<?php
-include "header.php";
-?>
-<div class="row">
-    <div class="col-11">
-        <div class="TextPrice">
-            <a href="view.php?id=93">
-                <div class="TextMain">
-                    "The Gu" red shirt XML tag t-shirt (Black) M
-                </div>
-                <ul id="ul-class-price">
-                    <li class="HomePagePrice">€30.95</li>
-                </ul>
-            </a>
-        </div>
-        <div class="HomePageStockItemPicture">
-    <!--        <img src="./img/product/580b57fbd9996e24bc43bf55.png" alt="">-->
-        </div>
-    </div>
-</div>
-<?php
-include "footer.php";
-?>
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <title>The place for your gadgets - NerdyGadgets</title>
+
+        <!-- Javascript -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/resizer.js"></script>
+
+        <!-- Style sheets-->
+        <link rel="stylesheet" href="css/main.css" type="text/css">
+    </head>
+    <body>
+
+    <?php include "header.php"; ?>
+    <?php include "blocks/page-banner.php"?>
+    <?php include "blocks/media-text.php"?>
+    <?php include "blocks/categories.php"?>
+    <?php include "footer.php"; ?>
+
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+    </body>
+</html>
 
