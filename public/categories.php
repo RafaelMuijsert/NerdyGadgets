@@ -16,35 +16,10 @@
 
         <?php
             include "header.php";
-            $StockGroups = getStockGroups($databaseConnection);
-        ?>
 
-        <div class="row">
-            <div class="col-12">
-                <div id="Wrap">
-                    <?php if (isset($StockGroups)) {
-                        $i = 0;
-                        foreach ($StockGroups as $StockGroup) {
-                            if ($i < 6) {
-                                ?>
-                                <a href="<?php print "browse.php?category_id=";
-                                print $StockGroup["StockGroupID"]; ?>">
-                                    <div id="StockGroup<?php print $i + 1; ?>"
-                                         style="background-image: url('img/stock-group/<?php print $StockGroup["ImagePath"]; ?>')"
-                                         class="StockGroups">
-                                        <h1><?php print $StockGroup["StockGroupName"]; ?></h1>
-                                    </div>
-                                </a>
-                                <?php
-                            }
-                            $i++;
-                        }
-                    } ?>
-                </div>
-            </div>
-        </div>
-
-        <?php include "footer.php"; ?>
+            include __DIR__ . "/blocks/categories.php";
+            include "footer.php";
+         ?>
 
         <script>
             if ( window.history.replaceState ) {

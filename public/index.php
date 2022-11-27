@@ -14,11 +14,14 @@
     </head>
     <body>
 
-    <?php include "header.php"; ?>
-    <?php include "blocks/page-banner.php"?>
-    <?php include "blocks/media-text.php"?>
-    <?php include "blocks/categories.php"?>
-    <?php include "footer.php"; ?>
+    <?php
+//        $StockGroups = getStockGroups($databaseConnection);
+        include "header.php";
+        include "blocks/page-banner.php";
+        include "blocks/media-text.php";
+        include "blocks/categories.php";
+        include "footer.php";
+    ?>
 
     <script>
         if ( window.history.replaceState ) {

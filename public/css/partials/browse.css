@@ -1,0 +1,6 @@
+.browse__filter,
+.browse__results {
+    background-color: var(--sub-bg-color);
+    padding: 40px;
+    border-radius: var(--border-radius);
+}
