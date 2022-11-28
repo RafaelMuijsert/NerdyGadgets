@@ -81,7 +81,3 @@ if (!isset($_SESSION['cart'])) {
 include "footer.php";
 ?>
 
-<script>
-    // Verwijder URL GET-query om dubbele uitvoering te voorkomen op ververs.
-    window.history.pushState("object or string", "Title", "/" + window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
-</script>
