@@ -114,6 +114,8 @@ function getStockItemImage($id, $databaseConnection) {
  *  Update shopping cart after submit with necessary checks
  * */
 function updateShoppingCart($itemID, $connection) {
+    $submitted = true;
+    sleep(0.1);
     $stock = getItemStock($itemID, $connection)['QuantityOnHand'];
 
     if(array_key_exists($itemID, $_SESSION['cart']) && $stock <= $_SESSION['cart'][$itemID]) {

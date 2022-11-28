@@ -6,7 +6,7 @@
                     <div class="footer__nav">
                         <span>Pagina's</span>
                         <ul>
-                            <li><a href="/">T-Shirst</a></li>
+                            <li><a href="/">T-shirst</a></li>
                             <li><a href="/">Chocolade</a></li>
                             <li><a href="/">Novelties</a></li>
 
@@ -21,7 +21,7 @@
                             <li>Huppelstraat 21</li>
                             <li>4466 TR, Japinko</li>
                             <li>+31 6 43567878</li>
-                            <li>info@nerdygadgetz.com</li>
+                            <li>info@nerdygadgets.com</li>
                         </ul>
                     </div>
                 </div>

@@ -7,7 +7,6 @@
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/popper.min.js"></script>
-        <script src="js/resizer.js"></script>
 
         <!-- Style sheets-->
         <link rel="stylesheet" href="css/main.css" type="text/css">

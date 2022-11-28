@@ -2,6 +2,7 @@
     session_start();
     include "database.php";
     $databaseConnection = connectToDatabase();
+    $submitted = false;
 ?>
 <header class="header">
     <div class="container">
@@ -37,11 +38,20 @@
 <!--                        </form>-->
 
                         <div class="header__icons">
-                            <a href="/" class="search-icon btn btn--primary">
+                            <script type="text/javascript">
+                                // setTimeout(function() {
+                                    //var cartCount='<?php //echo count($_SESSION['cart']); ?>//';
+                                    //var el = document.getElementById('cart-icon--count');
+                                    //el.innerText = cartCount + '+';
+                                // }, 10);
+                            </script>
+                            <a href="/browse.php" class="search-icon btn btn--primary">
                                 <img class="icon" src="./img/icons/search.svg" alt="">
                             </a>
                             <a href="cart.php" class="cart-icon btn btn--primary">
-                                <div class="cart-icon--count">1+</div>
+<!--                                --><?php //if(count($_SESSION['cart']) > 0 || $submitted): ?>
+                                    <div class="cart-icon--count" id="cart-icon--count"></div>
+<!--                                --><?php //endif; ?>
                                 <img class="icon" src="./img/icons/cart.svg" alt="">
                             </a>
 

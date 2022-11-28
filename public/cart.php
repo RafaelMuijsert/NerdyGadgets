@@ -75,7 +75,7 @@
                                             $price = round($stockItem['SellPrice'], 2);
                                             $total += $price * $quantity; ?>
 
-                                            <input name="<?= $stockItem['StockItemID'] ?>" min="1" type="number" value="<?= $quantity ?>" max="<?= $stock ?>">
+                                            <input name="<?= $stockItem['StockItemID'] ?>" onchange="this.form.submit()" min="1" type="number" value="<?= $quantity ?>" max="<?= $stock ?>">
 
                                         </form>
 

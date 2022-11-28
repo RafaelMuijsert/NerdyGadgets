@@ -1,9 +1,9 @@
 .header {
     width: 100%;
-    z-index: 1;
     position: fixed;
     left: 0;
     top: 18px;
+    z-index: 15;
 }
 
 .header__inner {

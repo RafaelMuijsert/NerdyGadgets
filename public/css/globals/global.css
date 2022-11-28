@@ -9,6 +9,19 @@ body {
     padding: 140px 0 0 0;
     color: var(--text-color);
     background-color: var(--main-bg-color);
+    position: relative;
+}
+
+body:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 447px;
+    height: 520px;
+    border-radius: 0 100% 0 0;
+    background: conic-gradient(at -2%, var(--primary-color), rgba(13, 108, 232, 0.4));
+    z-index: -1;
 }
 
 a, a:focus, a:active {

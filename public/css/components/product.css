@@ -1,0 +1,66 @@
+.product-sum {
+    display: flex;
+    margin-bottom: 40px;
+}
+
+.product-sum__left {
+    display: block;
+    width: 398px;
+    height: 328px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background-color: var(--main-bg-color);
+}
+
+.product-sum__left div {
+    width: 100%;
+    height: 100%;
+}
+
+.product-sum__right {
+    padding: 28px 0 0 56px;
+    display: grid;
+    align-content: space-between;
+    max-width: 420px;
+}
+
+.product-sum__title {
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 500;
+    font-style: normal;
+    font-family: Roboto;
+    margin-bottom: 10px;
+}
+
+.product-sum__price {
+    font-size: 32px;
+    line-height: 1;
+    font-weight: 500;
+    font-style: normal;
+    font-family: Roboto;
+    color: var(--primary-color);
+}
+
+.product-sum__btw {
+    font-size: 14px;
+    line-height: 1;
+    font-weight: 500;
+    font-style: normal;
+    font-family: Roboto;
+    color: var(--primary-color);
+}
+
+.product-sum__btn {
+    margin-top: 14px;
+}
+
+.product-sum__number {
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 200;
+    font-style: normal;
+    font-family: Roboto;
+    color: #2E2D2D;
+    margin-bottom: 14px;
+}

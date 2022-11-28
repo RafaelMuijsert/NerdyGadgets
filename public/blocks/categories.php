@@ -1,4 +1,6 @@
-<?php $StockGroups = getStockGroups($databaseConnection); ?>
+<?php
+    $StockGroups = getStockGroups($databaseConnection);
+?>
 <section class="categories">
     <div class="container">
         <div class="row">
@@ -18,11 +20,11 @@
                         $columnSize = "col-4";
                     endif ?>
 
-                    <div class="<?= $columnSize ?>">
-                        <a class="category-item" href="<?= "browse.php?category_id=" . $StockGroups[$i]["StockGroupID"] ?>">
-                            <div class="categor-item__inner" id="StockGroup<?= $i + 1; ?>"
+                    <div class="<?= $columnSize ?> spacing">
+                        <a class="categories__item" href="<?= "browse.php?category_id=" . $StockGroups[$i]["StockGroupID"] ?>">
+                            <div class="categories__item-inner" id="StockGroup<?= $i + 1; ?>"
                                  style="background-image: url('img/stock-group/<?= $StockGroups[$i]["ImagePath"]; ?>')">
-                                <h4 class="category-item__title"><?= $StockGroups[$i]["StockGroupName"]; ?></h4>
+                                <h4 class="categories__item-title"><?= $StockGroups[$i]["StockGroupName"]; ?></h4>
                             </div>
                         </a>
                     </div>
