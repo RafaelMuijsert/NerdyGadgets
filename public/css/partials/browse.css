@@ -5,9 +5,26 @@
     border-radius: var(--border-radius);
 }
 
+.browse__results {
+    height: 100%;
+}
+
 .browse__filter h5 {
     font-size: 24px;
     line-height: 1;
     font-weight: 500;
+    font-family: Roboto;
+}
+
+.browse__no-results-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.browse__no-results {
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 200;
     font-family: Roboto;
 }

@@ -270,21 +270,23 @@
                         </div>
                     </div>
                 </div>
-
+                <?php
+                    $expression = (isset($ReturnableResult) && count($ReturnableResult) > 0);
+                ?>
                 <div class="col-8 search__res">
-                    <div class="browse__results">
-                        <?php if (isset($ReturnableResult) && count($ReturnableResult) > 0) {
-                            foreach ($ReturnableResult as $row) { ?>
+                    <div class="browse__results <?php if($expression): else: echo 'browse__no-results-wrapper'; endif; ?>">
+                        <?php if ($expression):
+                            foreach ($ReturnableResult as $row): ?>
 
                                 <div class="product-sum" id="ProductFrame">
                                     <a class="ListItem product-sum__left" href='view.php?id=<?= $row['StockItemID']; ?>'>
-                                        <?php if (isset($row['ImagePath'])) { ?>
+                                        <?php if (isset($row['ImagePath'])): ?>
                                             <div class="ImgFrame"
                                                  style="background-image: url('<?= "/img/stock-item/" . $row['ImagePath']; ?>'); background-size: 230px; background-repeat: no-repeat; background-position: center;"></div>
-                                        <?php } else if (isset($row['BackupImagePath'])) { ?>
+                                        <?php elseif (isset($row['BackupImagePath'])): ?>
                                             <div class="ImgFrame"
                                                  style="background-image: url('<?= "/img/stock-group/" . $row['BackupImagePath'] ?>'); background-size: cover;"></div>
-                                        <?php } ?>
+                                        <?php endif; ?>
                                     </a>
 
                                     <div class="product-sum__right" id="StockItemFrameRight">
@@ -306,7 +308,7 @@
                                     </div>
                                 </div>
 
-                            <?php } ?>
+                            <?php endforeach; ?>
 
                             <form class="pagination" id="PageSelector">
 
@@ -326,27 +328,21 @@
                                 <input type="hidden" name="products_on_page" id="products_on_page"
                                        value="<?php print ($_SESSION['products_on_page']); ?>">
 
-                                <?php if ($AmountOfPages > 0) {
+                                <?php if ($AmountOfPages > 0):
                                     for ($i = 1; $i <= $AmountOfPages; $i++) {
-                                        if ($PageNumber == ($i - 1)) {
-                                            ?>
+                                        if ($PageNumber == ($i - 1)): ?>
                                             <div id="SelectedPage" class="pagination__btn"><?php print $i; ?></div><?php
-                                        } else { ?>
-                                            <button id="page_number" class="pagination__btn-active" value="<?php print($i - 1); ?>" type="submit"
-                                                    name="page_number"><?php print($i); ?></button>
-                                        <?php }
+                                        else: ?>
+                                            <button id="page_number" class="pagination__btn-active" value="<?php print($i - 1); ?>" type="submit" name="page_number"><?php print($i); ?></button>
+                                        <?php endif;
                                     }
-
-                                } ?>
+                                endif; ?>
                             </form>
-                            <?php
-                        } else {
-                            ?>
-                            <h2 id="NoSearchResults">
+                        <?php else: ?>
+                            <h2 class="browse__no-results">
                                 Helaas, er zijn geen resultaten gevonden.
                             </h2>
-                            <?php
-                        } ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
