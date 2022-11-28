@@ -2,8 +2,14 @@
 include "header.php";
 $total = 0;
 foreach($_POST as $key => $value) {
+  // 
+  if($value == 0) {
+    continue;
+  }
+  // bij een negatieve hoeveelheid wordt deze positief gemaakt
   $value = abs($value);
   $stock = getItemStock($key, $databaseConnection)['QuantityOnHand'];
+  // hoeveelheid is maximaal het aantal op voorraad
   $value = ($value <= $stock) ? $value : $stock;
   $_SESSION['cart'][$key] = abs($value);
 }
