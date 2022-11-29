@@ -86,3 +86,19 @@
     transform: translate(0, -50%) rotate(-45deg);
     background-color: var(--primary-color);
 }
+
+/*
+    Order button
+*/
+.btn--order {
+    background-color: var(--accent-color);
+    border-radius: var(--border-radius);
+    color: var(--sub-bg-color);
+    border: none;
+    padding: 16px 48px;
+}
+
+.btn--order:hover {
+    background-color: var(--accent-color-hover);
+    color: var(--sub-bg-color);
+}

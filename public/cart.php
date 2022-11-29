@@ -39,51 +39,55 @@
                 <div class="row">
                     <div class="col-8">
                         <div class="shopping-cart__cart bg-white">
-                            <h1>Winkelmandje</h1>
+                            <h1 class="shopping-cart__title">Winkelmandje</h1>
 
-                            <?php foreach ($_SESSION['cart'] as $key => $item):
-                                $stockItem = getStockItem($key, $databaseConnection);
+                            <?php if(count($_SESSION['cart']) !== 0): ?>
 
-                                if (!$stockItem):
-                                    continue;
-                                endif; ?>
-                                <div class="card">
-                                    <div class="card__img">
-                                        <?php if($stockItemImage = getStockItemImage($key, $databaseConnection)): ?>
-                                            <div class=''>
+                                <?php foreach ($_SESSION['cart'] as $key => $item):
+                                    $stockItem = getStockItem($key, $databaseConnection);
+
+                                    if (!$stockItem):
+                                        continue;
+                                    endif; ?>
+                                    <div class="card">
+                                        <div class="card__img">
+                                            <?php if($stockItemImage = getStockItemImage($key, $databaseConnection)): ?>
                                                 <img class='img-fluid' src="<?= 'img/stock-item/' . $stockItemImage[0]['ImagePath'] ?>">
-                                            </div>
-                                        <?php else: ?>
-                                            <div class=''>
+                                            <?php else: ?>
                                                 <img class='img-fluid' src="<?= 'img/stock-item/' . $stockItem['BackupImagePath'] ?>">
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <div class="card__description">
+                                            <div>
+                                                <h2><?= $stockItem['StockItemName'] ?></h2>
+                                                <div class="card__price">&euro; <?= number_format($stockItem['SellPrice'], 2, '.') ?> <span>Inclusief btw</span></div>
                                             </div>
-                                        <?php endif; ?>
-                                    </div>
+                                            <span class="card__stock">Artikelnummer: <?= $stockItem['StockItemID'] ?></span>
+                                        </div>
 
-                                    <div class="card__description">
-                                        <h2><?= $stockItem['StockItemName'] ?></h2>
-                                        <div class="card__price">&euro; <?= number_format($stockItem['SellPrice'], 2, '.') ?> <span>Inclusief btw</span></div>
-                                        <span class="card__stock">Artikelnummer: <?= $stockItem['StockItemID'] ?></span>
-                                    </div>
+                                        <div class="card__count">
+                                            <form method='post'>
+                                                <?php
+                                                $quantity = $_SESSION['cart'][$stockItem['StockItemID']];
+                                                $stock = getItemStock($stockItem['StockItemID'], $databaseConnection)['QuantityOnHand'];
+                                                $price = round($stockItem['SellPrice'], 2);
+                                                $total += $price * $quantity; ?>
 
-                                    <div class="card__description">
-                                        <form method='post'>
-                                            <?php
-                                            $quantity = $_SESSION['cart'][$stockItem['StockItemID']];
-                                            $stock = getItemStock($stockItem['StockItemID'], $databaseConnection)['QuantityOnHand'];
-                                            $price = round($stockItem['SellPrice'], 2);
-                                            $total += $price * $quantity; ?>
+                                                <input class="btn" name="<?= $stockItem['StockItemID'] ?>" onchange="this.form.submit()" min="1" type="number" value="<?= $quantity ?>" max="<?= $stock ?>">
 
-                                            <input name="<?= $stockItem['StockItemID'] ?>" onchange="this.form.submit()" min="1" type="number" value="<?= $quantity ?>" max="<?= $stock ?>">
+                                            </form>
 
-                                        </form>
-
-                                        <div class="close">
-                                            <a href="<?= 'cart.php?remove=' . $key ?>" class="text-danger">&#10005; </a>
+                                            <div class="close">
+                                                <a href="<?= 'cart.php?remove=' . $key ?>" class="text-danger">&#10005; </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            <?php endforeach; ?>
+                                <?php endforeach; ?>
+
+                            <?php else: ?>
+                                <h2>Uw winkelmandje is leeg.</h2>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -97,13 +101,13 @@
                                     <b>Overzicht</b>
                                 </h5>
                                 <hr>
-                                <div class="">
+                                <div class="shopping-cart__total">
                                     <div class="">Totaal</div>
                                     <div class=" text-right">&euro; <?php print(number_format($total, 2, '.')) ?></div>
                                 </div>
                                 <hr>
                                 <div class="text-right">
-                                    <a href="https://www.ideal.nl/demo/qr/?app=ideal" class="btn btn--primary">Bestelling plaatsen</a>
+                                    <a href="https://www.ideal.nl/demo/qr/?app=ideal" class="btn btn--order">Bestelling plaatsen</a>
                                 </div>
                             <?php endif; ?>
 
