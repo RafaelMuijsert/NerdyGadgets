@@ -6,7 +6,7 @@
                     <div class="footer__nav">
                         <span>Pagina's</span>
                         <ul>
-                            <li><a href="/">T-shirst</a></li>
+                            <li><a href="/">T-shirts</a></li>
                             <li><a href="/">Chocolade</a></li>
                             <li><a href="/">Novelties</a></li>
 

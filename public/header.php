@@ -19,15 +19,12 @@
                             <?php
                             $HeaderStockGroups = getHeaderStockGroups($databaseConnection);
 
-                            foreach ($HeaderStockGroups as $HeaderStockGroup) {
-                                ?>
+                            foreach ($HeaderStockGroups as $HeaderStockGroup): ?>
                                 <li>
-                                    <a href="browse.php?category_id=<?php print $HeaderStockGroup['StockGroupID']; ?>"
-                                       class="HrefDecoration"><?php print $HeaderStockGroup['StockGroupName']; ?></a>
+                                    <a href="browse.php?category_id=<?= $HeaderStockGroup['StockGroupID']; ?>"
+                                       class="HrefDecoration"><?= $HeaderStockGroup['StockGroupName']; ?></a>
                                 </li>
-                                <?php
-                            }
-                            ?>
+                            <?php endforeach; ?>
                             <li>
                                 <a href="categories.php" class="HrefDecoration">Alle categorieën</a>
                             </li>
@@ -38,24 +35,17 @@
 <!--                        </form>-->
 
                         <div class="header__icons">
-                            <script type="text/javascript">
-                                // setTimeout(function() {
-                                    //var cartCount='<?php //echo count($_SESSION['cart']); ?>//';
-                                    //var el = document.getElementById('cart-icon--count');
-                                    //el.innerText = cartCount + '+';
-                                // }, 10);
-                            </script>
                             <a href="/browse.php" class="search-icon btn btn--primary">
                                 <img class="icon" src="./img/icons/search.svg" alt="">
                             </a>
                             <a href="cart.php" class="cart-icon btn btn--primary">
 <!--                                --><?php //if(count($_SESSION['cart']) > 0 || $submitted): ?>
-                                    <div class="cart-icon--count" id="cart-icon--count"></div>
+                                    <div class="cart-icon--count" id="cart-icon--count">1+</div>
 <!--                                --><?php //endif; ?>
                                 <img class="icon" src="./img/icons/cart.svg" alt="">
                             </a>
 
-                            <a href="#" class="profile-icon btn btn--primary">
+                            <a href="./login.php" class="profile-icon btn btn--primary">
                                 <img class="icon" src="./img/icons/profile.svg" alt="">
                             </a>
 

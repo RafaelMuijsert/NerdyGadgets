@@ -55,6 +55,34 @@
     margin-top: 14px;
 }
 
+.product-sum__btn {
+    position: relative;
+}
+
+.product-sum__btn a {
+    position: absolute;
+    left: 24px;
+    bottom: 0;
+    transform: translateY(120%);
+    color: var(--accent-color) !important;
+    text-decoration: none;
+    border: none;
+    font-weight: 300;
+}
+
+.product-sum__btn a:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    transform: translateX(-110%);
+    background-image: url("/img/icons/done.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+}
+
 .product-sum__number {
     font-size: 16px;
     line-height: 1;

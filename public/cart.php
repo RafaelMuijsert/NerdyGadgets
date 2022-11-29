@@ -19,35 +19,34 @@
         <?php
         $total = 0;
 
-        foreach($_POST as $key => $value) {
+        foreach($_POST as $key => $value):
             $value = abs($value);
             $stock = getItemStock($key, $databaseConnection)['QuantityOnHand'];
             $value = ($value <= $stock) ? $value : $stock;
             $_SESSION['cart'][$key] = abs($value);
-        }
+        endforeach;
 
-        if(array_key_exists('remove', $_GET)) {
+        if(array_key_exists('remove', $_GET)):
             unset($_SESSION['cart'][$_GET['remove']]);
-        }
+        endif;
 
-        if (!isset($_SESSION['cart'])) {
+        if (!isset($_SESSION['cart'])):
             $_SESSION['cart'] = [];
-        } ?>
+        endif; ?>
 
         <section class="shopping-cart">
             <div class="container">
                 <div class="row">
                     <div class="col-8">
-                        <div class="shopping-cart__cart">
+                        <div class="shopping-cart__cart bg-white">
                             <h1>Winkelmandje</h1>
 
-                            <?php foreach ($_SESSION['cart'] as $key => $item): ?>
-                                <?php //Haal item op
+                            <?php foreach ($_SESSION['cart'] as $key => $item):
                                 $stockItem = getStockItem($key, $databaseConnection);
 
-                                if (!$stockItem) {
+                                if (!$stockItem):
                                     continue;
-                                } ?>
+                                endif; ?>
                                 <div class="card">
                                     <div class="card__img">
                                         <?php if($stockItemImage = getStockItemImage($key, $databaseConnection)): ?>
@@ -89,11 +88,11 @@
                     </div>
 
                     <div class="col-4">
-                        <div class="shopping-cart__checkout">
+                        <div class="shopping-cart__checkout bg-white">
 
-                            <?php if (empty($_SESSION['cart'])) {
+                            <?php if (empty($_SESSION['cart'])):
                                 print("<h2>Uw winkelmandje is leeg.</h2>");
-                            } else { ?>
+                            else: ?>
                                 <h5>
                                     <b>Overzicht</b>
                                 </h5>
@@ -106,7 +105,7 @@
                                 <div class="text-right">
                                     <a href="https://www.ideal.nl/demo/qr/?app=ideal" class="btn btn--primary">Bestelling plaatsen</a>
                                 </div>
-                            <?php } ?>
+                            <?php endif; ?>
 
                         </div>
                     </div>

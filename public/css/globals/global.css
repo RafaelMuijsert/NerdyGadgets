@@ -31,3 +31,9 @@ a, a:focus, a:active {
     border: none !important;
     box-shadow: none !important;
 }
+
+.bg-white {
+    background-color: var(--sub-bg-color);
+    padding: 40px;
+    border-radius: var(--border-radius);
+}

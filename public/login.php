@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <title>Bestel overzicht - NerdyGadgets</title>
+    <title>Login page - NerdyGadgets</title>
 
     <!-- Javascript -->
     <script src="js/jquery.min.js"></script>
@@ -14,9 +14,10 @@
 <body>
 
 <?php
-    include "header.php";
-    include "./blocks/summary.php";
-    include "footer.php";
+//        $StockGroups = getStockGroups($databaseConnection);
+include "header.php";
+include "./blocks/login.php";
+include "footer.php";
 ?>
 
 <script>

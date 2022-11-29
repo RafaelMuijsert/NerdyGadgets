@@ -14,7 +14,6 @@
     <body>
 
     <?php
-//        $StockGroups = getStockGroups($databaseConnection);
         include "header.php";
         include "blocks/page-banner.php";
         include "blocks/media-text.php";
