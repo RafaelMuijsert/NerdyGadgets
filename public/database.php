@@ -131,3 +131,14 @@ function updateShoppingCart($itemID, $connection) {
     print("<a style='color: green' href='cart.php'>Toegevoegd!</a>");
     return true;
 }
+function getCountry($databaseConnection) {
+    $Query = "
+            SELECT CountryID, CountryName
+            FROM Countries 
+            ORDER BY CountryName ASC";
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_execute($Statement);
+    $Result = mysqli_stmt_get_result($Statement);
+    $Countries = mysqli_fetch_all($Result, MYSQLI_ASSOC);
+    return $Countries;
+}
