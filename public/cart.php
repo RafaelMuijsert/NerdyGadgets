@@ -2,7 +2,7 @@
 include "header.php";
 $total = 0;
 foreach($_POST as $key => $value) {
-  // hoeveelheid van 0 niet toevoegen
+  // hoeveelheid van 0 niet toevoegen.
   if($value == 0) {
     continue;
   }
