@@ -3,7 +3,7 @@ include "header.php";
 $total = 0;
 foreach($_POST as $key => $value) {
   // 
-  if($value == 0) {
+  if($value == 0 || !$value) {
     continue;
   }
   // bij een negatieve hoeveelheid wordt deze positief gemaakt
