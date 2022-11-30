@@ -76,7 +76,7 @@ if (!isset($_SESSION['cart'])) {
                 </div>
                 <hr>
                 <div class="text-right">
-                    <a href="https://www.ideal.nl/demo/qr/?app=ideal" class="btn btn-primary">Bestelling plaatsen</a>
+                    <a href="order.php" class="btn btn-primary">Bestelling plaatsen</a>
                 </div>
             </div>
             <?php } ?>
