@@ -1,6 +1,7 @@
 <?php
 include "header.php";
 $total = 0;
+$_SESSION['userinfo'] = $_POST;
 ?>
 <!DOCTYPE html>
 <html lang="en">
