@@ -1,104 +1,109 @@
 <?php
 include "header.php";
+$total = 0;
 ?>
-<!DOCTYPE Html>
+<!DOCTYPE html>
 <html lang="en">
-<div class="col-12">
+<div class="text-center col-12">
     <h1>Afronden</h1>
     <hr>
 </div>
 <body>
-
-<METHOD="post">
-
-    <div class="container overflow-hidden text-center">
+    <div class="container overflow-hidden mb-5">
         <div class="row gx-5">
             <div class="col">
-                <div class="p-3 border bg-light">
-                    <h2>Gegevens</h2>
+                <div class="p-3 rounded border bg-light">
+                    <h2 class="text-center">Gegevens</h2>
                     <hr>
-    <div>
-    <?php print("Naam: ". $_POST["fname"]. " " . $_POST["lname"]); ?>
-    </div><br>
-
-    <div><?php print("Email: " . $_POST["email"]); ?>
-    </div><br>
-
-    <div><?php print("Telefoonnummer: " . $_POST["Number"]); ?>
-    </div><br>
-
-    <div><?php print("Land:" . $_POST["country"]); ?>
-    </div><br>
-
-    <div><?php print("Straat: " . $_POST["street"]); ?>
-    </div><br>
-
-    <div><?php print("Postcode: " . $_POST["postcode"]); ?>
-    </div><br>
-
-    <div><?php print("Stad:" . $_POST["city"]); ?>
-    </div><br>
-
-
-                 </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>Naam: </p>
+                        </div>
+                        <div class="col">
+                            <p><?php print($_POST["fname"]); ?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>Email: </p>
+                        </div>
+                        <div class="col">
+                            <p><?php print($_POST["email"]); ?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>Telefoonnummer: </p>
+                        </div>
+                        <div class="col">
+                            <p><?php print($_POST["Number"]); ?></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>Land: </p>
+                        </div>
+                        <div class="col">
+                            <p><?php print($_POST["country"]); ?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>Straat: </p>
+                        </div>
+                        <div class="col">
+                            <p><?php print($_POST["street"]); ?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>Postcode: </p>
+                        </div>
+                        <div class="col">
+                            <p><?php print($_POST["postcode"]); ?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>Stad: </p>
+                        </div>
+                        <div class="col">
+                            <p><?php print($_POST["city"]); ?></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <a>Kloppen de gegevens niet? Ga naar de</a>
+                    <a href="order.php">vorige pagina</a>
+                </div>
             </div>
             <div class="col">
-                <div class="p-3 border bg-light">
-                    <h2>Overzicht</h2>
-<hr>
-
-                    <div>
-                        <div class='col'><div class='row'><div class='row align-items-center'>
-                        <div class="card border-0">
-                            <div class="row">
-                                <div class="col">
-                                    <?php
-                                    foreach ($_SESSION['cart'] as $key => $item) {
-                                    //Haal item op
-                                    $stockItem = getStockItem($key, $databaseConnection);
-                                    // als key niet bestaat, ga door.
-                                    if (!$stockItem) {
-                                        continue;
-                                    }
-
-                                    if ($stockItemImage = getStockItemImage($key, $databaseConnection)) {
-                                        print("<div class='col-2'></div>");
-                                    } else {
-                                        print("<div class='col-2'></div>");
-                                    };
-                                    print ("<div class='col'><div class='row'>" . $stockItem['StockItemName']);
-                                    ?>
-                                    <form method='post'><div class='col'>
-
-                                            <?php
-
-                                            $quantity = $_SESSION['cart'][$stockItem['StockItemID']];
-                                            $stock = getItemStock($stockItem['StockItemID'], $databaseConnection)['QuantityOnHand'];
-
-                                            print("<p class='align-items-end'> Aantal: $quantity </p></form>");
-                                            print("</div></div></div></div>");
-                                            print("<hr>");
-                                            $price = round($stockItem['SellPrice'], 2);
-                                            $total = $price * $quantity;
-                                            print ("</div>");
-                                            }
-                                    ?>
-                                        </div></div></div>
-                                            <div class="col-4">
-                                                <br>
-                                                <hr>
-                                                <div class="row">
-                                                    <div class="col">Totaal</div>
-                                                    <div class="col text-right">&euro; <?php print(number_format($total, 2, '.')) ?></div>
-                                                </div>
-                                                <hr>
-                                            </div>
-                                        </div>
-                    </div>
+                <div class="p-3 rounded border bg-light">
+                    <h2 class="text-center">Overzicht</h2>
+                    <hr>
+                    <?php foreach($_SESSION['cart'] as $id => $quantity): ?>
+                        <?php $stockItem = getStockItem($id, $databaseConnection);
+                        $price = round($stockItem['SellPrice'], 2);
+                        $total += $price * $quantity;
+                        ?>
+                        <div class="p-2 m-3 border rounded row text-left align-items-center">
+                            <div class="col-6">
+                                <p class="mb-0"><?=$stockItem['StockItemName']?></p>
+                            </div>
+                            <div class="text-right col">
+                                <input disabled value=<?=$quantity?> type="number">
+                            </div>
+                            <div class="text-right col">
+                                <p class="mb-0">&euro;<?=$price?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                    <h4 class="text-right">Totaal: &euro;<?=$total ?></h4>
+                    <a href="https://www.ideal.nl/demo/qr/?app=ideal" type="button" class="shadow-lg w-100 btn btn-primary">
+                        Betalen
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-    <a href="https://www.ideal.nl/demo/qr/?app=ideal" class="btn btn-primary">Doorgaan</a>
-
 </body>

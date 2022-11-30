@@ -21,7 +21,7 @@ include "header.php";
     <input type="email" id="email" name="email" style="width: 400px;" required><br><br>
 
     <label for="phonenumber">Telefoonnummer:</label>
-    <input type="string" id="Number" name="Number" style="width: 400px;"><br><br>
+    <input type="tel" id="Number" name="Number" style="width: 400px;"><br><br>
 
     <label for="country">Land:</label>
     <select name="country" id="country">
