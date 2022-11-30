@@ -107,3 +107,6 @@ $total = 0;
         </div>
     </div>
 </body>
+<?php
+include "footer.php"
+?>
