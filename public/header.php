@@ -1,7 +1,7 @@
 <!-- de inhoud van dit bestand wordt bovenaan elke pagina geplaatst -->
 <?php
 session_start();
-include "database.php";
+include "../src/database.php";
 $databaseConnection = connectToDatabase();
 
 ?>
@@ -34,7 +34,7 @@ $databaseConnection = connectToDatabase();
                 <div class="row">
                     <div class="col-12">
                         <div class="header__pop-up-inner">
-                            Plaats hier updates of sale gerelateerde updates zodat de klant daarvan op de hoogte is. (dit is conversie verhogend)
+                            Voor 22:00 besteld, morgen in huis!
                         </div>
                     </div>
                 </div>
@@ -43,20 +43,20 @@ $databaseConnection = connectToDatabase();
         <div class="header__brand">
             <div class="container">
                 <div class="row align-items-center">
-                    <div class="col-3">
-                        <a href="./" class="header__logo" id="LogoA">
+                    <div class="col-md-3">
+                        <a href="" class="header__logo" id="LogoA">
                             <div id="LogoImage" class="header__logo-img">
-                                <img src="./img/logo.png" alt="">
+                                <img src="img/logo.png" alt="">
                             </div>
                         </a>
                     </div>
-                    <div class="col-xs-4 search__input">
-                      <form action="browse.php">
-                        <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?" name="search_string" id="search_string" value="" class="form-submit">
-                      </form>
+                    <div class="m-0 col-5 rounded mh-100 ">
+                        <form action="browse.php">
+                            <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?" name="search_string" id="search_string" value="" class="form-submit">
+                        </form>
                     </div>
-                    <div class="nav-wrapper">
-                        <a href="#" class="btn btn-light btn-lg">
+                    <div class="nav-wrapper col-md-3">
+                        <a href="login.php" class="btn btn-light btn-lg">
                             <i class="fa-solid fa-user"></i> Inloggen
                         </a>
                         <a href="cart.php" class="btn btn-light btn-lg">

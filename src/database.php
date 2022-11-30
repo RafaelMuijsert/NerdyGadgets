@@ -128,7 +128,7 @@ function updateShoppingCart($itemID, $connection) {
         $_SESSION['cart'][$itemID] = 1;
     }
 
-    print("<a style='color: green' href='cart.php'>Toegevoegd!</a>");
+    print("<a style='color: green' href='../public/cart.php'>Toegevoegd!</a>");
     return true;
 }
 function getCountry($databaseConnection) {

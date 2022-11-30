@@ -17,5 +17,24 @@
             window.history.replaceState( null, null, window.location.href );
         }
     </script>
+
+    <div class="mt-5 container">
+        <hr>
+        <div class="row">
+            <div class="col-3">
+                <p>©2022 NerdyGadgets</p>
+            </div>
+            <div class="col-3">
+                <a>Algemene voorwaarden</a>
+            </div>
+            <div class="col-3">
+                <a>Privacybeleid</a>
+            </div>
+            <div class="col-3">
+                <a>Cookiebeleid</a>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

@@ -1,7 +1,9 @@
 <?php
 include "header.php";
 $total = 0;
-$_SESSION['userinfo'] = $_POST;
+if(count($_POST) > 0) {
+    $_SESSION['userinfo'] = $_POST;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +23,9 @@ $_SESSION['userinfo'] = $_POST;
                             <p>Naam: </p>
                         </div>
                         <div class="col">
-                            <p><?php print($_POST["fname"]); ?></p>
+                            <p>
+                                <?=$_SESSION['userinfo']['fname']?> <?=$_SESSION['userinfo']['lname']?>
+                            </p>
                         </div>
                     </div>
                     <div class="row">
@@ -29,7 +33,9 @@ $_SESSION['userinfo'] = $_POST;
                             <p>Email: </p>
                         </div>
                         <div class="col">
-                            <p><?php print($_POST["email"]); ?></p>
+                            <p>
+                                <?=$_SESSION['userinfo']['email']?>
+                            </p>
                         </div>
                     </div>
                     <div class="row">
@@ -37,7 +43,9 @@ $_SESSION['userinfo'] = $_POST;
                             <p>Telefoonnummer: </p>
                         </div>
                         <div class="col">
-                            <p><?php print($_POST["Number"]); ?></p>
+                            <p>
+                                <?=$_SESSION['userinfo']['Number']?>
+                            </p>
                         </div>
                     </div>
                     <hr>
@@ -46,7 +54,9 @@ $_SESSION['userinfo'] = $_POST;
                             <p>Land: </p>
                         </div>
                         <div class="col">
-                            <p><?php print($_POST["country"]); ?></p>
+                            <p>
+                                <?=$_SESSION['userinfo']['country']?>
+                            </p>
                         </div>
                     </div>
                     <div class="row">
@@ -54,7 +64,9 @@ $_SESSION['userinfo'] = $_POST;
                             <p>Straat: </p>
                         </div>
                         <div class="col">
-                            <p><?php print($_POST["street"]); ?></p>
+                            <p>
+                                <?=$_SESSION['userinfo']['street']?>
+                            </p>
                         </div>
                     </div>
                     <div class="row">
@@ -62,7 +74,9 @@ $_SESSION['userinfo'] = $_POST;
                             <p>Postcode: </p>
                         </div>
                         <div class="col">
-                            <p><?php print($_POST["postcode"]); ?></p>
+                            <p>
+                                <?=$_SESSION['userinfo']['postcode']?>
+                            </p>
                         </div>
                     </div>
                     <div class="row">
@@ -70,7 +84,9 @@ $_SESSION['userinfo'] = $_POST;
                             <p>Stad: </p>
                         </div>
                         <div class="col">
-                            <p><?php print($_POST["city"]); ?></p>
+                            <p>
+                                <?=$_SESSION['userinfo']['city']?>
+                            </p>
                         </div>
                     </div>
                     <hr>
@@ -82,23 +98,7 @@ $_SESSION['userinfo'] = $_POST;
                 <div class="p-3 rounded border bg-light">
                     <h2 class="text-center">Overzicht</h2>
                     <hr>
-                    <?php foreach($_SESSION['cart'] as $id => $quantity): ?>
-                        <?php $stockItem = getStockItem($id, $databaseConnection);
-                        $price = round($stockItem['SellPrice'], 2);
-                        $total += $price * $quantity;
-                        ?>
-                        <div class="p-2 m-3 border rounded row text-left align-items-center">
-                            <div class="col-6">
-                                <p class="mb-0"><?=$stockItem['StockItemName']?></p>
-                            </div>
-                            <div class="text-right col">
-                                <input disabled value=<?=$quantity?> type="number">
-                            </div>
-                            <div class="text-right col">
-                                <p class="mb-0">&euro;<?=$price?></p>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
+                    <?php include "../src/summary.php"?>
                     <h4 class="text-right">Totaal: &euro;<?=$total ?></h4>
                     <a href="https://www.ideal.nl/demo/qr/?app=ideal" type="button" class="shadow-lg w-100 btn btn-primary">
                         Betalen

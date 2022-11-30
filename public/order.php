@@ -11,7 +11,7 @@ include "header.php";
 <div class="d-flex align-items-center justify-content-center">
     <div class="p-3 rounded border bg-light" style="width: 60%;">
         <h2 class=text-center>Gegevens</h2><hr>
-        <FORM METHOD="post" action="summary.php">
+        <FORM METHOD="post" action="checkout.php">
             <div class="row">
                 <div class="col-2">
                     <label for="fname">Voornaam:</label>
@@ -141,7 +141,7 @@ include "header.php";
             <INPUT TYPE="hidden" NAME="required_fields" VALUE="name, from">
 
         <!--    <a href="summary.php" class="btn btn-primary">Doorgaan</a>-->
-            <input type="submit" value="Verwerken">
+            <input class="shadow-lg w-100 btn btn-primary" type="submit" value="Verwerken">
         </FORM>
     </div>
 </div>

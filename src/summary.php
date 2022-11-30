@@ -1,4 +1,7 @@
-<?php foreach($_SESSION['cart'] as $id => $quantity): ?>
+
+<?php
+$total = 0;
+foreach($_SESSION['cart'] as $id => $quantity): ?>
     <?php $stockItem = getStockItem($id, $databaseConnection);
     $price = round($stockItem['SellPrice'], 2);
     $total += $price * $quantity;
@@ -11,7 +14,7 @@
             <input disabled value=<?=$quantity?> type="number">
         </div>
         <div class="text-right col">
-            <p class="mb-0">&euro;<?=$price?></p>
+            <p class="mb-0">&euro;<?=number_format($price * $quantity, 2, '.')?></p>
         </div>
     </div>
 <?php endforeach; ?>

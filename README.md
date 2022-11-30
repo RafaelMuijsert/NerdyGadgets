@@ -19,7 +19,7 @@ Run the following commands in a mariadb shell:
 CREATE USER IF NOT EXISTS 'nerd'@'localhost' IDENTIFIED BY 'NerdyGadgets69420!@'
 GRANT ALL PRIVILEGES ON nerdygadgets.* TO 'nerd'@'localhost';
 ```
-Or alternatively, run the database_user.sql file found in bin
+Or alternatively, run the database_user.sql file found in setup
 
 Make sure the web server is pointed to the public/ directory and not to the project root.
 
