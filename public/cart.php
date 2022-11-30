@@ -2,8 +2,8 @@
 include "header.php";
 $total = 0;
 foreach($_POST as $key => $value) {
-  // hoeveelheid van 0 niet toevoegen.
-  if($value == 0) {
+  // 
+  if($value == 0 || !$value) {
     continue;
   }
   // bij een negatieve hoeveelheid wordt deze positief gemaakt
@@ -76,7 +76,7 @@ if (!isset($_SESSION['cart'])) {
                 </div>
                 <hr>
                 <div class="text-right">
-                    <a href="Order.php" class="btn btn-primary">Bestelling plaatsen</a>
+                    <a href="https://www.ideal.nl/demo/qr/?app=ideal" class="btn btn-primary">Bestelling plaatsen</a>
                 </div>
             </div>
             <?php } ?>
