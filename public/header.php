@@ -7,7 +7,6 @@ $GLOBALS['databaseConnection'] = connectToDatabase();
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +68,7 @@ if (!isset($_SESSION['cart'])) {
                             <i class="fa-solid fa-user"></i> Inloggen
                         </a>
                         <a href="cart.php" class="btn btn-light btn-lg">
-                            <i class="fa-solid fa-shopping-bag"></i> 
+                            <i class="fa-solid fa-shopping-bag"></i>
                         </a>
                     </div>
                 </div>
@@ -83,15 +82,13 @@ if (!isset($_SESSION['cart'])) {
                             <?php
                             $HeaderStockGroups = getHeaderStockGroups($GLOBALS['databaseConnection']);
 
-                            foreach ($HeaderStockGroups as $HeaderStockGroup) {
-                                ?>
+                            foreach($HeaderStockGroups as $HeaderStockGroup){?>
                                 <li>
                                     <a href="browse.php?category_id=<?php print $HeaderStockGroup['StockGroupID']; ?>"
                                        class="HrefDecoration"><?php print $HeaderStockGroup['StockGroupName']; ?></a>
                                 </li>
                                 <?php
-                            }
-                            ?>
+                            } ?>
                             <li>
                                 <a href="categories.php" class="HrefDecoration">Alle categorieën</a>
                             </li>
@@ -107,10 +104,11 @@ if (!isset($_SESSION['cart'])) {
 
             <!-- einde code voor US3 zoeken -->
     </header>
+<!--    --><?php //hea ?>
     <div class="container">
             <!--            <div class="col-12">-->
             <!--                <div id="SubContent">-->
-            <!--                --><?php //include "./Components/filter.php"; ?>
+
 
 
 

@@ -59,10 +59,10 @@ include "header.php";
                     <label for="number">Telefoonnummer:</label>
                 </div>
                 <div class="col-8">
-                    <input type="text" id="number" name="number"
+                    <input type="text" id="phone" name="phone"
                            <?php
-                           if (isset($_SESSION['userinfo']['Number'])){
-                               print ('value="' . $_SESSION['userinfo']['Number'] . '"');
+                           if (isset($_SESSION['userinfo']['phone'])){
+                               print ('value="' . $_SESSION['userinfo']['phone'] . '"');
                            }
                            ?>
                            style="width: 80%;"><br><br>
