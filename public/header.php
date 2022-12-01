@@ -4,6 +4,9 @@ session_start();
 include "../src/database.php";
 $GLOBALS['databaseConnection'] = connectToDatabase();
 
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +68,7 @@ $GLOBALS['databaseConnection'] = connectToDatabase();
                             <i class="fa-solid fa-user"></i> Inloggen
                         </a>
                         <a href="cart.php" class="btn btn-light btn-lg">
-                            <i class="fa-solid fa-shopping-bag"></i> 
+                            <i class="fa-solid fa-shopping-bag"></i>
                         </a>
                     </div>
                 </div>
@@ -79,15 +82,13 @@ $GLOBALS['databaseConnection'] = connectToDatabase();
                             <?php
                             $HeaderStockGroups = getHeaderStockGroups($GLOBALS['databaseConnection']);
 
-                            foreach ($HeaderStockGroups as $HeaderStockGroup) {
-                                ?>
+                            foreach($HeaderStockGroups as $HeaderStockGroup){?>
                                 <li>
                                     <a href="browse.php?category_id=<?php print $HeaderStockGroup['StockGroupID']; ?>"
                                        class="HrefDecoration"><?php print $HeaderStockGroup['StockGroupName']; ?></a>
                                 </li>
                                 <?php
-                            }
-                            ?>
+                            } ?>
                             <li>
                                 <a href="categories.php" class="HrefDecoration">Alle categorieën</a>
                             </li>
@@ -103,10 +104,11 @@ $GLOBALS['databaseConnection'] = connectToDatabase();
 
             <!-- einde code voor US3 zoeken -->
     </header>
+<!--    --><?php //hea ?>
     <div class="container">
             <!--            <div class="col-12">-->
             <!--                <div id="SubContent">-->
-            <!--                --><?php //include "./Components/filter.php"; ?>
+
 
 
 
