@@ -92,7 +92,6 @@ if (!isset($_SESSION['cart'])) {
                     ?>
                     <div>
                         <h2>Uw winkelmandje is nog leeg.</h2>
-                        <a href="browse.php" class="btn btn-primary">Verder winkelen</a>
                     </div>
                     <?php
                 } else {
@@ -108,9 +107,11 @@ if (!isset($_SESSION['cart'])) {
                             </a>
                         </div>
                     </div>
-            <?php } ?>
+
+                <?php } ?>
         </div>
     </div>
+    <a href="browse.php" class="p-2 mt-5 btn border btn-outline-primary">Verder winkelen</a>
 </div>
 <?php
 include "footer.php";
