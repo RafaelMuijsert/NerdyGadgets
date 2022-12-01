@@ -11,7 +11,7 @@ $databaseConnection = connectToDatabase();
     <title>NerdyGadgets</title>
 
     <!-- Javascript -->
-    <script src="https://kit.fontawesome.com/c89a6832c4.js" crossorigin="anonymous"></script>
+    <script src="js/fontawesome.js" crossorigin="anonymous"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -42,17 +42,22 @@ $databaseConnection = connectToDatabase();
         </div>
         <div class="header__brand">
             <div class="container">
-                <div class="row align-items-center">
+                <div class="row align-items-center align-middle m-0">
                     <div class="col-md-3">
                         <a href="" class="header__logo" id="LogoA">
                             <div id="LogoImage" class="header__logo-img">
-                                <img src="img/logo.png" alt="">
+                                <a href="index.php">
+                                    <img src="img/logo.png" alt="">
+                                </a>
                             </div>
                         </a>
                     </div>
-                    <div class="m-0 col-5 rounded mh-100 ">
-                        <form action="browse.php">
-                            <input class="form-control" type="text" placeholder="Waar ben je naar op zoek?" name="search_string" id="search_string" value="" class="form-submit">
+                    <div class="col-md-5 p-1 rounded float-left align-middle">
+                        <form class=" row align-items-center" action="browse.php">
+                            <label class="clearfix fa-solid fa-magnifying-glass text-white" for="search_string"></label>
+                            <div class="col">
+                                <input class="form-control form-submit" type="text" placeholder="Waar ben je naar op zoek?" name="search_string" id="search_string">
+                            </div>
                         </form>
                     </div>
                     <div class="nav-wrapper col-md-3">
