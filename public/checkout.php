@@ -44,7 +44,7 @@ if(count($_POST) > 0) {
                         </div>
                         <div class="col">
                             <p>
-                                <?=$_SESSION['userinfo']['Number']?>
+                                <?=$_SESSION['userinfo']['number']?>
                             </p>
                         </div>
                     </div>
