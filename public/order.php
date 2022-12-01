@@ -103,8 +103,8 @@ include "header.php";
                 <div class="col-8">
                     <input type="text" id="city" name="city"
                         <?php
-                        if (isset($_SESSION['userinfo']['postcode'])){
-                            print ('value="' . $_SESSION['userinfo']['postcode'] . '"');
+                        if (isset($_SESSION['userinfo']['city'])){
+                            print ('value="' . $_SESSION['userinfo']['city'] . '"');
                         }
                         ?>
                            style="width: 80%" required><br><br>
