@@ -37,3 +37,7 @@ a, a:focus, a:active {
     padding: 40px;
     border-radius: var(--border-radius);
 }
+
+.bg-white--large {
+    min-height: 50vh;
+}

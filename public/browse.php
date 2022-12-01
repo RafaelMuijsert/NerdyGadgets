@@ -259,7 +259,7 @@
                     $expression = (isset($ReturnableResult) && count($ReturnableResult) > 0);
                 ?>
                 <div class="col-8 search__res">
-                    <div class="browse__results bg-white <?php if($expression): else: echo 'browse__no-results-wrapper'; endif; ?>">
+                    <div class="browse__results bg-white bg-white--large <?php if($expression): else: echo 'browse__no-results-wrapper'; endif; ?>">
                         <?php if ($expression):
                             foreach ($ReturnableResult as $row): ?>
 

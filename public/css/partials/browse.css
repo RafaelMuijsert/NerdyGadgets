@@ -22,10 +22,6 @@
     font-family: Roboto;
 }
 
-.search__res {
-    min-height: 50vh;
-}
-
 .product__header-form a {
     position: absolute;
     right: 0;

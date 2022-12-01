@@ -38,7 +38,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-8">
-                        <div class="shopping-cart__cart bg-white">
+                        <div class="shopping-cart__cart bg-white bg-white--large">
                             <h1 class="shopping-cart__title">Winkelmandje</h1>
 
                             <?php if(count($_SESSION['cart']) !== 0): ?>

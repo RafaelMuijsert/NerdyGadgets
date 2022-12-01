@@ -4,10 +4,6 @@
     margin-bottom: 22px;
 }
 
-.shopping-cart__cart {
-    min-height: 50vh;
-}
-
 .shopping-cart__cart h2 {
     font-size: 24px;
     line-height: 1;
