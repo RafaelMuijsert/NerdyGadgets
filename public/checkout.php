@@ -99,7 +99,7 @@ if(count($_POST) > 0) {
                     <h2 class="text-center">Overzicht</h2>
                     <hr>
                     <?php include "../src/summary.php"?>
-                    <h4 class="text-right">Totaal: &euro;<?=$total ?></h4>
+                    <h4 class="text-right">Totaal: &euro;<?=number_format($total, 2, '.') ?></h4>
                     <a href="https://www.ideal.nl/demo/qr/?app=ideal" type="button" class="shadow-lg w-100 btn btn-primary">
                         Betalen
                     </a>
