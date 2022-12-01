@@ -82,7 +82,7 @@ if ($SearchString != "") {
         if ($i != 0) {
             $queryBuildResult .= "AND ";
         }
-        $queryBuildResult .= "SI.SearchDetails LIKE '%$searchValues[$i]%' ";
+        $queryBuildResult .= "(SI.SearchDetails LIKE '%$searchValues[$i]%' OR SI.CustomFields LIKE '%$searchValues[$i]%') ";
     }
     if ($queryBuildResult != "") {
         $queryBuildResult .= " OR ";
