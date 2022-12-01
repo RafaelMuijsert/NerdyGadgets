@@ -60,12 +60,13 @@ ul.header__categories li:last-child {
 ul#ul-class-price li {
     display: inline;
 }
-
+/*
 ul#ul-class-navigation {
     right: 10px;
     line-height: 200px;
     position: absolute;
 }
+ */
 
 ul#ul-class-navigation li {
     color: #212121;

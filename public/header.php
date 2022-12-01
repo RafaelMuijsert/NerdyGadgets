@@ -2,7 +2,7 @@
 <?php
 session_start();
 include "../src/database.php";
-$databaseConnection = connectToDatabase();
+$GLOBALS['databaseConnection'] = connectToDatabase();
 
 ?>
 <!DOCTYPE html>
@@ -77,7 +77,7 @@ $databaseConnection = connectToDatabase();
                     <div class="col-12" id="CategoriesBar">
                         <ul class="header__categories">
                             <?php
-                            $HeaderStockGroups = getHeaderStockGroups($databaseConnection);
+                            $HeaderStockGroups = getHeaderStockGroups($GLOBALS['databaseConnection']);
 
                             foreach ($HeaderStockGroups as $HeaderStockGroup) {
                                 ?>

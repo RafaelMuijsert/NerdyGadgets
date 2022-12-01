@@ -1,6 +1,7 @@
 <!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <?php
 include __DIR__ . "/header.php";
+$databaseConnection = $GLOBALS['databaseConnection'];
 
 $StockItem = getStockItem($_GET['id'], $databaseConnection);
 $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
@@ -58,8 +59,8 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                                 <div class="carousel-inner">
                                     <?php for ($i = 0; $i < count($StockItemImage); $i++) {
                                         ?>
-                                        <div class="carousel-item <?php print ($i == 0) ? 'active' : ''; ?>">
-                                            <img src="img/stock-item/<?php print $StockItemImage[$i]['ImagePath'] ?>">
+                                        <div class="carousel-item <?php print (($i == 0) ? 'active' : '') ; ?>">
+                                            <img alt="stock item image" src="img/stock-item/<?php print $StockItemImage[$i]['ImagePath'] ?>">
                                         </div>
                                     <?php } ?>
                                 </div>
@@ -96,7 +97,9 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                             <h6> Inclusief BTW </h6>
 
                             <form method="post">
-                                <input type="number" name="stockItemID" value="<?php print ($_GET['id']); ?>" hidden>
+                                <label>
+                                    <input type="number" name="stockItemID" value="<?php print ($_GET['id']); ?>" hidden>
+                                </label>
                                 <input class="btn btn-dark" type="submit" name="submit" value="Toevoegen">
                             </form>
 
@@ -126,11 +129,13 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                 if (is_array($CustomFields)) { ?>
                     <table>
                     <thead>
-                    <th>Naam</th>
-                    <th>Data</th>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Data</th>
+                    </tr>
                     </thead>
                     <?php
-                    foreach ($CustomFields as $SpecName => $SpecText) { ?>
+                    foreach ($CustomFields as $SpecName => $SpecText): ?>
                         <tr>
                             <td>
                                 <?php print $SpecName; ?>
@@ -147,7 +152,7 @@ $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
                                 ?>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php endforeach; ?>
                     </table><?php
                 } else { ?>
 

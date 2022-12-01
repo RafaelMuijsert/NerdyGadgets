@@ -16,7 +16,7 @@ Please see https://github.com/php-pds/skeleton
 Install the given database from the official Windesheim GitLab.
 Run the following commands in a mariadb shell:
 ```sql
-CREATE USER IF NOT EXISTS 'nerd'@'localhost' IDENTIFIED BY 'NerdyGadgets69420!@'
+CREATE USER IF NOT EXISTS 'nerd'@'localhost' IDENTIFIED BY 'NerdyGadgets69420!@';
 GRANT ALL PRIVILEGES ON nerdygadgets.* TO 'nerd'@'localhost';
 ```
 Or alternatively, run the database_user.sql file found in setup

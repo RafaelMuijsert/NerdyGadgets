@@ -2,7 +2,7 @@
 <?php
 
 include __DIR__ . "/header.php";
-$StockGroups = getStockGroups($databaseConnection);
+$StockGroups = getStockGroups($GLOBALS['databaseConnection']);
 
 ?>
 <div class="row">

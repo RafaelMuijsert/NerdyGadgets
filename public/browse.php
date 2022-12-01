@@ -63,20 +63,10 @@ switch ($SortOnPage) {
     case "name_high_low";
         $Sort = "StockItemName DESC";
         break;
-    case "price_low_high":
-    {
-        $Sort = "SellPrice";
-        break;
-    }
-    default:
-    {
-        $Sort = "SellPrice";
-        $SortName = "price_low_high";
-    }
+
 }
 $searchValues = explode(" ", $SearchString);
 
-$queryBuildResult = "";
 if ($SearchString != "") {
     for ($i = 0; $i < count($searchValues); $i++) {
         if ($i != 0) {
@@ -87,7 +77,7 @@ if ($SearchString != "") {
     if ($queryBuildResult != "") {
         $queryBuildResult .= " OR ";
     }
-    if ($SearchString != "" || $SearchString != null) {
+    if ($SearchString != null) {
         $queryBuildResult .= "SI.StockItemID ='$SearchString'";
     }
 }
@@ -128,7 +118,7 @@ if ($CategoryID == "") {
                 LIMIT ?  OFFSET ?";
 
 
-    $Statement = mysqli_prepare($databaseConnection, $Query);
+    $Statement = mysqli_prepare($GLOBALS['databaseConnection'], $Query);
     mysqli_stmt_bind_param($Statement, "ii",  $ProductsOnPage, $Offset);
     mysqli_stmt_execute($Statement);
     $ReturnableResult = mysqli_stmt_get_result($Statement);
@@ -138,7 +128,7 @@ if ($CategoryID == "") {
             SELECT count(*)
             FROM stockitems SI
             $queryBuildResult";
-    $Statement = mysqli_prepare($databaseConnection, $Query);
+    $Statement = mysqli_prepare($GLOBALS['databaseConnection'], $Query);
     mysqli_stmt_execute($Statement);
     $Result = mysqli_stmt_get_result($Statement);
     $Result = mysqli_fetch_all($Result, MYSQLI_ASSOC);
@@ -163,7 +153,7 @@ if ($CategoryID !== "") {
            ORDER BY " . $Sort . "
            LIMIT ? OFFSET ?";
 
-    $Statement = mysqli_prepare($databaseConnection, $Query);
+    $Statement = mysqli_prepare($GLOBALS['databaseConnection'], $Query);
     mysqli_stmt_bind_param($Statement, "iii", $CategoryID, $ProductsOnPage, $Offset);
     mysqli_stmt_execute($Statement);
     $ReturnableResult = mysqli_stmt_get_result($Statement);
@@ -173,7 +163,7 @@ if ($CategoryID !== "") {
                 SELECT count(*)
                 FROM stockitems SI
                 WHERE " . $queryBuildResult . " ? IN (SELECT SS.StockGroupID from stockitemstockgroups SS WHERE SS.StockItemID = SI.StockItemID)";
-    $Statement = mysqli_prepare($databaseConnection, $Query);
+    $Statement = mysqli_prepare($GLOBALS['databaseConnection'], $Query);
     mysqli_stmt_bind_param($Statement, "i", $CategoryID);
     mysqli_stmt_execute($Statement);
     $Result = mysqli_stmt_get_result($Statement);
@@ -204,14 +194,14 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
         <div id="FilterFrame"><h2 class="FilterText"><i class="fas fa-filter"></i> Filteren </h2>
             <form>
                 <div id="FilterOptions">
-                    <h4 class="FilterTopMargin"><i class="fas fa-search"></i> Zoeken</h4>
+                    <h4 class="FilterTopMargin"><label for="search_string" class="fas fa-search"></label> Zoeken</h4>
                     <input type="text" placeholder="Waar ben je naar op zoek?" name="search_string" id="search_string"
-                           value="<?php print (isset($_GET['search_string'])) ? $_GET['search_string'] : ""; ?>"
+                           value="<?php print (isset($_GET['search_string']) ? $_GET['search_string'] : "") ; ?>"
                            class="form-submit">
-                    <h4 class="FilterTopMargin"><i class="fas fa-list-ol"></i> Aantal producten op pagina</h4>
+                    <label for="products_on_page" class="h4 FilterTopMargin"><i class="fas fa-list-ol"></i> Aantal producten op pagina</label>
 
                     <input type="hidden" name="category_id" id="category_id"
-                           value="<?php print (isset($_GET['category_id'])) ? $_GET['category_id'] : ""; ?>">
+                           value="<?php print (isset($_GET['category_id']) ? $_GET['category_id'] : "" ) ; ?>">
                     <select class="btn btn-outline-dark btn-lg " name="products_on_page" id="products_on_page" onchange="this.form.submit()">>
                         <option value="25" <?php if ($_SESSION['products_on_page'] == 25) {
                             print "selected";
@@ -226,7 +216,7 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
                         } ?>>75
                         </option>
                     </select>
-                    <h4 class="dropdown show FilterTopMargin"><i class="fas fa-sort"></i> Sorteren</h4>
+                    <label for="sort" class="h4 dropdown show FilterTopMargin"><i class="fas fa-sort"></i> Sorteren</label>
                     <select class="btn btn-outline-dark dropdown-toggle" name="sort" id="sort" onchange="this.form.submit()">>
                         <option value="price_low_high" <?php if ($_SESSION['sort'] == "price_low_high") {
                             print "selected";
@@ -248,107 +238,105 @@ function berekenVerkoopPrijs($adviesPrijs, $btw) {
             </form>
         </div>
     </div>
-    </div>
+</div>
 
     <!-- einde zoekresultaten die links van de zoekbalk staan -->
     <!-- einde code deel 3 van User story: Zoeken producten  -->
 
-    <div class="col search__res">
-        <div id="ResultsArea" class="Browse">
-            <?php
-            if (isset($ReturnableResult) && count($ReturnableResult) > 0) {
-                foreach ($ReturnableResult as $row) {
-                    ?>
-                    <!--  coderegel 1 van User story: bekijken producten  -->
+<div class="col search__res">
+    <div id="ResultsArea" class="Browse">
+        <?php
+        if (isset($ReturnableResult) && count($ReturnableResult) > 0) {
+            foreach ($ReturnableResult as $row) {
+                ?>
+                <!--  coderegel 1 van User story: bekijken producten  -->
 <!--                    <a class="ListItem" href='view.php?id=--><?php //print $row['StockItemID']; ?><!--'>-->
-                        <!-- einde coderegel 1 van User story: bekijken producten   -->
-                        <div id="ProductFrame">
-                            <a class="ListItem" href='view.php?id=<?php print $row['StockItemID']; ?>'>
-                            <?php
-                            if (isset($row['ImagePath'])) { ?>
-                                <div class="ImgFrame"
-                                     style="background-image: url('<?php print "/img/stock-item/" . $row['ImagePath']; ?>'); background-size: 230px; background-repeat: no-repeat; background-position: center;"></div>
-                            <?php } else if (isset($row['BackupImagePath'])) { ?>
-                                <div class="ImgFrame"
-                                     style="background-image: url('<?php print "/img/stock-group/" . $row['BackupImagePath'] ?>'); background-size: cover;"></div>
-                            <?php }
-                            ?>
-                            </a>
-                            <div id="StockItemFrameRight">
-                                <div class="CenterPriceLeftChild">
-                                    <h1 class="StockItemPriceText"><?php print sprintf("€%0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
-                                    <h6>Inclusief BTW </h6>
-                                    <form method="post">
-                                        <input class="btn btn-dark" type="submit" name="<?php print ("submit" . $row["StockItemID"]) ?>" value="+">
-                                    </form>
+                    <!-- einde coderegel 1 van User story: bekijken producten   -->
+                    <div id="ProductFrame">
+                        <a class="ListItem" href='view.php?id=<?php print $row['StockItemID']; ?>'>
+                        <?php
+                        if (isset($row['ImagePath'])) { ?>
+                            <div class="ImgFrame"
+                                 style="background-image: url('<?php print "/img/stock-item/" . $row['ImagePath']; ?>'); background-size: 230px; background-repeat: no-repeat; background-position: center;"></div>
+                        <?php } else if (isset($row['BackupImagePath'])) { ?>
+                            <div class="ImgFrame"
+                                 style="background-image: url('<?php print "/img/stock-group/" . $row['BackupImagePath'] ?>'); background-size: cover;"></div>
+                        <?php }
+                        ?>
+                        </a>
+                        <div id="StockItemFrameRight">
+                            <div class="CenterPriceLeftChild">
+                                <h1 class="StockItemPriceText"><?php print sprintf("€%0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></h1>
+                                <h6>Inclusief BTW </h6>
+                                <form method="post">
+                                    <input class="btn btn-dark" type="submit" name="<?php print ("submit" . $row["StockItemID"]) ?>" value="+">
+                                </form>
 
-                                    <?php
-                                        if (isset($_POST[("submit" . $row["StockItemID"])])) {
-                                            updateShoppingCart($row["StockItemID"], $databaseConnection);
-                                        }
-                                    ?>
+                                <?php
+                                    if (isset($_POST[("submit" . $row["StockItemID"])])) {
+                                        updateShoppingCart($row["StockItemID"], $GLOBALS['databaseConnection']);
+                                    }
+                                ?>
 
-                                </div>
                             </div>
-                            <h1 class="StockItemID">Artikelnummer: <?php print $row["StockItemID"]; ?></h1>
-                            <p class="StockItemName" style="width: 82.5%"><?php print $row["StockItemName"]; ?></p>
-                            <p class="StockItemComments"><?php print $row["MarketingComments"]; ?></p>
-                            <h4 class="ItemQuantity"><?php print getVoorraadTekst($row["QuantityOnHand"]); ?></h4>
                         </div>
-                            <hr>
-                        <!--  coderegel 2 van User story: bekijken producten  -->
+                        <h1 class="StockItemID">Artikelnummer: <?php print $row["StockItemID"]; ?></h1>
+                        <p class="StockItemName" style="width: 82.5%"><?php print $row["StockItemName"]; ?></p>
+                        <p class="StockItemComments"><?php print $row["MarketingComments"]; ?></p>
+                        <h4 class="ItemQuantity"><?php print getVoorraadTekst($row["QuantityOnHand"]); ?></h4>
+                    </div>
+                        <hr>
+                    <!--  coderegel 2 van User story: bekijken producten  -->
 
 <!--                    </a>-->
 
-                    <!--  einde coderegel 2 van User story: bekijken producten  -->
-                <?php } ?>
+                <!--  einde coderegel 2 van User story: bekijken producten  -->
+            <?php } ?>
 
-                <form id="PageSelector">
+            <form id="PageSelector">
 
-                    <!-- code deel 4 van User story: Zoeken producten  -->
-                    <input type="hidden" name="search_string" id="search_string"
-                           value="<?php if (isset($_GET['search_string'])) {
-                               print ($_GET['search_string']);
-                           } ?>">
-                    <input type="hidden" name="sort" id="sort" value="<?php print ($_SESSION['sort']); ?>">
+                <!-- code deel 4 van User story: Zoeken producten  -->
+                <input type="hidden" name="search_string" id="search_string"
+                       value="<?php if (isset($_GET['search_string'])) {
+                           print ($_GET['search_string']);
+                       } ?>">
+                <input type="hidden" name="sort" id="sort" value="<?php print ($_SESSION['sort']); ?>">
 
-                    <!-- einde code deel 4 van User story: Zoeken producten  -->
-                    <input type="hidden" name="category_id" id="category_id" value="<?php if (isset($_GET['category_id'])) {
-                        print ($_GET['category_id']);
-                    } ?>">
-                    <input type="hidden" name="result_page_numbers" id="result_page_numbers"
-                           value="<?php print (isset($_GET['result_page_numbers'])) ? $_GET['result_page_numbers'] : "0"; ?>">
-                    <input type="hidden" name="products_on_page" id="products_on_page"
-                           value="<?php print ($_SESSION['products_on_page']); ?>">
+                <!-- einde code deel 4 van User story: Zoeken producten  -->
+                <input type="hidden" name="category_id" id="category_id" value="<?php if (isset($_GET['category_id'])) {
+                    print ($_GET['category_id']);
+                } ?>">
+                <input type="hidden" name="result_page_numbers" id="result_page_numbers"
+                       value="<?php print (isset($_GET['result_page_numbers']) ? $_GET['result_page_numbers'] : "0") ; ?>">
+                <input type="hidden" name="products_on_page" id="products_on_page"
+                       value="<?php print ($_SESSION['products_on_page']); ?>">
 
-                    <?php
-                    if ($AmountOfPages > 0) {
-                        for ($i = 1; $i <= $AmountOfPages; $i++) {
-                            if ($PageNumber == ($i - 1)) {
-                                ?>
-                                <div id="SelectedPage"><?php print $i; ?></div><?php
-                            } else { ?>
-                                <button id="page_number" class="PageNumber" value="<?php print($i - 1); ?>" type="submit"
-                                        name="page_number"><?php print($i); ?></button>
-                            <?php }
-                        }
-
+                <?php
+                if ($AmountOfPages > 0) {
+                    for ($i = 1; $i <= $AmountOfPages; $i++) {
+                        if ($PageNumber == ($i - 1)) {
+                            ?>
+                            <div id="SelectedPage"><?php print $i; ?></div><?php
+                        } else { ?>
+                            <button id="page_number" class="PageNumber" value="<?php print($i - 1); ?>" type="submit"
+                                    name="page_number"><?php print($i); ?></button>
+                        <?php }
                     }
-                    ?>
-                </form>
-                <?php
-            } else {
+
+                }
                 ?>
-                <h2 id="NoSearchResults">
-                    Yarr, er zijn geen resultaten gevonden.
-                </h2>
-                <?php
-            }
+            </form>
+            <?php
+        } else {
             ?>
-        </div>
+            <h2 id="NoSearchResults">
+                Yarr, er zijn geen resultaten gevonden.
+            </h2>
+            <?php
+        }
+        ?>
     </div>
 </div>
-
 
 <?php
 include __DIR__ . "/footer.php";

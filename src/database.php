@@ -32,8 +32,7 @@ function getHeaderStockGroups($databaseConnection) {
                 ORDER BY StockGroupID ASC";
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_execute($Statement);
-    $HeaderStockGroups = mysqli_stmt_get_result($Statement);
-    return $HeaderStockGroups;
+    return mysqli_stmt_get_result($Statement);
 }
 
 function getStockGroups($databaseConnection) {
@@ -48,8 +47,7 @@ function getStockGroups($databaseConnection) {
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_execute($Statement);
     $Result = mysqli_stmt_get_result($Statement);
-    $StockGroups = mysqli_fetch_all($Result, MYSQLI_ASSOC);
-    return $StockGroups;
+    return mysqli_fetch_all($Result, MYSQLI_ASSOC);
 }
 
 function getStockItem($id, $databaseConnection) {
@@ -105,9 +103,7 @@ function getStockItemImage($id, $databaseConnection) {
     mysqli_stmt_bind_param($Statement, "i", $id);
     mysqli_stmt_execute($Statement);
     $R = mysqli_stmt_get_result($Statement);
-    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
-
-    return $R;
+    return mysqli_fetch_all($R, MYSQLI_ASSOC);
 }
 
 /*
@@ -139,6 +135,5 @@ function getCountry($databaseConnection) {
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_execute($Statement);
     $Result = mysqli_stmt_get_result($Statement);
-    $Countries = mysqli_fetch_all($Result, MYSQLI_ASSOC);
-    return $Countries;
+    return mysqli_fetch_all($Result, MYSQLI_ASSOC);
 }

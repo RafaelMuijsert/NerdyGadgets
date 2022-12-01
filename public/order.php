@@ -1,7 +1,7 @@
 <?php
 include "header.php";
 ?>
-<!DOCTYPE Html>
+<!DOCTYPE html>
 <html lang="en">
 <div class="col-12">
         <h1>Gegevens invullen</h1>
@@ -56,10 +56,10 @@ include "header.php";
             </div>
             <div class="row">
                 <div class="col-2">
-                    <label for="phonenumber">Telefoonnummer:</label>
+                    <label for="number">Telefoonnummer:</label>
                 </div>
                 <div class="col-8">
-                    <input type="string" id="Number" name="Number"
+                    <input type="text" id="number" name="number"
                            <?php
                            if (isset($_SESSION['userinfo']['Number'])){
                                print ('value="' . $_SESSION['userinfo']['Number'] . '"');
@@ -75,7 +75,7 @@ include "header.php";
                 <div class="col-8">
                     <select name="country" id="country" style="width: 80%;">
                         <?php
-                        $countries = getCountry($databaseConnection);
+                        $countries = getCountry($GLOBALS['databaseConnection']);
                         print_r($countries[1]['CountryName']);
                         foreach ($countries as $index => $country){
                             $countryName = $country['CountryName'];
@@ -148,3 +148,5 @@ include "header.php";
 <?php
 include "footer.php";
 ?>
+</body>
+</html>
