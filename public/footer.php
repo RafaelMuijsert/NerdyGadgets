@@ -1,6 +1,5 @@
 <!-- de inhoud van dit bestand wordt onderaan elke pagina geplaatst -->
 <!--<div class="d-flex flex-column">-->
-<!--        <!-- FOOTER -->-->
 <!--    <footer class="mt-auto">-->
 <!--        <div class="container py-4">-->
 <!--            <div class="row gy-4 gx-5">-->
