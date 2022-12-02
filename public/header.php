@@ -64,9 +64,9 @@ if (!isset($_SESSION['cart'])) {
                         </form>
                     </div>
                     <div class="nav-wrapper col-md-3">
-                        <a href="login.php" class="btn btn-light btn-lg">
-                            <i class="fa-solid fa-user"></i> Inloggen
-                        </a>
+<!--                        <a href="login.php" class="btn btn-light btn-lg">-->
+<!--                            <i class="fa-solid fa-user"></i> Inloggen-->
+<!--                        </a>-->
                         <a href="cart.php" class="btn btn-light btn-lg">
                             <i class="fa-solid fa-shopping-bag"></i>
                         </a>
