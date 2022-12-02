@@ -4,14 +4,35 @@ $total = 0;
 foreach($_POST as $key => $value) {
     //
     if($value == 0 || !$value) {
-    continue;
+        if(isset($_SESSION['cart'][$key])) {
+            unset($_SESSION['cart'][$key]);
+        }
+        continue;
     }
     // bij een negatieve hoeveelheid wordt deze positief gemaakt
     $value = abs($value);
     $stock = getItemStock($key, $GLOBALS['databaseConnection'])['QuantityOnHand'];
+    if($stock <= 0) {
+        if(isset($_SESSION['cart'][$key])) {
+            unset($_SESSION['cart'][$key]);
+            continue;
+        }
+    }
     // hoeveelheid is maximaal het aantal op voorraad
     $value = ($value <= $stock) ? $value : $stock;
     $_SESSION['cart'][$key] = abs($value);
+}
+
+foreach($_SESSION['cart'] as $key => $value) {
+    $stock = getItemStock($key, $GLOBALS['databaseConnection'])['QuantityOnHand'];
+    if($stock <= 0) {
+        unset($_SESSION['cart'][$key]);
+        continue;
+    }
+    if($value > $stock) {
+        $_SESSION['cart'][$key] = $stock;
+    }
+
 }
 if(array_key_exists('remove', $_GET)) {
     unset($_SESSION['cart'][$_GET['remove']]);

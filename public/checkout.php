@@ -4,6 +4,7 @@ $total = 0;
 if(count($_POST) > 0) {
     $_SESSION['userinfo'] = $_POST;
 }
+$databaseConnection = $GLOBALS['databaseConnection'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,10 +102,10 @@ if(count($_POST) > 0) {
                     <?php include "../src/summary.php"?>
                     <h4 class="text-right">Totaal: &euro;<?=number_format($total, 2, '.') ?></h4>
                     <form method="get">
-                        <input type="submit" name="payButton" value="betalen">
+                        <input class="btn btn-primary" type="submit" name="payButton" value="Betalen">
                     </form>
                     <?php
-                    if (isset($_GET['payButton']) && $_GET['payButton'] == 'betalen') {
+                    if (isset($_GET['payButton']) && $_GET['payButton'] == 'Betalen') {
                         addKlant($_SESSION['userinfo']['fname'], $_SESSION['userinfo']['lname'], $_SESSION['userinfo']['email'], $_SESSION['userinfo']['phone'], $databaseConnection);
                         $klantID = findKlant($databaseConnection);
                         addOrder($klantID[0]['max(klantID)'], $_SESSION['userinfo']['country'], $_SESSION['userinfo']['street'], $_SESSION['userinfo']['postcode'], $_SESSION['userinfo']['city'], $databaseConnection);

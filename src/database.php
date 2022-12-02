@@ -88,7 +88,6 @@ function getItemStock($id, $databaseConnection) {
   if ($ReturnableResult && mysqli_num_rows($ReturnableResult) == 1) {
       $Result = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
   }
-
   return $Result;
 }
 
@@ -111,9 +110,7 @@ function getStockItemImage($id, $databaseConnection) {
  * */
 function updateShoppingCart($itemID, $connection) {
     $stock = getItemStock($itemID, $connection)['QuantityOnHand'];
-
-    if(array_key_exists($itemID, $_SESSION['cart']) && $stock <= $_SESSION['cart'][$itemID]) {
-        $_SESSION['cart'][$itemID] = $stock;
+    if((array_key_exists($itemID, $_SESSION['cart']) && $stock <= $_SESSION['cart'][$itemID]) || $stock == 0) {
         print("<p style='color: red; max-width: 250px; text-align: right;'>Kan niet meer producten toevoegen dan de hoeveelheid producten in voorraad.</p>");
         return false;
     }
@@ -168,7 +165,7 @@ function removeStock($stockID, $aantal, $databaseConnection){
             SET QuantityOnHand = (QuantityOnHand - ?)
             WHERE StockItemID = ?";
     $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "is", $aantal, $stockID);
+    mysqli_stmt_bind_param($Statement, "ii", $aantal, $stockID);
     mysqli_stmt_execute($Statement);
 }
 function findKlant($databaseConnection){
