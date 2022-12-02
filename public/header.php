@@ -32,17 +32,17 @@ if (!isset($_SESSION['cart'])) {
 <body>
 <div class="Background">
     <header class="header" id="Header">
-        <div class="header__pop-up">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="header__pop-up-inner">
-                            Voor 22:00 besteld, morgen in huis!
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="header__pop-up">-->
+<!--            <div class="container">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-12">-->
+<!--                        <div class="header__pop-up-inner">-->
+<!--                            Voor 22:00 besteld, morgen in huis!-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="header__brand">
             <div class="container">
                 <div class="row align-items-center align-middle m-0">
