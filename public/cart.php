@@ -105,7 +105,7 @@
                                 <hr>
                                 <div class="shopping-cart__total">
                                     <div class="">Totaal</div>
-                                    <div class=" text-right">&euro; <?php print(number_format($total, 2, '.')) ?></div>
+                                    <div class=" text-right">&euro; <?= (number_format($total, 2, '.')) ?></div>
                                 </div>
                                 <hr>
                                 <div class="text-right">
