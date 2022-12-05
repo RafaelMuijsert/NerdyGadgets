@@ -3,6 +3,9 @@
     include "database.php";
     $databaseConnection = connectToDatabase();
     $submitted = false;
+    if(!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
 ?>
 <header class="header">
     <div class="container">
