@@ -1,3 +1,5 @@
+use nerdygadgets;
+
 drop table webshop_orderregel;
 
 drop table webshop_order;
