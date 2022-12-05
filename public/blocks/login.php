@@ -5,8 +5,9 @@
                 <div class="bg-white bg-white--large">
                     <h1 class="shopping-cart__title">Login page</h1>
                     <form action="" method="POST">
-                        <input placeholder="Gebruikersnaam" type="email" name="username">
-                        <input placeholder="Wachtwoord" type="password" name="password">
+                        <input class="input" placeholder="Gebruikersnaam" type="email" name="username">
+                        <input class="input" placeholder="Wachtwoord" type="password" name="password">
+                        <input class="btn btn--order" type="submit">
                     </form>
                 </div>
             </div>

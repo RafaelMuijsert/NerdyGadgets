@@ -1,8 +1,8 @@
 <?php
     $total = 0;
-    if(count($_POST) > 0) {
+    if(count($_POST) > 0):
         $_SESSION['userinfo'] = $_POST;
-    }
+    endif;
     $databaseConnection = $GLOBALS['databaseConnection'];
 ?>
 <section class="checkout">
@@ -50,30 +50,68 @@
                 <div class="checkout__wrapper bg-white bg-white--large">
                     <h2>Te bestellen producten</h2>
 
-                    <div class="div">
-                        // Alle producten
+                    <div class="checkout__products">
+                        <?php
+                        $total = 0;
+                        foreach($_SESSION['cart'] as $id => $quantity): ?>
+                            <?php $stockItem = getStockItem($id, $GLOBALS['databaseConnection']);
+                            $price = round($stockItem['SellPrice'], 2);
+                            $total += $price * $quantity;
+                            ?>
+                            <div class="p-2 mb-3 border d-flex align-items-center">
+                                <div class="">
+                                    <label for="quantity" class=""><?=$stockItem['StockItemName']?></label>
+                                </div>
+                                <div class="text-right">
+                                    <label>
+                                        <input name="quantity" type="number" disabled value="<?=$quantity?>">
+                                    </label>
+                                </div>
+
+                                <div class="text-right">
+                                    <p class="">&euro;<?=number_format($price * $quantity, 2)?></p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+
+                        Totaal: <?= $total ?>
                     </div>
 
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
-                    <?php
-                    if(isset($_GET['action']) && $_GET['action'] == 'pay') {
-                        addKlant($_SESSION['userinfo']['fname'], $_SESSION['userinfo']['lname'], $_SESSION['userinfo']['email'], $_SESSION['userinfo']['phone'], $databaseConnection);
+                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay'):
+
+                        addKlant(
+                                $_SESSION['userinfo']['firstname'],
+                                $_SESSION['userinfo']['surname'],
+                                $_SESSION['userinfo']['email'],
+                                $_SESSION['userinfo']['phone'],
+                                $databaseConnection
+                        );
                         $klantID = findKlant($databaseConnection);
-                        addOrder($klantID[0]['max(klantID)'], $_SESSION['userinfo']['country'], $_SESSION['userinfo']['street'], $_SESSION['userinfo']['postcode'], $_SESSION['userinfo']['city'], $databaseConnection);
+
+                        addOrder(
+                                $klantID[0]['max(klantID)'],
+                                $_SESSION['userinfo']['country'],
+                                $_SESSION['userinfo']['street'],
+                                $_SESSION['userinfo']['postcode'],
+                                $_SESSION['userinfo']['city'],
+                                $databaseConnection
+                        );
                         $orderID = findOrder($databaseConnection);
-                        foreach ($_SESSION['cart'] as $id => $quantity) {
+
+                        foreach ($_SESSION['cart'] as $id => $quantity):
                             $total = 0;
                             $stockItem = getStockItem($id, $GLOBALS['databaseConnection']);
                             $price = round($stockItem['SellPrice'], 2);
                             $total += $price * $quantity;
                             addOrderregel($orderID[0]['max(OrderID)'], $id, $quantity, $total, $databaseConnection);
                             removeStock($id, $quantity, $databaseConnection);
-                        }
-                        ?>
+                        endforeach; ?>
+
                         <script>
                             window.location.replace('https://www.ideal.nl/demo/qr/?app=ideal');
                         </script>
-                    <?php } ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

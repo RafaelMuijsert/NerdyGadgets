@@ -14,6 +14,7 @@
 <body>
 
 <?php
+    include "functions.php";
     include "header.php";
     include "./blocks/checkout.php";
     include "footer.php";
