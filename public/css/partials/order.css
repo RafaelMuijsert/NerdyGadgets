@@ -1,0 +1,54 @@
+.order__form {
+    display: inline-block;
+    width: calc(100% + 16px);
+    margin-left: -8px;
+    margin-top: 24px;
+}
+
+.order__form-row {
+    width: calc(100% - 16px);
+    float: left;
+    margin: 0 8px 16px 8px;
+}
+
+.order__form-row--50 {
+    width: calc(50% - 16px);
+}
+
+.order__form-row--40 {
+    width: calc(40% - 16px);
+}
+
+.order__form-row--20 {
+    width: calc(20% - 16px);
+}
+
+.order__form-row--auto {
+    width: auto;
+}
+
+.order__form-row input,
+.order__form-row select,
+.order__form-row textarea {
+    width: 100% !important;
+}
+
+.order__form-row textarea {
+    height: 160px;
+    resize: none;
+}
+
+.order__form .country {
+    pointer-events: none !important;
+    user-select: none !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+
+.order__form .btn {
+    width: max-content !important;
+    min-width: 244px;
+    margin-top: 32px;
+}

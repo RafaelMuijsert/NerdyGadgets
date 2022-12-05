@@ -1,0 +1,16 @@
+.input,
+.select {
+    display: block;
+    outline: none;
+    width: max-content;
+    padding: 16px;
+    transition: var(--transition);
+    background-color: var(--main-bg-color);
+    border-radius: var(--border-radius);
+    border: 0.1px solid var(--main-bg-color);
+}
+
+.input:active,
+.input:focus {
+    border: 0.1px solid var(--primary-color);
+}

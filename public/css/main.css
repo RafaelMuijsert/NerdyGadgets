@@ -10,6 +10,7 @@
 @import "globals/typography.css";
 @import "globals/button.css";
 @import "globals/icons.css";
+@import "globals/input.css";
 
 /* Partials */
 @import "partials/header.css";
@@ -19,6 +20,7 @@
 @import "partials/categories.css";
 @import "partials/product.css";
 @import "partials/shopping-cart.css";
+@import "partials/order.css";
 @import "partials/footer.css";
 
 /* Components */
