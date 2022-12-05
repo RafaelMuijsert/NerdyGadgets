@@ -55,10 +55,14 @@
                                                         </div>
 
                                                         <a class="carousel-control-prev" href="#ImageCarousel" data-slide="prev">
-                                                            <span class="carousel-control-prev-icon"></span>
+                                                            <span class="carousel-control-prev-icon">
+                                                                <svg style="transform: rotate(180deg)" xmlns='http://www.w3.org/2000/svg' fill='#0D6CE8' viewBox='0 0 8 8'><path d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/></svg>
+                                                            </span>
                                                         </a>
                                                         <a class="carousel-control-next" href="#ImageCarousel" data-slide="next">
-                                                            <span class="carousel-control-next-icon"></span>
+                                                            <span class="carousel-control-next-icon">
+                                                                <svg xmlns='http://www.w3.org/2000/svg' fill='#0D6CE8' viewBox='0 0 8 8'><path d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/></svg>
+                                                            </span>
                                                         </a>
                                                     </div>
                                                 </div>
