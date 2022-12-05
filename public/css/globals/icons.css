@@ -1,14 +1,11 @@
 .cart-icon {
+    background-color: var(--accent-color) !important;
     width: max-content;
     color: var(--sub-bg-color);
     display: flex;
     gap: 14px;
 }
 
-.profile-icon {
-    background-color: var(--accent-color) !important;
-}
-
-.profile-icon:hover {
+.cart-icon:hover {
     background-color: var(--accent-color-hover) !important;
 }

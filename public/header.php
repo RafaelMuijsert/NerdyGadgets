@@ -41,20 +41,19 @@
                             <a href="/browse.php" class="search-icon btn btn--primary">
                                 <img class="icon" src="./img/icons/search.svg" alt="">
                             </a>
+
+                            <a href="./login.php" class="profile-icon btn btn--primary">
+                                <img class="icon" src="./img/icons/profile.svg" alt="">
+                            </a>
+
                             <a href="cart.php" class="cart-icon btn btn--primary">
 <!--                                --><?php //if(count($_SESSION['cart']) > 0 || $submitted): ?>
                                     <div class="cart-icon--count" id="cart-icon--count">1+</div>
 <!--                                --><?php //endif; ?>
                                 <img class="icon" src="./img/icons/cart.svg" alt="">
                             </a>
-
-                            <a href="./login.php" class="profile-icon btn btn--primary">
-                                <img class="icon" src="./img/icons/profile.svg" alt="">
-                            </a>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

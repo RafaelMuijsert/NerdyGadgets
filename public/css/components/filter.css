@@ -10,6 +10,7 @@
     -moz-appearance: none;
     text-indent: 1px;
     text-overflow: '';
+    min-width: 78px;
 }
 
 .filter__search {

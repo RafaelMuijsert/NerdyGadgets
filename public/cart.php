@@ -63,7 +63,9 @@
                                                 <h2><?= $stockItem['StockItemName'] ?></h2>
                                                 <div class="card__price">&euro; <?= number_format($stockItem['SellPrice'], 2, '.') ?> <span>Inclusief btw</span></div>
                                             </div>
-                                            <span class="card__stock">Artikelnummer: <?= $stockItem['StockItemID'] ?></span>
+                                            <span class="card__stock">
+                                                Artikelnummer: <?= $stockItem['StockItemID'] ?>
+                                            </span>
                                         </div>
 
                                         <div class="card__count">

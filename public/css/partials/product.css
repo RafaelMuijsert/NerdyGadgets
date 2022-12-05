@@ -53,6 +53,10 @@
     font-weight: 200;
 }
 
+.product__header-number span {
+    padding-right: 18px;
+}
+
 .product__header-right {
     margin-top: 50px;
     display: grid;

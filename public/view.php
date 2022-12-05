@@ -16,40 +16,40 @@
 
         <?php
             include "header.php";
-            $StockItem = getStockItem($_GET['id'], $databaseConnection);
-            $StockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
+            $stockItem = getStockItem($_GET['id'], $databaseConnection);
+            $stockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
         ?>
 
         <section class="product">
             <div class="container">
                 <div class="row">
 
-                    <?php if ($StockItem != null): ?>
+                    <?php if ($stockItem != null): ?>
 
                         <div class="col-12">
                             <div class="article-header product__header bg-white" id="ArticleHeader">
 
                                 <div class="product__header-left">
                                     <div class="product__header-img">
-                                        <?php if (isset($StockItemImage)): ?>
+                                        <?php if (isset($stockItemImage)): ?>
 
-                                            <?php if(count($StockItemImage) == 0): ?>
-                                                <div class="product__img" id="ImageFrame" style="background-image: url('img/stock-group/<?= $StockItem['BackupImagePath']; ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
-                                            <?php elseif (count($StockItemImage) == 1): ?>
-                                                <div class="product__img" id="ImageFrame" style="background-image: url('img/stock-item/<?= $StockItemImage[0]['ImagePath']; ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
-                                            <?php elseif (count($StockItemImage) >= 2): ?>
+                                            <?php if(count($stockItemImage) == 0): ?>
+                                                <div class="product__img" id="ImageFrame" style="background-image: url('img/stock-group/<?= $stockItem['BackupImagePath']; ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
+                                            <?php elseif (count($stockItemImage) == 1): ?>
+                                                <div class="product__img" id="ImageFrame" style="background-image: url('img/stock-item/<?= $stockItemImage[0]['ImagePath']; ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
+                                            <?php elseif (count($stockItemImage) >= 2): ?>
                                                 <div class="product__carousel" id="ImageFrame">
                                                     <div id="ImageCarousel" class="carousel slide" data-interval="false">
                                                         <ul class="carousel-indicators">
-                                                            <?php for ($i = 0; $i < count($StockItemImage); $i++): ?>
+                                                            <?php for ($i = 0; $i < count($stockItemImage); $i++): ?>
                                                                 <li data-target="#ImageCarousel" data-slide-to="<?= $i ?>" <?= (($i == 0) ? 'class="active"' : ''); ?>></li>
                                                             <?php endfor; ?>
                                                         </ul>
 
                                                         <div class="carousel-inner">
-                                                            <?php for ($i = 0; $i < count($StockItemImage); $i++): ?>
+                                                            <?php for ($i = 0; $i < count($stockItemImage); $i++): ?>
                                                                 <div class="carousel-item <?= ($i == 0) ? 'active' : ''; ?>">
-                                                                    <img src="img/stock-item/<?= $StockItemImage[$i]['ImagePath'] ?>">
+                                                                    <img src="img/stock-item/<?= $stockItemImage[$i]['ImagePath'] ?>">
                                                                 </div>
                                                             <?php endfor; ?>
                                                         </div>
@@ -65,22 +65,25 @@
                                             <?php endif; ?>
 
                                         <?php else:; ?>
-                                            <div id="ImageFrame product__img" class="product__img" style="background-image: url('img/stock-group/<?= $StockItem['BackupImagePath']; ?>'); background-size: cover;"></div>
+                                            <div id="ImageFrame product__img" class="product__img" style="background-image: url('img/stock-group/<?= $stockItem['BackupImagePath']; ?>'); background-size: cover;"></div>
                                         <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="product__header-center">
                                     <div>
                                         <h1 class="product__header-title">
-                                            <?= $StockItem['StockItemName']; ?>
+                                            <?= $stockItem['StockItemName']; ?>
                                         </h1>
                                         <h3 class="product__header-price">
-                                            <b><?= sprintf("€%.2f", $StockItem['SellPrice']); ?> </b>
+                                            <b><?= sprintf("€%.2f", $stockItem['SellPrice']); ?> </b>
                                             <span>Inclusief btw</span>
                                         </h3>
                                     </div>
 
-                                    <p class="product__header-number">Artikelnummer: <?= $StockItem["StockItemID"]; ?></p>
+                                    <div class="product__header-number">
+                                        <span><?= $stockItem['QuantityOnHand']; ?>  </span>
+                                        <span> Artikelnummer: <?= $stockItem["StockItemID"]; ?></span>
+                                    </div>
 
                                 </div>
 
@@ -106,13 +109,13 @@
                         <div class="bg-white">
                             <div class="stock-item-descr" id="StockItemDescription">
                                 <h3>Artikel beschrijving</h3>
-                                <p><?= $StockItem['SearchDetails']; ?></p>
+                                <p><?= $stockItem['SearchDetails']; ?></p>
                             </div>
 
                             <div class="product__spec stock-item-spec" id="StockItemSpecifications">
                                 <h3>Artikel specificaties</h3>
                                 <?php
-                                $CustomFields = json_decode($StockItem['CustomFields'], true);
+                                $CustomFields = json_decode($stockItem['CustomFields'], true);
 
                                 if (is_array($CustomFields)): ?>
                                     <table>
@@ -138,18 +141,18 @@
                                         <?php endforeach; ?>
                                     </table>
                                 <?php else: ?>
-                                    <p><?= $StockItem['CustomFields']; ?>.</p>
+                                    <p><?= $stockItem['CustomFields']; ?>.</p>
                                 <?php endif; ?>
                             </div>
 
                         </div>
                     </div>
-                    <?php if (isset($StockItem['Video'])): ?>
+                    <?php if (isset($stockItem['Video'])): ?>
                         <div class="col-6">
                             <div class="bg-white">
                                 <h3>Video</h3>
                                 <div class="product__video" id="VideoFrame">
-                                    <?= $StockItem['Video']; ?>
+                                    <?= $stockItem['Video']; ?>
                                 </div>
                             </div>
                         </div>
