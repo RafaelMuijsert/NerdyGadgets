@@ -7,6 +7,7 @@ $GLOBALS['databaseConnection'] = connectToDatabase();
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

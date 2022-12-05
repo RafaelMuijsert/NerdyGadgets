@@ -101,11 +101,11 @@ $databaseConnection = $GLOBALS['databaseConnection'];
                     <hr>
                     <?php include "../src/summary.php"?>
                     <h4 class="text-right">Totaal: &euro;<?=number_format($total, 2, '.') ?></h4>
-                    <form method="get">
-                        <input class="btn btn-primary" type="submit" name="payButton" value="Betalen">
-                    </form>
+                    <a href="?action=pay" class="w-100 btn btn-primary">
+                        Betalen
+                    </a>
                     <?php
-                    if (isset($_GET['payButton']) && $_GET['payButton'] == 'Betalen') {
+                    if(isset($_GET['action']) && $_GET['action'] == 'pay') {
                         addKlant($_SESSION['userinfo']['fname'], $_SESSION['userinfo']['lname'], $_SESSION['userinfo']['email'], $_SESSION['userinfo']['phone'], $databaseConnection);
                         $klantID = findKlant($databaseConnection);
                         addOrder($klantID[0]['max(klantID)'], $_SESSION['userinfo']['country'], $_SESSION['userinfo']['street'], $_SESSION['userinfo']['postcode'], $_SESSION['userinfo']['city'], $databaseConnection);
@@ -118,7 +118,7 @@ $databaseConnection = $GLOBALS['databaseConnection'];
                             addOrderregel($orderID[0]['max(OrderID)'], $id, $quantity, $total, $databaseConnection);
                             removeStock($id, $quantity, $databaseConnection);
                         }
-                        $_POST['payButton'] = ''; ?>
+                        ?>
                         <script>
                             window.location.replace('https://www.ideal.nl/demo/qr/?app=ideal');
                         </script>
