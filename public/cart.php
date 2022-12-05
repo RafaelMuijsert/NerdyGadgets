@@ -50,13 +50,13 @@
                                         continue;
                                     endif; ?>
                                     <div class="card">
-                                        <div class="card__img">
+                                        <a href="view.php?id=<?= $key ?>" class="card__img">
                                             <?php if($stockItemImage = getStockItemImage($key, $databaseConnection)): ?>
                                                 <img class='img-fluid' src="<?= 'img/stock-item/' . $stockItemImage[0]['ImagePath'] ?>">
                                             <?php else: ?>
                                                 <img class='img-fluid' src="<?= 'img/stock-item/' . $stockItem['BackupImagePath'] ?>">
                                             <?php endif; ?>
-                                        </div>
+                                        </a>
 
                                         <div class="card__description">
                                             <div>
