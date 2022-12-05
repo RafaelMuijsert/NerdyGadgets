@@ -104,7 +104,8 @@
                 if ($i != 0):
                     $queryBuildResult .= "AND ";
                 endif;
-                $queryBuildResult .= "SI.SearchDetails LIKE '%$searchValues[$i]%' ";
+//                $queryBuildResult .= "SI.SearchDetails LIKE '%$searchValues[$i]%' ";
+                $queryBuildResult .= "(SI.SearchDetails LIKE '%$searchValues[$i]%' OR SI.CustomFields LIKE '%$searchValues[$i]%') ";
             endfor;
 
             if ($queryBuildResult != ""):
