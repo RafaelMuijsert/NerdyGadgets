@@ -15,7 +15,7 @@
 
 <?php
     include "header.php";
-    include "./blocks/summary.php";
+    include "./blocks/checkout.php";
     include "footer.php";
 ?>
 
