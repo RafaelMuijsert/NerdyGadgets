@@ -12,6 +12,7 @@
     $itemsInCart = ($itemsInCart == 0) ? '' : "+$itemsInCart";
 ?>
 <header class="header">
+
     <?php if(cartUpdateRequested()): ?>
         <div>
             <?php if($cartUpdate): ?>
@@ -64,7 +65,9 @@
                             </a>
 
                             <a href="cart.php" class="cart-icon btn btn--primary">
-                                    <div class="cart-icon--count" id="cart-icon--count"><?=$itemsInCart?></div>
+                                <?php if($itemsInCart > 0): ?>
+                                <div class="mr-2 cart-icon--count" id="cart-icon--count"><?=$itemsInCart?></div>
+                                <?php endif?>
                                 <img class="icon" src="./img/icons/cart.svg" alt="">
                             </a>
                         </div>

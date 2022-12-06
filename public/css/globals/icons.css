@@ -3,7 +3,6 @@
     width: max-content;
     color: var(--sub-bg-color);
     display: flex;
-    gap: 14px;
 }
 
 .cart-icon:hover {
