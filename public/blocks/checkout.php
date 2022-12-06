@@ -73,18 +73,20 @@
                             $price = round($stockItem['SellPrice'], 2);
                             $total += $price * $quantity;
                             ?>
-                            <div class="p-2 mb-3 border d-flex align-items-center">
-                                <div class="">
-                                    <label for="quantity" class=""><?=$stockItem['StockItemName']?></label>
-                                </div>
-                                <div class="text-right">
-                                    <label>
-                                        <input name="quantity" type="number" disabled value="<?=$quantity?>">
-                                    </label>
-                                </div>
+                            <div class="container p-2 mb-3 border d-flex align-items-center">
+                                <div class="row">
+                                    <div class="col-4 display align-middle text-left w-100">
+                                        <label for="quantity" class=""><?=$stockItem['StockItemName']?></label>
+                                    </div>
+                                    <div class="col text-right align-middle">
+                                        <label>
+                                            <input name="quantity" type="number" disabled value="<?=$quantity?>">
+                                        </label>
+                                    </div>
 
-                                <div class="text-right">
-                                    <p class="">&euro;<?=number_format($price * $quantity, 2)?></p>
+                                    <div class="col text-right">
+                                        <p class="">&euro;<?=number_format($price * $quantity, 2)?></p>
+                                    </div>
                                 </div>
                             </div>
                         <?php endforeach; ?>

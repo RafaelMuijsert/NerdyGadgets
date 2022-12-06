@@ -125,7 +125,7 @@ function updateShoppingCart($connection) {
     if(cartUpdateRequested()) {
         $quantity = 1;
         if(isset($_POST['itemQuantity'])) {
-            $quantity = $_POST['itemQuantity'];
+            $quantity = intval($_POST['itemQuantity']);
         }
         if(addToCart($_POST['id'], $quantity, $connection)) {
             return true;
