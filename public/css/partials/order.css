@@ -19,8 +19,16 @@
     width: calc(40% - 16px);
 }
 
+.order__form-row--30 {
+    width: calc(30% - 16px);
+}
+
 .order__form-row--20 {
     width: calc(20% - 16px);
+}
+
+.order__form-row--10 {
+    width: calc(10% - 16px);
 }
 
 .order__form-row--auto {

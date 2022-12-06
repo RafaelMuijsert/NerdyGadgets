@@ -84,14 +84,24 @@
                             <input class="input" placeholder="Stad" value="<?= $city ?>" type="text" id="city" name="city" required>
                         </div>
 
-                        <div class="order__form-row order__form-row--50">
+                        <div class="order__form-row order__form-row--40">
                             <?php
                             $street = '';
                             if (isset($_SESSION['userinfo']['street'])):
                                 $street = $_SESSION['userinfo']['street'];
                             endif; ?>
-                            <label for="street">Straat + huisnummer:*</label>
+                            <label for="street">Straat:*</label>
                             <input class="input" type="text" id="street" name="street" placeholder="Vul hier in..." value="<?= $street ?>" required>
+                        </div>
+
+                        <div class="order__form-row order__form-row--10">
+                            <?php
+                            $housenumber = '';
+                            if (isset($_SESSION['userinfo']['housenumber'])):
+                                $housenumber = $_SESSION['userinfo']['housenumber'];
+                            endif; ?>
+                            <label for="housenumber">Huisnr:*</label>
+                            <input class="input" type="text" id="housenumber" name="housenumber" placeholder="..." value="<?= $housenumber ?>" required>
                         </div>
 
                         <div class="order__form-row order__form-row--50">
@@ -111,7 +121,7 @@
                                 $comment = $_SESSION['userinfo']['comment'];;
                             endif; ?>
                             <label for="comment">Opmerkingen:</label>
-                            <textarea class="input" placeholder="Vul hier in..." value="<?= $comment ?>" type="text" id="comment" name="comment"></textarea>
+                            <textarea class="input" placeholder="Vul hier in... (max 255 karakters)" value="<?= $comment ?>" type="text" id="comment" name="comment"></textarea>
                         </div>
 
                         <div class="order__form-row">

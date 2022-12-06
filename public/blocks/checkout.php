@@ -83,9 +83,13 @@
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
                     <?php if(isset($_GET['action']) && $_GET['action'] == 'pay'):
 
+                        $postcode = str_replace(' ', '', $_SESSION['userinfo']['postcode']);
+
                         addKlant(
                                 $_SESSION['userinfo']['firstname'],
+                                $_SESSION['userinfo']['prefixName'],
                                 $_SESSION['userinfo']['surname'],
+                                $_SESSION['userinfo']['birthDate'],
                                 $_SESSION['userinfo']['email'],
                                 $_SESSION['userinfo']['phone'],
                                 $databaseConnection
@@ -96,11 +100,16 @@
                                 $klantID[0]['max(klantID)'],
                                 $_SESSION['userinfo']['country'],
                                 $_SESSION['userinfo']['street'],
-                                $_SESSION['userinfo']['postcode'],
+                                $_SESSION['userinfo']['housenumber'],
+                                $postcode,
                                 $_SESSION['userinfo']['city'],
+                                $_SESSION['userinfo']['comment'],
                                 $databaseConnection
                         );
                         $orderID = findOrder($databaseConnection);
+
+                        $_SESSION['userinfo'] = '';
+                        $_SESSION['cart'] = [];
 
                         foreach ($_SESSION['cart'] as $id => $quantity):
                             $total = 0;
