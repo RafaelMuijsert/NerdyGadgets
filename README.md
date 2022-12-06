@@ -10,8 +10,14 @@ Please see https://github.com/php-pds/skeleton
 - A web server (apache is preferred)
 - PHP (tested with version 8.1.11)
 - mysqli php extension
+- intl php extension
 
 ## Setup
+
+Edit php.ini and add the following line under [PHP]:
+```
+extension=intl
+```
 
 Install the given database from the official Windesheim GitLab.
 Run the following commands in a mariadb shell:

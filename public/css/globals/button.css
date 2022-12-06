@@ -91,6 +91,7 @@
     Order button
 */
 .btn--order {
+    width: 100%;
     background-color: var(--accent-color);
     border-radius: var(--border-radius);
     color: var(--sub-bg-color);
