@@ -4,6 +4,16 @@
         $_SESSION['userinfo'] = $_POST;
     endif;
     $databaseConnection = $GLOBALS['databaseConnection'];
+    $dateformatter = new IntlDateFormatter(
+        'nl_NL',
+        IntlDateFormatter::FULL,
+        IntlDateFormatter::FULL,
+        'Europe/Amsterdam',
+        IntlDateFormatter::GREGORIAN,
+        'EEEE d MMMM'
+    );
+    $shippingTime = '1 day';
+    $shippingDate = $dateformatter->format(strtotime("+$shippingTime", mktime(0, 0, 0)));
 ?>
 <section class="checkout">
     <div class="container">
@@ -44,7 +54,9 @@
 
                     <h5 class="checkout__title checkout__title-delivery">Bezorgmoment</h5>
                     <ul>
-                        <li>Dinsdag 25 November - 10:30</li>
+                        <li>
+                            <?= ucfirst($shippingDate) ?>
+                        </li>
                         <li>PostNL</li>
                     </ul>
                 </div>

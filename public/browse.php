@@ -280,12 +280,9 @@
                                             <h3 class="product-sum__title" style="width: 82.5%"><?= $row["StockItemName"]; ?></h3>
                                             <span class="product-sum__price"><?= sprintf("€%0.2f", berekenVerkoopPrijs($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></span>
                                             <span class="product-sum__btw">Inclusief btw</span>
-
                                             <form method="post" class="product-sum__btn">
-                                                <input class="btn btn--primary" type="submit" name="<?= ("submit" . $row["StockItemID"]) ?>" value="Toevoegen aan winkelmandje">
-                                                <?php if (isset($_POST[("submit" . $row["StockItemID"])])) {
-                                                    updateShoppingCart($row["StockItemID"], $databaseConnection);
-                                                } ?>
+                                                <input type="hidden" name="id" value="<?=$row['StockItemID']?>" />
+                                                <input class="btn btn--primary" type="submit" value="Toevoegen aan winkelmandje">
                                             </form>
                                         </div>
 

@@ -21,14 +21,11 @@
 
         foreach($_POST as $key => $value):
             $value = abs($value);
-            $stock = getItemStock($key, $databaseConnection)['QuantityOnHand'];
+            $stock = getItemStock($key, $databaseConnection);
             $value = ($value <= $stock) ? $value : $stock;
             $_SESSION['cart'][$key] = abs($value);
         endforeach;
 
-        if(array_key_exists('remove', $_GET)):
-            unset($_SESSION['cart'][$_GET['remove']]);
-        endif;
 
         if (!isset($_SESSION['cart'])):
             $_SESSION['cart'] = [];
@@ -72,7 +69,7 @@
                                             <form method='post'>
                                                 <?php
                                                 $quantity = $_SESSION['cart'][$stockItem['StockItemID']];
-                                                $stock = getItemStock($stockItem['StockItemID'], $databaseConnection)['QuantityOnHand'];
+                                                $stock = getItemStock($stockItem['StockItemID'], $databaseConnection);
                                                 $price = round($stockItem['SellPrice'], 2);
                                                 $total += $price * $quantity; ?>
 

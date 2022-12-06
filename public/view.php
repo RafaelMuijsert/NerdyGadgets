@@ -93,13 +93,10 @@
 
                                 <div class="product__header-right">
                                     <form class="product__header-form" method="post">
-                                        <input class="product__header-count" type="number" name="stockItemID" value="<?= ($_GET['id']); ?>">
-                                        <input class="btn btn--primary" type="submit" name="submit" value="Toevoegen">
-                                        <?php if (isset($_POST["submit"])):
-                                            updateShoppingCart($_GET['id'], $databaseConnection);
-                                        endif; ?>
+                                        <input type="hidden" name="id" value="<?=$_GET['id'] ?>" />
+                                        <input class="product__header-count" type="number" name="itemQuantity" value="1">
+                                        <input class="btn btn--primary" type="submit" value="Toevoegen">
                                     </form>
-
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,5 @@
 <?php
+    setlocale(LC_TIME, 'nl_NL');
     session_start();
     include "database.php";
     $databaseConnection = connectToDatabase();
@@ -6,8 +7,24 @@
     if(!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = [];
     }
+    $cartUpdate = updateShoppingCart($databaseConnection);
+    $itemsInCart = count($_SESSION['cart']);
+    $itemsInCart = ($itemsInCart == 0) ? '' : "+$itemsInCart";
 ?>
 <header class="header">
+    <?php if(cartUpdateRequested()): ?>
+        <div>
+            <?php if($cartUpdate): ?>
+                <div class="alert alert-success" role="alert">
+                    Item is toegevoegd aan het winkelmandje
+                </div>
+            <?php else: ?>
+                <div class="alert alert-danger" role="alert">
+                    Er zijn geen producten meer op voorraad. Probeer het later nog eens
+                </div>
+            <?php endif ?>
+        </div>
+    <?php endif ?>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -47,9 +64,7 @@
                             </a>
 
                             <a href="cart.php" class="cart-icon btn btn--primary">
-<!--                                --><?php //if(count($_SESSION['cart']) > 0 || $submitted): ?>
-                                    <div class="cart-icon--count" id="cart-icon--count">1+</div>
-<!--                                --><?php //endif; ?>
+                                    <div class="cart-icon--count" id="cart-icon--count"><?=$itemsInCart?></div>
                                 <img class="icon" src="./img/icons/cart.svg" alt="">
                             </a>
                         </div>

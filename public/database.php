@@ -91,7 +91,7 @@ function getItemStock($id, $databaseConnection) {
       $Result = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
   }
 
-  return $Result;
+  return $Result['QuantityOnHand'];
 }
 
 function getStockItemImage($id, $databaseConnection) {
@@ -110,26 +110,44 @@ function getStockItemImage($id, $databaseConnection) {
     return $R;
 }
 
+function cartUpdateRequested() {
+    return isset($_POST['id']);
+}
+
 /*
  *  Update shopping cart after submit with necessary checks
  * */
-function updateShoppingCart($itemID, $connection) {
-    $submitted = true;
-    sleep(0.1);
-    $stock = getItemStock($itemID, $connection)['QuantityOnHand'];
+function updateShoppingCart($connection) {
+    if(array_key_exists('remove', $_GET)):
+        unset($_SESSION['cart'][$_GET['remove']]);
+    endif;
 
-    if(array_key_exists($itemID, $_SESSION['cart']) && $stock <= $_SESSION['cart'][$itemID]) {
-        $_SESSION['cart'][$itemID] = $stock;
-        print("<p style='color: red; max-width: 250px; text-align: right;'>Kan niet meer producten toevoegen dan de hoeveelheid producten in voorraad.</p>");
+    if(cartUpdateRequested()) {
+        $quantity = 1;
+        if(isset($_POST['itemQuantity'])) {
+            $quantity = $_POST['itemQuantity'];
+        }
+        if(addToCart($_POST['id'], $quantity, $connection)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+/*
+Add $quantity of $id to cart. Returns false if available stock is less than $quantity.
+*/
+function addToCart($id, $quantity, $connection) {
+    $quantity = abs($quantity);
+    $stock = getItemStock($id, $connection);
+
+    $cartQuantity = 0;
+    if(array_key_exists($id, $_SESSION['cart'])) {
+        $cartQuantity = $_SESSION['cart'][$id];
+    }
+    if($stock < $cartQuantity + $quantity) {
         return false;
     }
-
-    if(array_key_exists($itemID, $_SESSION['cart'])) {
-        $_SESSION['cart'][$itemID]++;
-    } else {
-        $_SESSION['cart'][$itemID] = 1;
-    }
-
-    print("<a style='color: green' href='cart.php'>Toegevoegd!</a>");
+    $_SESSION['cart'][$id] = $cartQuantity + $quantity;
     return true;
 }
