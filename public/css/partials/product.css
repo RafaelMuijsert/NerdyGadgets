@@ -1,0 +1,121 @@
+.product {
+    /* */
+}
+
+.product__header {
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 398px 25% auto;
+}
+
+.product__header-img {
+    background-color: var(--main-bg-color);
+    border-radius: var(--border-radius);
+    width: 398px;
+    height: 319px;
+}
+
+.product__header-img div {
+    width: 100%;
+    height: 100%;
+}
+
+.product__header-center {
+    padding-left: 65px;
+    display: grid;
+    align-content: space-between;
+}
+
+.product__header-title {
+    font-size: 24px;
+    font-family: Roboto;
+    font-weight: 500;
+    margin: 48px 0 16px 0;
+}
+
+.product__header-price {
+    font-size: 32px;
+    font-family: Roboto;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.product__header-price span {
+    font-size: 14px;
+    font-family: Roboto;
+    font-weight: 600;
+}
+
+.product__header-number {
+    margin-bottom: 24px;
+    font-size: 16px;
+    font-family: Roboto;
+    font-weight: 200;
+}
+
+.product__header-number span {
+    padding-right: 18px;
+}
+
+.product__header-right {
+    margin-top: 50px;
+    display: grid;
+    justify-content: end;
+}
+
+.product__header-form {
+    display: flex;
+    column-gap: 12px;
+    height: max-content;
+    justify-content: end;
+    position: relative;
+}
+
+.product__header-form a {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translateY(120%);
+    color: var(--accent-color) !important;
+    text-decoration: none;
+    border: none;
+    font-weight: 300;
+}
+
+.product__header-form a:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    transform: translateX(-110%);
+    background-image: url("/img/icons/done.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+}
+
+.product__header-count {
+    background-color: var(--main-bg-color);
+    border-radius: 11px;
+    color: #2E2D2DCF !important;
+    padding: 19px 40px 16px 18px;
+    outline: none;
+    border: none;
+    width: max-content;
+}
+
+.product__spec tr {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 32px;
+}
+
+.product__spec tr td:last-child {
+    text-align: right;
+}
+
+.product__video {
+    min-height: 380px;
+    margin-top: 22px;
+}

@@ -1,0 +1,105 @@
+.btn {
+    display: block;
+    outline: none;
+    width: max-content;
+    padding: 16px;
+    transition: var(--transition);
+}
+
+/*
+    Primary button
+*/
+.btn--primary {
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    color: var(--sub-bg-color);
+    border: none;
+}
+
+.btn--primary:hover {
+    background-color: var(--primary-color-hover);
+    color: var(--sub-bg-color);
+}
+
+.btn .icon {
+    width: auto;
+    height: 22px;
+    font-family: Roboto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+
+/*
+    Secundary button
+*/
+.btn--secundary {
+    background-color: transparent;
+    border-radius: var(--border-radius);
+    color: var(--text-color);
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 0;
+}
+
+.btn--secundary:hover {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: none;
+}
+
+.btn--secundary span {
+    width: 24px;
+    height: 2px;
+    background-color: var(--text-color);
+    border-radius: 0;
+    display: block;
+    position: relative;
+}
+
+.btn--secundary:hover span {
+    background-color: var(--primary-color);
+}
+
+.btn--secundary span::before,
+.btn--secundary span::after {
+    content: "";
+    width: 12px;
+    height: 2px;
+    background-color: var(--text-color);
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+    transform-origin: right;
+    transition: var(--transition);
+}
+
+.btn--secundary:hover span::before {
+    transform: translate(0, -50%) rotate(45deg);
+    background-color: var(--primary-color);
+}
+
+.btn--secundary:hover span::after {
+    transform: translate(0, -50%) rotate(-45deg);
+    background-color: var(--primary-color);
+}
+
+/*
+    Order button
+*/
+.btn--order {
+    width: 100%;
+    background-color: var(--accent-color);
+    border-radius: var(--border-radius);
+    color: var(--sub-bg-color);
+    border: none;
+    padding: 16px 48px;
+}
+
+.btn--order:hover {
+    background-color: var(--accent-color-hover);
+    color: var(--sub-bg-color);
+}

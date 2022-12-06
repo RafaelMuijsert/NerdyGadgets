@@ -1,0 +1,10 @@
+.cart-icon {
+    background-color: var(--accent-color) !important;
+    width: max-content;
+    color: var(--sub-bg-color);
+    display: flex;
+}
+
+.cart-icon:hover {
+    background-color: var(--accent-color-hover) !important;
+}

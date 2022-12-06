@@ -1,0 +1,47 @@
+.browse__results {
+    height: 100%;
+}
+
+.browse__filter h5 {
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 500;
+    font-family: Roboto;
+}
+
+.browse__no-results-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.browse__no-results {
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 200;
+    font-family: Roboto;
+}
+
+.product__header-form a {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translateY(120%);
+    color: var(--accent-color) !important;
+    text-decoration: none;
+    border: none;
+    font-weight: 300;
+}
+
+.product__header-form a:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    transform: translateX(-110%);
+    background-image: url("/img/icons/done.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 24px;
+}

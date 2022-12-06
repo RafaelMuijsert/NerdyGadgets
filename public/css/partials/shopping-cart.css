@@ -1,0 +1,32 @@
+.shopping-cart__title {
+    font-size: 24px;
+    font-family: Roboto;
+    margin-bottom: 22px;
+}
+
+.shopping-cart__cart h2 {
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 200;
+    font-family: Roboto;
+}
+
+/* Shopping cart summary */
+.shopping-cart__total {
+    display: flex;
+    justify-content: space-between;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 200;
+}
+
+.shopping-cart__total div {
+    width: max-content;
+}
+
+.shopping-cart__checkout h2 {
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 200;
+    font-family: Roboto;
+}
