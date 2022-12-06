@@ -1,109 +1,84 @@
-<!-- de inhoud van dit bestand wordt bovenaan elke pagina geplaatst -->
 <?php
-session_start();
-include "database.php";
-$databaseConnection = connectToDatabase();
-
+    setlocale(LC_TIME, 'nl_NL');
+    session_start();
+    include "database.php";
+    $databaseConnection = connectToDatabase();
+    $submitted = false;
+    if(!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+    $cartUpdate = updateShoppingCart($databaseConnection);
+    $itemsInCart = count($_SESSION['cart']);
+    $itemsInCart = ($itemsInCart == 0) ? '' : "+$itemsInCart";
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>NerdyGadgets</title>
+<header class="header">
+    <div class="container">
+        <?php if(cartUpdateRequested()): ?>
+            <div>
+                <?php if($cartUpdate): ?>
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Hier komt de conversieverhogende maatregel van Jesse
+                    </div>
+                <?php else: ?>
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Er zijn geen producten meer op voorraad. Probeer het later nog eens
+                    </div>
+                <?php endif ?>
+            </div>
+        <?php endif ?>
+        <div class="row">
+            <div class="col-12">
+                <div class="header__inner">
 
-    <!-- Javascript -->
-    <script src="https://kit.fontawesome.com/c89a6832c4.js" crossorigin="anonymous"></script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/resizer.js"></script>
+                    <a href="./" class="header__logo" id="LogoA">
+                        NG
+                    </a>
 
-    <!-- Style sheets-->
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+                    <div class="header__navigation">
+                        <ul class="header__menu">
+                            <?php
+                            $HeaderStockGroups = getHeaderStockGroups($databaseConnection);
 
-    <link rel="stylesheet" href="css/components/header.css" type="text/css">
-    <link rel="stylesheet" href="css/components/article-header.css" type="text/css">
+                            foreach ($HeaderStockGroups as $HeaderStockGroup): ?>
+                                <li>
+                                    <a href="browse.php?category_id=<?= $HeaderStockGroup['StockGroupID']; ?>"
+                                       class="HrefDecoration"><?= $HeaderStockGroup['StockGroupName']; ?></a>
+                                </li>
+                            <?php endforeach; ?>
+                            <li>
+                                <a href="categories.php" class="HrefDecoration">Alle categorieën</a>
+                            </li>
+                        </ul>
 
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/typekit.css">
-</head>
-<body>
-<div class="Background">
-    <header class="header" id="Header">
-        <div class="header__pop-up">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="header__pop-up-inner">
-                            Plaats hier updates of sale gerelateerde updates zodat de klant daarvan op de hoogte is. (dit is conversie verhogend)
+<!--                        <form action="browse.php">-->
+<!--                            <input class="form-control" type="text" placeholder="Style mij nog even!" name="search_string" id="search_string" value="" class="form-submit">-->
+<!--                        </form>-->
+
+                        <div class="header__icons">
+                            <a href="/browse.php" class="search-icon btn btn--primary">
+                                <img class="icon" src="./img/icons/search.svg" alt="">
+                            </a>
+
+                            <a href="./login.php" class="profile-icon btn btn--primary">
+                                <img class="icon" src="./img/icons/profile.svg" alt="">
+                            </a>
+
+                            <a href="cart.php" class="cart-icon btn btn--primary">
+                                <?php if($itemsInCart > 0): ?>
+                                <div class="mr-2 cart-icon--count" id="cart-icon--count"><?=$itemsInCart?></div>
+                                <?php endif?>
+                                <img class="icon" src="./img/icons/cart.svg" alt="">
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="header__brand">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-3">
-                        <a href="./" class="header__logo" id="LogoA">
-                            <div id="LogoImage" class="header__logo-img">
-                                <img src="./img/logo.png" alt="">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-xs-4 search__input">
-                      <form action="browse.php">
-                        <input class="form-control" type="text" placeholder="Style mij nog even!" name="search_string" id="search_string" value="" class="form-submit">
-                      </form>
-                    </div>
-                    <div class="nav-wrapper">
-                        
-                        <a href="#" class="btn btn-light btn-lg">
-                            <i class="fa-solid fa-user"></i> Inloggen
-                        </a>
-                        <a href="cart.php" class="btn btn-light btn-lg">
-                            <i class="fa-solid fa-shopping-bag"></i> 
-                        </a>
-                    </div>
+    </div>
+</header>
 
-                </div>
-            </div>
-        </div>
-        <div class="header__nav">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12" id="CategoriesBar">
-                        <ul class="header__categories">
-                            <?php
-                            $HeaderStockGroups = getHeaderStockGroups($databaseConnection);
-
-                            foreach ($HeaderStockGroups as $HeaderStockGroup) {
-                                ?>
-                                <li>
-                                    <a href="browse.php?category_id=<?php print $HeaderStockGroup['StockGroupID']; ?>"
-                                       class="HrefDecoration"><?php print $HeaderStockGroup['StockGroupName']; ?></a>
-                                </li>
-                                <?php
-                            }
-                            ?>
-                            <li>
-                                <a href="categories.php" class="HrefDecoration">Alle categorieën</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-            <!-- code voor US3: zoeken -->
-
-
-
-            <!-- einde code voor US3 zoeken -->
-    </header>
-    <div class="container">
-            <!--            <div class="col-12">-->
-            <!--                <div id="SubContent">-->
-            <!--                --><?php //include "./Components/filter.php"; ?>
 
 
 

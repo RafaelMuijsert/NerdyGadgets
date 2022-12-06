@@ -91,7 +91,7 @@ function getItemStock($id, $databaseConnection) {
       $Result = mysqli_fetch_all($ReturnableResult, MYSQLI_ASSOC)[0];
   }
 
-  return $Result;
+  return $Result['QuantityOnHand'];
 }
 
 function getStockItemImage($id, $databaseConnection) {
@@ -108,4 +108,46 @@ function getStockItemImage($id, $databaseConnection) {
     $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
 
     return $R;
+}
+
+function cartUpdateRequested() {
+    return isset($_POST['id']);
+}
+
+/*
+ *  Update shopping cart after submit with necessary checks
+ * */
+function updateShoppingCart($connection) {
+    if(array_key_exists('remove', $_GET)):
+        unset($_SESSION['cart'][$_GET['remove']]);
+    endif;
+
+    if(cartUpdateRequested()) {
+        $quantity = 1;
+        if(isset($_POST['itemQuantity'])) {
+            $quantity = intval($_POST['itemQuantity']);
+        }
+        if(addToCart($_POST['id'], $quantity, $connection)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+/*
+Add $quantity of $id to cart. Returns false if available stock is less than $quantity.
+*/
+function addToCart($id, $quantity, $connection) {
+    $quantity = abs($quantity);
+    $stock = getItemStock($id, $connection);
+
+    $cartQuantity = 0;
+    if(array_key_exists($id, $_SESSION['cart'])) {
+        $cartQuantity = $_SESSION['cart'][$id];
+    }
+    if($stock < $cartQuantity + $quantity) {
+        return false;
+    }
+    $_SESSION['cart'][$id] = $cartQuantity + $quantity;
+    return true;
 }

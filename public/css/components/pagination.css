@@ -1,0 +1,25 @@
+.pagination {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.pagination__btn {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    color: var(--primary-color);
+    padding: 16px 26px;
+    margin: 0 11px;
+    font-size: 18px;
+}
+
+.pagination__btn-active {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    color: var(--sub-bg-color);
+    padding: 16px 26px;
+    margin: 0 11px;
+    font-size: 18px;
+}

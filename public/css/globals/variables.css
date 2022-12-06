@@ -1,0 +1,16 @@
+:root {
+    --primary-color: #0D6CE8;
+    --primary-color-hover: #0D6CE880;
+    --main-bg-color: #F8F8F8;
+    --sub-bg-color: #FFFFFF;
+    --accent-color: #3FE80D;
+    --accent-color-hover: #3FE80D80;
+    --text-color: #2E2D2D;
+    --border-radius: 12px;
+    --border-radius-small: 5px;
+    --transition: 0.3s ease all;
+    --drop-shadow:
+        3.1px 10.9px 7.7px rgba(0, 0, 0, 0.02),
+        7.7px 27.3px 21.3px rgba(0, 0, 0, 0.03),
+        25px 88px 80px rgba(0, 0, 0, 0.05);
+}
