@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-4">
                 <div class="checkout__wrapper bg-white">
-                    <h5>Ingevulde gegevens</h5>
+                    <h5 class="checkout__title">Ingevulde gegevens</h5>
 
                     <?php
                         $firstname = $_SESSION['userinfo']['firstname'];
@@ -42,8 +42,11 @@
                         <p>---</p>
                     <?php endif; ?>
 
-                    <h5>Bezorgmoment</h5>
-                    <p>Dinsdag 25 November - 10:30</p>
+                    <h5 class="checkout__title checkout__title-delivery">Bezorgmoment</h5>
+                    <ul>
+                        <li>Dinsdag 25 November - 10:30</li>
+                        <li>PostNL</li>
+                    </ul>
                 </div>
             </div>
             <div class="col-8">

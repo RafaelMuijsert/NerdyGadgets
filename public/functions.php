@@ -77,3 +77,14 @@ function findOrder($databaseConnection){
     $orderID = mysqli_fetch_all($Result, MYSQLI_ASSOC);
     return $orderID;
 }
+
+
+function getTotalPrice() {
+    foreach ($_SESSION['cart'] as $id => $quantity):
+        $total = 0;
+        $stockItem = getStockItem($id, $GLOBALS['databaseConnection']);
+        $price = round($stockItem['SellPrice'], 2);
+        $total += $price * $quantity;
+    endforeach;
+    return $total;
+}

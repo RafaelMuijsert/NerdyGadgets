@@ -37,7 +37,7 @@
                             <input class="input" placeholder="Achternaam" value="<?= $surname ?>" type="text" id="surname" name="surname" required>
                         </div>
 
-                        <div class="order__form-row order__form-row--50">
+                        <div class="order__form-row">
                             <?php
                             $birthDate = '';
                             if (isset($_SESSION['userinfo']['birthDate'])):
@@ -123,19 +123,11 @@
             </div>
             <div class="col-4">
                 <div class="order__wrapper bg-white">
-                    <?php
-//                        $quantity = $_SESSION['cart'][$stockItem['StockItemID']];
-//                        $stock = getItemStock($stockItem['StockItemID'], $databaseConnection)['QuantityOnHand'];
-//                        $price = round($stockItem['SellPrice'], 2);
-//                        $total += $price * $quantity;
-                    $total = 'Totaal moet nog berekend worden';
-                    ?>
                     <h5>Overzicht</h5>
                     <hr>
                     <div class="shopping-cart__total">
                         <div class="">Totaal</div>
-<!--                        <div class=" text-right">&euro; --><?//= (number_format($total, 2, '.')) ?><!--</div>-->
-                        <?= $total ?>
+                        € <?= getTotalPrice(); ?>
                     </div>
                 </div>
             </div>
