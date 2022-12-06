@@ -85,8 +85,12 @@
                                     </div>
 
                                     <div class="product__header-number">
-                                        <span><?= $stockItem['QuantityOnHand']; ?>  </span>
-                                        <span> Artikelnummer: <?= $stockItem["StockItemID"]; ?></span>
+                                        <div>
+                                            <span><?= $stockItem['QuantityOnHand']; ?>  </span>
+                                        </div>
+                                        <div>
+                                            <span> Artikelnummer: <?= $stockItem["StockItemID"]; ?></span>
+                                        </div>
                                     </div>
 
                                 </div>

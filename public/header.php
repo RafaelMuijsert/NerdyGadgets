@@ -12,21 +12,22 @@
     $itemsInCart = ($itemsInCart == 0) ? '' : "+$itemsInCart";
 ?>
 <header class="header">
-
-    <?php if(cartUpdateRequested()): ?>
-        <div>
-            <?php if($cartUpdate): ?>
-                <div class="alert alert-success" role="alert">
-                    Item is toegevoegd aan het winkelmandje
-                </div>
-            <?php else: ?>
-                <div class="alert alert-danger" role="alert">
-                    Er zijn geen producten meer op voorraad. Probeer het later nog eens
-                </div>
-            <?php endif ?>
-        </div>
-    <?php endif ?>
     <div class="container">
+        <?php if(cartUpdateRequested()): ?>
+            <div>
+                <?php if($cartUpdate): ?>
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Hier komt de conversieverhogende maatregel van Jesse
+                    </div>
+                <?php else: ?>
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Er zijn geen producten meer op voorraad. Probeer het later nog eens
+                    </div>
+                <?php endif ?>
+            </div>
+        <?php endif ?>
         <div class="row">
             <div class="col-12">
                 <div class="header__inner">
