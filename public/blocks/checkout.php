@@ -120,9 +120,6 @@
                         );
                         $orderID = findOrder($databaseConnection);
 
-                        $_SESSION['userinfo'] = '';
-                        $_SESSION['cart'] = [];
-
                         foreach ($_SESSION['cart'] as $id => $quantity):
                             $total = 0;
                             $stockItem = getStockItem($id, $GLOBALS['databaseConnection']);
@@ -130,7 +127,10 @@
                             $total += $price * $quantity;
                             addOrderregel($orderID[0]['max(OrderID)'], $id, $quantity, $total, $databaseConnection);
                             removeStock($id, $quantity, $databaseConnection);
-                        endforeach; ?>
+                        endforeach;
+                        $_SESSION['userinfo'] = '';
+                        $_SESSION['cart'] = [];
+                        ?>
 
                         <script>
                             window.location.replace('https://www.ideal.nl/demo/qr/?app=ideal');
