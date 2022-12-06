@@ -4,7 +4,7 @@
             <div class="col-8">
                 <div class="order__wrapper bg-white bg-white--large">
                     <h2>Gegevens invullen</h2>
-                    <p>Vul in de onderstaande Velden uw in:</p>
+                    <p>Vul in de onderstaande Velden uw gegevens in:</p>
                     <form method="post" action="checkout.php" class="order__form">
 
                         <div class="order__form-row order__form-row--40">
