@@ -22,21 +22,21 @@ function getCountry($databaseConnection) {
     return mysqli_fetch_all($Result, MYSQLI_ASSOC);
 }
 
-function addKlant($vNaam, $aNaam, $email, $telefoon, $databaseConnection){
+function addKlant($firstname, $prefixName, $surname, $birthdate, $email, $phonenumber, $databaseConnection){
     $Query = "
-            INSERT INTO webshop_klant (voornaam, achternaam, email, telefoonnummer)
-            VALUES (?, ?, ?, ?)";
+            INSERT INTO webshop_klant (voornaam, tussenvoegsel, achternaam, geboortedatum, email, telefoonnummer)
+            VALUES (?, ?, ?, ?, ?, ?)";
     $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "ssss", $vNaam, $aNaam, $email, $telefoon);
+    mysqli_stmt_bind_param($Statement, "ssssss", $firstname, $prefixName, $surname, $birthdate, $email, $phonenumber);
     mysqli_stmt_execute($Statement);
 }
 
-function addOrder($klantID, $land, $adress, $postcode, $stad, $databaseConnection){
+function addOrder($klantID, $land, $street, $housenumber, $postcode, $stad, $comment, $databaseConnection){
     $Query = "
-            INSERT INTO webshop_order (klantID, land, straat, postcode, stad)
-            VALUES (?, ?, ?, ?, ?)";
+            INSERT INTO webshop_order (klantID, straat, postcode, stad, land, huisnummer, opmerkingen)
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
     $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "sssss", $klantID, $land, $adress, $postcode, $stad);
+    mysqli_stmt_bind_param($Statement, "sssssss", $klantID, $street, $postcode, $stad, $land, $housenumber, $comment);
     mysqli_stmt_execute($Statement);
 }
 
@@ -48,6 +48,7 @@ function addOrderregel($orderID, $artikelID, $aantal, $bedrag, $databaseConnecti
     mysqli_stmt_bind_param($Statement, "ssid", $orderID, $artikelID, $aantal, $bedrag);
     mysqli_stmt_execute($Statement);
 }
+
 function removeStock($stockID, $aantal, $databaseConnection){
     $Query = "
             UPDATE stockitemholdings
@@ -57,6 +58,7 @@ function removeStock($stockID, $aantal, $databaseConnection){
     mysqli_stmt_bind_param($Statement, "ii", $aantal, $stockID);
     mysqli_stmt_execute($Statement);
 }
+
 function findKlant($databaseConnection){
     $Query = "
             SELECT max(klantID)
@@ -67,6 +69,7 @@ function findKlant($databaseConnection){
     $klantID = mysqli_fetch_all($Result, MYSQLI_ASSOC);
     return $klantID;
 }
+
 function findOrder($databaseConnection){
     $Query = "
             SELECT max(OrderID)
@@ -77,7 +80,6 @@ function findOrder($databaseConnection){
     $orderID = mysqli_fetch_all($Result, MYSQLI_ASSOC);
     return $orderID;
 }
-
 
 function getTotalPrice() {
     foreach ($_SESSION['cart'] as $id => $quantity):
