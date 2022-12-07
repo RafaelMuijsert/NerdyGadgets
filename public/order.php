@@ -14,7 +14,7 @@
 <body>
 
 <?php
-    include "functions.php";
+    include "../src/functions.php";
     include "header.php";
     include "./blocks/order.php";
     include "footer.php";
