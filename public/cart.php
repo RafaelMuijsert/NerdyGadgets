@@ -89,10 +89,8 @@
                             <?php endif; ?>
                         </div>
                     </div>
-
                     <div class="col-4">
                         <div class="shopping-cart__checkout bg-white">
-
                             <?php if (empty($_SESSION['cart'])):
                                 print("<h2>Uw winkelmandje is leeg.</h2>");
                             else: ?>
@@ -109,7 +107,6 @@
                                     <a href="./order.php" class="btn btn--order">Bestelling plaatsen</a>
                                 </div>
                             <?php endif; ?>
-
                         </div>
                     </div>
                 </div>

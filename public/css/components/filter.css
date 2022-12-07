@@ -65,6 +65,12 @@
     background-size: 50%;
     background-position: 53% 11px;
     background-repeat: no-repeat;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    pointer-events: none;
 }
 
 .filter__page-select {
@@ -96,6 +102,12 @@
     background-size: 35%;
     background-position: 50% 11px;
     background-repeat: no-repeat;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    pointer-events: none;
 }
 
 .filter__order-select {

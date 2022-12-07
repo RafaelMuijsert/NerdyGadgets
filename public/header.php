@@ -1,7 +1,7 @@
 <?php
     setlocale(LC_TIME, 'nl_NL');
     session_start();
-    include "database.php";
+    include "../src/database.php";
     $databaseConnection = connectToDatabase();
     $submitted = false;
     if(!isset($_SESSION['cart'])) {
