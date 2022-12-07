@@ -24,7 +24,7 @@
 .btn .icon {
     width: auto;
     height: 22px;
-    font-family: Roboto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     font-weight: 600;
     font-style: normal;
 }

@@ -45,7 +45,7 @@
     font-size: 64px;
     line-height: 0;
     color: var(--primary-color);
-    font-family: Roboto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     font-weight: 600;
     font-style: normal;
 }
