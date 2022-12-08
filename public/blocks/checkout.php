@@ -85,7 +85,7 @@
                                     </div>
 
                                     <div class="col text-right">
-                                        <p class="">&euro;<?=number_format($price * $quantity, 2)?></p>
+                                        <p class="">&euro;<?=number_format($price * $quantity, 2, '.', ',')?></p>
                                     </div>
                                 </div>
                             </div>

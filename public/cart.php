@@ -42,7 +42,6 @@
 
                                 <?php foreach ($_SESSION['cart'] as $key => $item):
                                     $stockItem = getStockItem($key, $databaseConnection);
-
                                     if (!$stockItem):
                                         continue;
                                     endif; ?>
@@ -58,7 +57,7 @@
                                         <div class="card__description">
                                             <div>
                                                 <h2><?= $stockItem['StockItemName'] ?></h2>
-                                                <div class="card__price">&euro; <?= number_format($stockItem['SellPrice'], 2, '.') ?> <span>Inclusief btw</span></div>
+                                                <div class="card__price">&euro; <?= number_format($stockItem['SellPrice'], 2, '.', ',') ?> <span>Inclusief btw</span></div>
                                             </div>
                                             <span class="card__stock">
                                                 Artikelnummer: <?= $stockItem['StockItemID'] ?>
@@ -100,7 +99,7 @@
                                 <hr>
                                 <div class="shopping-cart__total">
                                     <div class="">Totaal</div>
-                                    <div class=" text-right">&euro; <?= (number_format($total, 2, '.')) ?></div>
+                                    <div class=" text-right">&euro; <?= (number_format($total, 2, '.', ',')) ?></div>
                                 </div>
                                 <hr>
                                 <div class="text-right">
