@@ -145,6 +145,15 @@
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
+                                        <?php if ($stockItem['IsChillerStock']): ?>
+                                        <tr>
+                                            <td>Temperatuur</td>
+                                            <td class="text-right ml-2">
+                                                23
+                                            </td>
+                                        </tr>
+                                        <?php endif ?>
+
                                     </table>
                                 <?php else: ?>
                                     <p><?= $stockItem['CustomFields']; ?>.</p>
