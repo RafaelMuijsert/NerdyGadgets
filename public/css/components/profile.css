@@ -1,0 +1,30 @@
+.profile__logout {
+    width: 100%;
+    position: relative;
+}
+
+.profile__logout::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: url("/img/icons/logout.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    z-index: 1;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none !important;
+    pointer-events: none !important;
+}
+
+.profile__logout input {
+    width: 100%;
+}

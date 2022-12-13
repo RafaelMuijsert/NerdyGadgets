@@ -14,7 +14,10 @@
     </head>
     <body>
 
-        <?php include "header.php"; ?>
+        <?php
+            session_start();
+            include "header.php";
+        ?>
 
         <?php
         $total = 0;
@@ -25,6 +28,30 @@
             $value = ($value <= $stock) ? $value : $stock;
             $_SESSION['cart'][$key] = abs($value);
         endforeach;
+
+        function updateSession($arrayName) {
+
+            if($arrayName == 'cart' || $arrayName == 'registration') {
+
+                foreach($_POST as $key => $value):
+                    $value = abs($value);
+                    $stock = getItemStock($key, $databaseConnection);
+                    $value = ($value <= $stock) ? $value : $stock;
+                    $_SESSION[$arrayName][$key] = abs($value);
+                endforeach;
+
+            } else {
+                return "Function is not capable of handling this request";
+            }
+
+            foreach($_POST as $key => $value):
+                $value = abs($value);
+                $stock = getItemStock($key, $databaseConnection);
+                $value = ($value <= $stock) ? $value : $stock;
+                $_SESSION[$arrayName][$key] = abs($value);
+            endforeach;
+
+        }
 
 
         if (!isset($_SESSION['cart'])):
