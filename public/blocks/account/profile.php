@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <td>Postcode:</td>
-                <td><?= $_SESSION['account']['postcode'] . " ". $_SESSION['account']['stad'] ?></td>
+                <td><?= $_SESSION['account']['postcode'] . ", ". $_SESSION['account']['stad'] ?></td>
             </tr>
             <tr>
                 <td>Adres:</td>
