@@ -58,7 +58,7 @@
                             </a>
 
                             <?php
-                                if($_SESSION['isLoggedIn']):
+                                if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
                                     $url = './account.php';
                                 else:
                                     $url = './login.php';
