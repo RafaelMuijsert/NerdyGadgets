@@ -143,6 +143,9 @@ function inputcheck($sessionArray) {
     } elseif (validate_phone_number($_SESSION[$sessionArray]['phone'])) {
         print("Telefoonnummer is niet correct ingevuld!");
         return false;
+    } elseif (isset($_SESSION[$sessionArray]['password'])) {
+        print("Wachtwoord mag niet leeg zijn!");
+        return false;
     }
 
     return true;
