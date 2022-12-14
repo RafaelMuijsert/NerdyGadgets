@@ -108,7 +108,7 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
 
         loginUser($lgn, $pwd, $databaseConnection);
     } catch (mysqli_sql_exception $e) {
-        print("Emailadres is al in gebruik. Kies een ander!!");
+        print("Ongeldig e-mailadres");
     }
 
 }
