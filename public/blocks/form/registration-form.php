@@ -14,6 +14,8 @@
             $hashPassword = password_hash($_SESSION['registration']['password'], PASSWORD_DEFAULT);
 
             if(inputcheck('registration')):
+                $exeption = false;
+
                 //Create User in the database
                 createUser(
                     $_SESSION['registration']['email'],
@@ -27,10 +29,13 @@
                     $_SESSION['registration']['housenumber'],
                     $_SESSION['registration']['postcode'],
                     $_SESSION['registration']['city'],
-                    $databaseConnection
+                    $databaseConnection,
+                    $username,
+                    $pwd
                 );
+                if($exeption == false):
 
-                loginUser($username, $pwd, $databaseConnection);
+                endif;
             endif;
         endif;
         ?>

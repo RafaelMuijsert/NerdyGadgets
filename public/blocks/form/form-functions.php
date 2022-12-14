@@ -137,11 +137,14 @@ function inputcheck($sessionArray) {
     } elseif (!ctype_alpha($_SESSION[$sessionArray]['street'])) {
         print("Straatnaam is niet correct ingevuld!");
         return false;
-    } elseif (validate_email($_SESSION[$sessionArray]['email'])) {
+    } elseif (isset($_SESSION[$sessionArray]['email']) && validate_email($_SESSION[$sessionArray]['email'])) {
         print("Emailadres is niet correct ingevuld!");
         return false;
     } elseif (validate_phone_number($_SESSION[$sessionArray]['phone'])) {
         print("Telefoonnummer is niet correct ingevuld!");
+        return false;
+    } elseif (isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
+        print("Wachtwoord mag niet leeg zijn en moet langer dan 8 karakters lang zijn!");
         return false;
     }
 

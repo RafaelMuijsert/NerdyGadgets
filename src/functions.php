@@ -91,16 +91,24 @@ function getTotalPrice() {
     return $total;
 }
 
-function createUser($email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $databaseConnection) {
-    $Query = "
+function createUser($email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $databaseConnection, $lgn, $pwd) {
+
+    try {
+        $Query = "
                     INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param(
-        $Statement,
-        "ssssssssssss",
-        $userID,
-        $email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode
-    );
-    mysqli_stmt_execute($Statement);
+        $Statement = mysqli_prepare($databaseConnection, $Query);
+        mysqli_stmt_bind_param(
+            $Statement,
+            "ssssssssssss",
+            $userID,
+            $email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode
+        );
+        mysqli_stmt_execute($Statement);
+
+        loginUser($lgn, $pwd, $databaseConnection);
+    } catch (mysqli_sql_exception $e) {
+        print("Ongeldig e-mailadres");
+    }
+
 }
