@@ -2,8 +2,8 @@ USE nerdygadgets;
 CREATE TABLE webshop_user (
       id INT PRIMARY KEY AUTO_INCREMENT,
       email VARCHAR(256),
-      password varchar(255)
-          voornaam VARCHAR(256),
+      password varchar(255),
+        voornaam VARCHAR(256),
       tussenvoegsel VARCHAR(256),
       achternaam VARCHAR(256),
       geboortedatum DATE,
