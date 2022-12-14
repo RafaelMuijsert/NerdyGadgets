@@ -40,12 +40,12 @@ function addOrder($klantID, $land, $street, $housenumber, $postcode, $stad, $com
     mysqli_stmt_execute($Statement);
 }
 
-function addOrderregel($orderID, $artikelID, $aantal, $bedrag, $databaseConnection){
+function addOrderregel($orderID, $artikelID, $aantal, $bedrag, $korting, $databaseConnection){
     $Query = "
-            INSERT INTO webshop_orderregel (orderID, artikelID, aantal, bedrag)
-            VALUES (?, ?, ?, ?)";
+            INSERT INTO webshop_orderregel (orderID, artikelID, aantal, bedrag, procentKorting)
+            VALUES (?, ?, ?, ?, ?)";
     $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "ssid", $orderID, $artikelID, $aantal, $bedrag);
+    mysqli_stmt_bind_param($Statement, "ssidd", $orderID, $artikelID, $aantal, $bedrag, $korting);
     mysqli_stmt_execute($Statement);
 }
 
@@ -89,6 +89,36 @@ function getTotalPrice() {
         $total += $price * $quantity;
     endforeach;
     return $total;
+}
+function getKortingcode($kortingscode, $databaseConnection){
+    $Querry =  "
+            SELECT procent, geldigtot
+            FROM webshop_kortingscodes
+            WHERE codenaam = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, "s", $kortingscode);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    $korting =  mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $korting;
+}
+function checkDatum($kortingscode, $databaseConnection){
+    $Querry = "
+            SELECT geldigtot
+            FROM webshop_kortingscodes
+            WHERE codenaam = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement,'s', $kortingscode);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    $geldigTot = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    if ($geldigTot == NULL){
+        return true;
+    }
+    else {
+        $datum = date("Y-m-d");
+        return (strtotime($geldigTot[0]['geldigtot']) > strtotime($datum));
+    }
 }
 
 function createUser($email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $databaseConnection, $lgn, $pwd) {
