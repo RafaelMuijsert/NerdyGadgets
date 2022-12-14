@@ -50,6 +50,7 @@
         </table>
     </div>
     <hr>
+    <?php var_dump($_SESSION['account']); ?>
     <?php if($hasPlacedAnOrder): ?>
         <div class="profile__recent-order recent-order">
             <h2>Laatste bestelling</h2>

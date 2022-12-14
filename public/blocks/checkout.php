@@ -14,7 +14,7 @@
     );
     $shippingTime = '1 day';
     $shippingDate = $dateformatter->format(strtotime("+$shippingTime", mktime(0, 0, 0)));
-    $CHECKOUT_ENABLED = false;
+    $CHECKOUT_DISABLED = false;
 ?>
 <section class="checkout">
     <div class="container">
@@ -106,7 +106,7 @@
                     </div>
 
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
-                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && $CHECKOUT_ENABLED):
+                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && !$CHECKOUT_DISABLED):
 
                         $postcode = str_replace(' ', '', $_SESSION['userinfo']['postcode']);
 

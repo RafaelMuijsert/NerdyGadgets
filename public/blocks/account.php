@@ -41,7 +41,7 @@
                             </div>
                         <?php else: ?>
                             <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
-                                <?php include 'account/my-orders.php'?>
+                                <?php include 'account/order-history.php' ?>
                             </div>
                         <?php endif; ?>
                     </div>
