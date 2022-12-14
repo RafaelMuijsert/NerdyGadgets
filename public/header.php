@@ -1,7 +1,7 @@
 <?php
     setlocale(LC_TIME, 'nl_NL');
-    session_start();
-    include "database.php";
+
+    include "../src/database.php";
     $databaseConnection = connectToDatabase();
     $submitted = false;
     if(!isset($_SESSION['cart'])) {
@@ -52,16 +52,19 @@
                             </li>
                         </ul>
 
-<!--                        <form action="browse.php">-->
-<!--                            <input class="form-control" type="text" placeholder="Style mij nog even!" name="search_string" id="search_string" value="" class="form-submit">-->
-<!--                        </form>-->
-
                         <div class="header__icons">
                             <a href="/browse.php" class="search-icon btn btn--primary">
                                 <img class="icon" src="./img/icons/search.svg" alt="">
                             </a>
 
-                            <a href="./login.php" class="profile-icon btn btn--primary">
+                            <?php
+                                if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
+                                    $url = './account.php';
+                                else:
+                                    $url = './login.php';
+                                endif;
+                            ?>
+                            <a href="<?= $url ?>" class="profile-icon btn btn--primary">
                                 <img class="icon" src="./img/icons/profile.svg" alt="">
                             </a>
 

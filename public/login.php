@@ -14,10 +14,11 @@
 <body>
 
 <?php
-//        $StockGroups = getStockGroups($databaseConnection);
-include "header.php";
-include "./blocks/login.php";
-include "footer.php";
+//    $databaseConnection = $GLOBALS['databaseConnection'];
+    session_start();
+    include "header.php";
+    include "./blocks/login.php";
+    include "footer.php";
 ?>
 
 <script>

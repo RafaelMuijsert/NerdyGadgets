@@ -15,8 +15,9 @@
     <body>
 
         <?php
+            session_start();
             include "header.php";
-            include "functions.php";
+            include "../src/functions.php";
         ?>
 
         <!-- dit bestand bevat alle code voor het productoverzicht -->

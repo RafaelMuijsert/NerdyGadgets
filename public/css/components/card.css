@@ -35,27 +35,27 @@
 
 .card__description h2 {
     font-size: 24px;
-    font-family: Roboto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     font-weight: 500;
 }
 
 .card__price {
     font-size: 32px;
-    font-family: Roboto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     font-weight: 600;
     color: var(--primary-color);
 }
 
 .card__price span {
     font-size: 14px;
-    font-family: Roboto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     font-weight: 600;
 }
 
 .card__stock {
     margin-bottom: 22px;
     font-size: 16px;
-    font-family: Roboto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     font-weight: 200;
 }
 

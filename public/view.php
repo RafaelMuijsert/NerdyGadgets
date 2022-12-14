@@ -15,6 +15,7 @@
     <body>
 
         <?php
+            session_start();
             include "header.php";
             $stockItem = getStockItem($_GET['id'], $databaseConnection);
             $stockItemImage = getStockItemImage($_GET['id'], $databaseConnection);
@@ -144,6 +145,15 @@
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
+                                        <?php if ($stockItem['IsChillerStock']): ?>
+                                        <tr>
+                                            <td>Temperatuur</td>
+                                            <td class="text-right ml-2">
+                                                <?= getColdroomTemperature($databaseConnection) ?> °C
+                                            </td>
+                                        </tr>
+                                        <?php endif ?>
+
                                     </table>
                                 <?php else: ?>
                                     <p><?= $stockItem['CustomFields']; ?>.</p>

@@ -14,7 +14,8 @@
 <body>
 
 <?php
-    include "functions.php";
+    session_start();
+    include "../src/functions.php";
     include "header.php";
     include "./blocks/checkout.php";
     include "footer.php";

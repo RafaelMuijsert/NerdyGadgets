@@ -14,6 +14,7 @@
     );
     $shippingTime = '1 day';
     $shippingDate = $dateformatter->format(strtotime("+$shippingTime", mktime(0, 0, 0)));
+    $CHECKOUT_ENABLED = false;
 ?>
 <section class="checkout">
     <div class="container">
@@ -68,10 +69,14 @@
                     <div class="checkout__products">
                         <?php
                         $total = 0;
+                        $factor = 1;
                         foreach($_SESSION['cart'] as $id => $quantity): ?>
                             <?php $stockItem = getStockItem($id, $GLOBALS['databaseConnection']);
                             $price = round($stockItem['SellPrice'], 2);
-                            $total += $price * $quantity;
+                            if (isset($_SESSION['korting'][0]['procent'])){
+                                $factor = (1 - ($_SESSION['korting'][0]['procent'] * 0.01));
+                            }
+                            $total += round(($price * $factor),2) * $quantity;
                             ?>
                             <div class="container p-2 mb-3 border d-flex align-items-center">
                                 <div class="row">
@@ -85,7 +90,13 @@
                                     </div>
 
                                     <div class="col text-right">
+                                        <?php if (!isset($_SESSION['korting'][0]['procent'])): ?>
                                         <p class="">&euro;<?=number_format($price * $quantity, 2)?></p>
+                                        <?php else:
+                                        ?>
+                                        <del><del style="display:inline-block;">&euro;<?=number_format($price * $quantity, 2)?></del></del>
+                                        <p style="display:inline-block;">&emsp;&euro;<?=number_format($price * $factor * $quantity, 2)?></p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -95,7 +106,7 @@
                     </div>
 
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
-                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay'):
+                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && $CHECKOUT_ENABLED):
 
                         $postcode = str_replace(' ', '', $_SESSION['userinfo']['postcode']);
 
@@ -124,14 +135,22 @@
 
                         foreach ($_SESSION['cart'] as $id => $quantity):
                             $total = 0;
+                            $factor = 1;
                             $stockItem = getStockItem($id, $GLOBALS['databaseConnection']);
                             $price = round($stockItem['SellPrice'], 2);
-                            $total += $price * $quantity;
-                            addOrderregel($orderID[0]['max(OrderID)'], $id, $quantity, $total, $databaseConnection);
+                            if (isset($_SESSION['korting'][0]['procent'])){
+                                $factor = (1 - ($_SESSION['korting'][0]['procent'] * 0.01));
+                                $procent = $_SESSION['korting'][0]['procent'];
+                            }
+                            else $procent = NULL;
+                            $total += round(($price * $factor),2) * $quantity;
+
+                            addOrderregel($orderID[0]['max(OrderID)'], $id, $quantity, $total, $procent,$databaseConnection);
                             removeStock($id, $quantity, $databaseConnection);
                         endforeach;
                         $_SESSION['userinfo'] = '';
                         $_SESSION['cart'] = [];
+                        unset($_SESSION['korting']);
                         ?>
 
                         <script>
