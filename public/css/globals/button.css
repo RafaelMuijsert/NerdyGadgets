@@ -103,3 +103,61 @@
     background-color: var(--accent-color-hover);
     color: var(--sub-bg-color);
 }
+
+/*
+    Grey button
+*/
+.btn--grey {
+    background-color: var(--main-bg-color);
+    border-radius: var(--border-radius) !important;
+    color: var(--text-color);
+    border: none;
+    width: 100%;
+    text-align: left;
+    position: relative;
+}
+
+.btn--grey.active::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 16px;
+    background-image: url("/img/icons/long-arrow.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.btn--grey:hover {
+    background-color: var(--primary-color-hover);
+    color: var(--sub-bg-color);
+}
+
+.btn .icon {
+    width: auto;
+    height: 22px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+/*
+    Red button
+*/
+.btn--red {
+    background-color: var(--accent-red-hover);
+    border-radius: var(--border-radius) !important;
+    color: var(--sub-bg-color);
+    border: none;
+    text-align: left;
+    position: relative;
+    padding-left: 48px;
+}
+
+.btn--red:hover {
+    background-color: var(--accent-red);
+    color: var(--sub-bg-color);
+}

@@ -3,6 +3,7 @@
     if(count($_POST) > 0):
         $_SESSION['userinfo'] = $_POST;
     endif;
+
     $databaseConnection = $GLOBALS['databaseConnection'];
     $dateformatter = new IntlDateFormatter(
         'nl_NL',

@@ -5,6 +5,10 @@
     margin-top: 24px;
 }
 
+.order__form-error {
+    color: var(--accent-red);
+}
+
 .order__form-row {
     width: calc(100% - 16px);
     float: left;

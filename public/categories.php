@@ -15,6 +15,7 @@
     <body>
 
         <?php
+            session_start();
             include "header.php";
             include __DIR__ . "/blocks/categories.php";
             include "footer.php";
