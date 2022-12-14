@@ -14,6 +14,7 @@
     <body>
 
     <?php
+        session_start();
         include "header.php";
         include "blocks/page-banner.php";
         include "blocks/media-text.php";

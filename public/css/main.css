@@ -22,6 +22,7 @@
 @import "partials/shopping-cart.css";
 @import "partials/order.css";
 @import "partials/checkout.css";
+@import "partials/login.css";
 @import "partials/footer.css";
 
 /* Components */
@@ -31,3 +32,5 @@
 @import "components/product.css";
 @import "components/pagination.css";
 @import "components/carousel.css";
+@import "components/account-menu.css";
+@import "components/profile.css";

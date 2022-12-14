@@ -15,6 +15,7 @@
     <body>
 
         <?php
+            session_start();
             include "header.php";
             $stockItem = getStockItem($_GET['id'], $databaseConnection);
             $stockItemImage = getStockItemImage($_GET['id'], $databaseConnection);

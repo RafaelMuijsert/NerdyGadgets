@@ -47,7 +47,7 @@
 
 .categories__item-title {
     color: var(--sub-bg-color);
-    font-family: Roboto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     font-weight: 500;
     font-style: normal !important;
     font-size: 48px;

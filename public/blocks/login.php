@@ -1,13 +1,34 @@
+<?php
+    include "form/form-functions.php";
+?>
 <section class="login">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
+        <div class="row justify-content-center">
+            <div class="col-4">
                 <div class="bg-white bg-white--large">
-                    <h1 class="shopping-cart__title">Login page</h1>
-                    <form action="" method="POST">
-                        <input class="input" placeholder="Gebruikersnaam" type="email" name="username">
+                    <h1 class="login__title">Login page</h1>
+
+                    <?php
+                        if(isset($_POST) && isset($_POST['submitLogin'])):
+                            $_SESSION['login'] = $_POST;
+                            $conn = $databaseConnection;
+                            $username = $_SESSION['login']['username'];
+                            $pwd = $_SESSION['login']['password'];
+
+                            loginUser($username, $pwd, $conn);
+                        endif;
+                    ?>
+
+                    <form class="login__form" action="" method="POST">
+                        <label for="username">Gebruikersnaam:</label>
+                        <input class="input" placeholder="Gebruikersnaam" type="text" name="username">
+
+                        <label for="password">Wachtwoord:</label>
                         <input class="input" placeholder="Wachtwoord" type="password" name="password">
-                        <input class="btn btn--order" type="submit">
+
+                        <a href="./register.php">Registreer nu!</a>
+
+                        <input name="submitLogin" class="btn btn--order submit" type="submit">
                     </form>
                 </div>
             </div>

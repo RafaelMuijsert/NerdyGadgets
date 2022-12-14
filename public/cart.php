@@ -14,7 +14,10 @@
     </head>
     <body>
 
-        <?php include "header.php"; ?>
+        <?php
+            session_start();
+            include "header.php";
+        ?>
 
         <?php
         $total = 0;
@@ -25,6 +28,30 @@
             $value = ($value <= $stock) ? $value : $stock;
             $_SESSION['cart'][$key] = abs($value);
         endforeach;
+
+        function updateSession($arrayName) {
+
+            if($arrayName == 'cart' || $arrayName == 'registration') {
+
+                foreach($_POST as $key => $value):
+                    $value = abs($value);
+                    $stock = getItemStock($key, $databaseConnection);
+                    $value = ($value <= $stock) ? $value : $stock;
+                    $_SESSION[$arrayName][$key] = abs($value);
+                endforeach;
+
+            } else {
+                return "Function is not capable of handling this request";
+            }
+
+            foreach($_POST as $key => $value):
+                $value = abs($value);
+                $stock = getItemStock($key, $databaseConnection);
+                $value = ($value <= $stock) ? $value : $stock;
+                $_SESSION[$arrayName][$key] = abs($value);
+            endforeach;
+
+        }
 
 
         if (!isset($_SESSION['cart'])):
@@ -42,7 +69,6 @@
 
                                 <?php foreach ($_SESSION['cart'] as $key => $item):
                                     $stockItem = getStockItem($key, $databaseConnection);
-
                                     if (!$stockItem):
                                         continue;
                                     endif; ?>
@@ -58,7 +84,7 @@
                                         <div class="card__description">
                                             <div>
                                                 <h2><?= $stockItem['StockItemName'] ?></h2>
-                                                <div class="card__price">&euro; <?= number_format($stockItem['SellPrice'], 2, '.') ?> <span>Inclusief btw</span></div>
+                                                <div class="card__price">&euro; <?= number_format($stockItem['SellPrice'], 2, '.', ',') ?> <span>Inclusief btw</span></div>
                                             </div>
                                             <span class="card__stock">
                                                 Artikelnummer: <?= $stockItem['StockItemID'] ?>
@@ -100,7 +126,7 @@
                                 <hr>
                                 <div class="shopping-cart__total">
                                     <div class="">Totaal</div>
-                                    <div class=" text-right">&euro; <?= (number_format($total, 2, '.')) ?></div>
+                                    <div class=" text-right">&euro; <?= (number_format($total, 2, '.', ',')) ?></div>
                                 </div>
                                 <hr>
                                 <div class="text-right">

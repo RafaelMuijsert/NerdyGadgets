@@ -2,23 +2,23 @@
 <?php
 
 function connectToDatabase() {
-    $Connection = null;
+    $connection = null;
 
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Set MySQLi to throw exceptions
     try {
-        $Connection = mysqli_connect("localhost", "nerd", "NerdyGadgets69420!@", "nerdygadgets");
-        mysqli_set_charset($Connection, 'latin1');
-        $DatabaseAvailable = true;
+	$connection = mysqli_connect("localhost", "nerd", getenv("DB_PASSWORD"), "nerdygadgets");
+        mysqli_set_charset($connection, 'latin1');
+        $databaseAvailable = true;
     } catch (mysqli_sql_exception $e) {
 //        var_dump($e);
-        $DatabaseAvailable = false;
+        $databaseAvailable = false;
     }
-    if (!$DatabaseAvailable) {
+    if (!$databaseAvailable) {
         ?><h2>Website wordt op dit moment onderhouden.</h2><?php
         die();
     }
 
-    return $Connection;
+    return $connection;
 }
 
 function getHeaderStockGroups($databaseConnection) {
