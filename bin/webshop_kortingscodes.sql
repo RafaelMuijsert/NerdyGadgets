@@ -1,12 +1,13 @@
-create table webshop_kortingscodes (
+USE nerdygadgets;
+CREATE TABLE IF NOT EXISTS webshop_kortingscodes (
 	codenaam varchar(10) PRIMARY KEY,
 	procent DOUBLE(4,2) NOT NULL,
-	geldigtot date,
-	uses int(4)
+	geldigtot DATE,
+	uses INT(4)
 );
 
-insert into webshop_kortingscodes (codenaam, procent, geldigtot)
-values ('TEST', 20, '2023-01-01')
+INSERT INTO webshop_kortingscodes (codenaam, procent, geldigtot)
+VALUES ('TEST', 20, '2023-01-01');
 
-alter table webshop_orderregel
-add procentKorting DOUBLE(4,2)
+ALTER TABLE webshop_orderregel
+ADD procentKorting DOUBLE(4,2);
