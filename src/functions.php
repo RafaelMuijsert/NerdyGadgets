@@ -93,7 +93,7 @@ function getTotalPrice() {
 function getKortingcode($kortingscode, $databaseConnection){
     $Querry =  "
             SELECT procent, geldigtot
-            FROM kortingcodes
+            FROM webshop_kortingscodes
             WHERE codenaam = ?";
     $Statement = mysqli_prepare($databaseConnection, $Querry);
     mysqli_stmt_bind_param($Statement, "s", $kortingscode);
@@ -105,7 +105,7 @@ function getKortingcode($kortingscode, $databaseConnection){
 function checkDatum($kortingscode, $databaseConnection){
     $Querry = "
             SELECT geldigtot
-            FROM kortingcodes
+            FROM webshop_kortingscodes
             WHERE codenaam = ?";
     $Statement = mysqli_prepare($databaseConnection, $Querry);
     mysqli_stmt_bind_param($Statement,'s', $kortingscode);
