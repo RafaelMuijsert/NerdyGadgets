@@ -13,11 +13,13 @@
 
 /* Shopping cart summary */
 .shopping-cart__total {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto;
     justify-content: space-between;
     font-family: Roboto;
     font-size: 16px;
     font-weight: 200;
+    row-gap: 8px;
 }
 
 .shopping-cart__total div {

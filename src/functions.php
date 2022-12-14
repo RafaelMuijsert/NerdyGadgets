@@ -90,3 +90,33 @@ function getTotalPrice() {
     endforeach;
     return $total;
 }
+function getKortingcode($kortingscode, $databaseConnection){
+    $Querry =  "
+            SELECT procent, stockgroup, geldigtot
+            FROM kortingcodes
+            WHERE codenaam = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, "s", $kortingscode);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    $korting =  mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $korting;
+}
+function checkDatum($kortingscode, $databaseConnection){
+    $Querry = "
+            SELECT geldigtot
+            FROM kortingcodes
+            WHERE codenaam = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement,'s', $kortingscode);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    $geldigTot = mysqli_fetch_all($result, MYSQLI_ASSOC)[0]['geldigtot'];
+    if ($geldigTot == NULL){
+        return true;
+    }
+    else {
+        $datum = date("Y-m-d");
+        return (strtotime($geldigTot) > strtotime($datum));
+    }
+}

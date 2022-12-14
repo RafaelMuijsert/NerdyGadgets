@@ -68,10 +68,14 @@
                     <div class="checkout__products">
                         <?php
                         $total = 0;
+                        $factor = 1;
                         foreach($_SESSION['cart'] as $id => $quantity): ?>
                             <?php $stockItem = getStockItem($id, $GLOBALS['databaseConnection']);
                             $price = round($stockItem['SellPrice'], 2);
-                            $total += $price * $quantity;
+                            if (isset($_SESSION['korting'][0]['procent'])){
+                                $factor = (1 - ($_SESSION['korting'][0]['procent'] * 0.01));
+                            }
+                            $total += ($price * $factor) * $quantity;
                             ?>
                             <div class="container p-2 mb-3 border d-flex align-items-center">
                                 <div class="row">
@@ -85,7 +89,13 @@
                                     </div>
 
                                     <div class="col text-right">
+                                        <?php if (!isset($_SESSION['korting'][0]['procent'])): ?>
                                         <p class="">&euro;<?=number_format($price * $quantity, 2)?></p>
+                                        <?php else:
+                                        ?>
+                                        <strike><p class="">&euro;<?=number_format($price * $quantity, 2)?></p></strike>
+                                        <p class="">&euro;<?=number_format($price * $factor * $quantity, 2)?></p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
