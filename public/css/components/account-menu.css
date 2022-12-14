@@ -1,5 +1,84 @@
 .acc-menu .btn {
     margin-bottom: 20px;
+    padding: 20px 16px 16px 48px;
+    position: relative;
+}
+
+.acc-menu #v-pills-home-tab::before {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background-image: url("/img/icons/profile-acc.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
+}
+
+.acc-menu #v-pills-home-tab.active::before,
+.acc-menu #v-pills-home-tab:hover #v-pills-home-tab::before {
+    background-image: url("/img/icons/profile-acc--white.svg") !important;
+}
+
+.acc-menu #v-pills-settings-tab::before {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background-image: url("/img/icons/settings.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
+}
+
+.acc-menu #v-pills-settings-tab.active::before {
+    background-image: url("/img/icons/settings--white.svg") !important;
+}
+
+.acc-menu #v-pills-account-tab::before {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background-image: url("/img/icons/account-management.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
+}
+
+.acc-menu #v-pills-account-tab.active::before {
+    background-image: url("/img/icons/account-management--white.svg") !important;
+}
+
+.acc-menu #v-pills-orders-tab::before {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background-image: url("/img/icons/orders.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1;
+}
+
+.acc-menu #v-pills-orders-tab.active::before {
+    background-image: url("/img/icons/orders--white.svg") !important;
 }
 
 .acc-menu .btn:last-child {

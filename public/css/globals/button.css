@@ -117,20 +117,6 @@
     position: relative;
 }
 
-.btn--grey.active::after {
-    content: "";
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 16px;
-    background-image: url("/img/icons/long-arrow.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
 .btn--grey:hover {
     background-color: var(--primary-color-hover);
     color: var(--sub-bg-color);
