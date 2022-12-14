@@ -20,7 +20,7 @@
 }
 
 .acc-menu #v-pills-home-tab.active::before,
-.acc-menu #v-pills-home-tab:hover #v-pills-home-tab::before {
+.acc-menu #v-pills-home-tab:hover::before {
     background-image: url("/img/icons/profile-acc--white.svg") !important;
 }
 
@@ -39,7 +39,8 @@
     z-index: 1;
 }
 
-.acc-menu #v-pills-settings-tab.active::before {
+.acc-menu #v-pills-settings-tab.active::before,
+.acc-menu #v-pills-settings-tab:hover::before {
     background-image: url("/img/icons/settings--white.svg") !important;
 }
 
@@ -58,7 +59,8 @@
     z-index: 1;
 }
 
-.acc-menu #v-pills-account-tab.active::before {
+.acc-menu #v-pills-account-tab.active::before,
+.acc-menu #v-pills-account-tab:hover::before {
     background-image: url("/img/icons/account-management--white.svg") !important;
 }
 
@@ -77,7 +79,8 @@
     z-index: 1;
 }
 
-.acc-menu #v-pills-orders-tab.active::before {
+.acc-menu #v-pills-orders-tab.active::before,
+.acc-menu #v-pills-orders-tab:hover::before {
     background-image: url("/img/icons/orders--white.svg") !important;
 }
 
