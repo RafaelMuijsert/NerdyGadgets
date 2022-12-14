@@ -27,7 +27,7 @@
     padding: 0 24px;
     text-decoration: none !important;
     outline: none !important;
-    font-family: Roboto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     font-weight: 600;
     font-style: normal;
 }
@@ -37,7 +37,7 @@
     color: var(--sub-bg-color);
     display: flex;
     align-items: center;
-    font-family: Roboto;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     font-weight: 600;
     font-style: normal;
 }

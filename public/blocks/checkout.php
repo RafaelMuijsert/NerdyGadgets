@@ -146,7 +146,6 @@
 
                             addOrderregel($orderID[0]['max(OrderID)'], $id, $quantity, $total, $procent,$databaseConnection);
                             removeStock($id, $quantity, $databaseConnection);
-
                         endforeach;
                         $_SESSION['userinfo'] = '';
                         $_SESSION['cart'] = [];

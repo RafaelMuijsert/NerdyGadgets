@@ -14,19 +14,24 @@ Please see https://github.com/php-pds/skeleton
 
 ## Setup
 
+In your Apache configuration, add the following option (usually above the DocumentRoot option):
+```
+SetEnv DB_PASSWORD "[PASSWORD]" 
+```
+Where `[PASSWORD]` = the database password.
+
 Edit php.ini and add the following line under [PHP]:
 ```
 extension=intl
 ```
+If you are using XAMPP, the mysqli extension should be enabled by default. 
+If this is not the case, or if you are hosting the server a different way, repeat the above step with the mysqli extension.
 
-Install the given database from the official Windesheim GitLab.
-Run the following commands in a mariadb shell:
-```sql
-CREATE USER IF NOT EXISTS 'nerd'@'localhost' IDENTIFIED BY 'NerdyGadgets69420!@'
-GRANT ALL PRIVILEGES ON nerdygadgets.* TO 'nerd'@'localhost';
+### Make sure the web server root is set to public/ and not to the project root.
+
+## Testing
+Given below is the shell command that can be used to connect to the primary database in case you want to perform manual operations.
+```bash
+$ sudo mariadb --host='nerdygadgets.shop' --port=33646 --user='nerd' --password='[PASSWORD]' 'nerdygadgets'
 ```
-Or alternatively, run the database_user.sql file found in bin
-
-Make sure the web server is pointed to the public/ directory and not to the project root.
-
 
