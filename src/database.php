@@ -95,6 +95,16 @@ function getItemStock($id, $databaseConnection) {
   return $Result['QuantityOnHand'];
 }
 
+function getColdroomTemperature($databaseConnection) {
+    try {
+        $result = mysqli_query($databaseConnection, 'SELECT Temperature FROM coldroomtemperatures');
+        return(mysqli_fetch_row($result)[0]);
+    } catch (Exception $err) {
+        return '???';
+    }
+
+}
+
 function getStockItemImage($id, $databaseConnection) {
 
     $Query = "

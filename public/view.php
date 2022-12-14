@@ -148,7 +148,7 @@
                                         <tr>
                                             <td>Temperatuur</td>
                                             <td class="text-right ml-2">
-                                                23
+                                                <?= getColdroomTemperature($databaseConnection) ?> °C
                                             </td>
                                         </tr>
                                         <?php endif ?>
