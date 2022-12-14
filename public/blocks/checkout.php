@@ -75,7 +75,7 @@
                             if (isset($_SESSION['korting'][0]['procent'])){
                                 $factor = (1 - ($_SESSION['korting'][0]['procent'] * 0.01));
                             }
-                            $total += ($price * $factor) * $quantity;
+                            $total += round(($price * $factor),2) * $quantity;
                             ?>
                             <div class="container p-2 mb-3 border d-flex align-items-center">
                                 <div class="row">
@@ -93,8 +93,8 @@
                                         <p class="">&euro;<?=number_format($price * $quantity, 2)?></p>
                                         <?php else:
                                         ?>
-                                        <strike><p class="">&euro;<?=number_format($price * $quantity, 2)?></p></strike>
-                                        <p class="">&euro;<?=number_format($price * $factor * $quantity, 2)?></p>
+                                        <del><del style="display:inline-block;">&euro;<?=number_format($price * $quantity, 2)?></del></del>
+                                        <p style="display:inline-block;">&emsp;&euro;<?=number_format($price * $factor * $quantity, 2)?></p>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -134,14 +134,23 @@
 
                         foreach ($_SESSION['cart'] as $id => $quantity):
                             $total = 0;
+                            $factor = 1;
                             $stockItem = getStockItem($id, $GLOBALS['databaseConnection']);
                             $price = round($stockItem['SellPrice'], 2);
-                            $total += $price * $quantity;
-                            addOrderregel($orderID[0]['max(OrderID)'], $id, $quantity, $total, $databaseConnection);
+                            if (isset($_SESSION['korting'][0]['procent'])){
+                                $factor = (1 - ($_SESSION['korting'][0]['procent'] * 0.01));
+                                $procent = $_SESSION['korting'][0]['procent'];
+                            }
+                            else $procent = NULL;
+                            $total += round(($price * $factor),2) * $quantity;
+
+                            addOrderregel($orderID[0]['max(OrderID)'], $id, $quantity, $total, $procent,$databaseConnection);
                             removeStock($id, $quantity, $databaseConnection);
+
                         endforeach;
                         $_SESSION['userinfo'] = '';
                         $_SESSION['cart'] = [];
+                        unset($_SESSION['korting']);
                         ?>
 
                         <script>

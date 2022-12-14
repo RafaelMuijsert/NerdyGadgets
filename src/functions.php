@@ -40,12 +40,12 @@ function addOrder($klantID, $land, $street, $housenumber, $postcode, $stad, $com
     mysqli_stmt_execute($Statement);
 }
 
-function addOrderregel($orderID, $artikelID, $aantal, $bedrag, $databaseConnection){
+function addOrderregel($orderID, $artikelID, $aantal, $bedrag, $korting, $databaseConnection){
     $Query = "
-            INSERT INTO webshop_orderregel (orderID, artikelID, aantal, bedrag)
-            VALUES (?, ?, ?, ?)";
+            INSERT INTO webshop_orderregel (orderID, artikelID, aantal, bedrag, procentKorting)
+            VALUES (?, ?, ?, ?, ?)";
     $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "ssid", $orderID, $artikelID, $aantal, $bedrag);
+    mysqli_stmt_bind_param($Statement, "ssidd", $orderID, $artikelID, $aantal, $bedrag, $korting);
     mysqli_stmt_execute($Statement);
 }
 
@@ -92,7 +92,7 @@ function getTotalPrice() {
 }
 function getKortingcode($kortingscode, $databaseConnection){
     $Querry =  "
-            SELECT procent, stockgroup, geldigtot
+            SELECT procent, geldigtot
             FROM kortingcodes
             WHERE codenaam = ?";
     $Statement = mysqli_prepare($databaseConnection, $Querry);
@@ -111,12 +111,12 @@ function checkDatum($kortingscode, $databaseConnection){
     mysqli_stmt_bind_param($Statement,'s', $kortingscode);
     mysqli_stmt_execute($Statement);
     $result = mysqli_stmt_get_result($Statement);
-    $geldigTot = mysqli_fetch_all($result, MYSQLI_ASSOC)[0]['geldigtot'];
+    $geldigTot = mysqli_fetch_all($result, MYSQLI_ASSOC);
     if ($geldigTot == NULL){
         return true;
     }
     else {
         $datum = date("Y-m-d");
-        return (strtotime($geldigTot) > strtotime($datum));
+        return (strtotime($geldigTot[0]['geldigtot']) > strtotime($datum));
     }
 }
