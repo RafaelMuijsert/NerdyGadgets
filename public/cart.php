@@ -151,9 +151,9 @@
                                     <?php if (isset($_SESSION['korting'][0]['procent'])): ?>
 <!--                                    even naar kijken wat moet voor de css, mij lukt dit niet-->
                                         <div class="">Prijs</div>
-                                        <div class=" text-right">&euro; <?= (number_format($zonderKorting, 2, '.')) ?></div>
+                                        <div class=" text-right">&euro; <?= (number_format($zonderKorting, 2, '.', ',')) ?></div>
                                         <div class=""><?php print ($_SESSION['korting'][0]['procent'] . "% korting")?></div>
-                                        <div class=" text-right">&euro; <?= (number_format(($zonderKorting - $total), 2, '.')) ?></div>
+                                        <div class=" text-right">&euro; <?= (number_format(($zonderKorting - $total), 2, '.', ',')) ?></div>
                                     <?php endif; ?>
                                     <div class="">Totaal</div>
                                     <div class=" text-right">&euro; <?= (number_format($total, 2, '.', ',')) ?></div>
