@@ -174,3 +174,19 @@ function kortingscodes($databaseConnection){
     $result = mysqli_stmt_get_result($Statement);
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
+function removeKortingscode($kortingID, $databaseConnection){
+    $Querry = "
+            DELETE FROM webshop_kortingscodes
+            WHERE kortingID = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, "s", $kortingID);
+    mysqli_stmt_execute($Statement);
+}
+function addKortingscode($naam, $procent, $geldigtot, $uses, $databaseConnection){
+    $Querry = "
+            INSERT INTO webshop_kortingscodes(codenaam, procent, geldigtot, uses)
+            VALUES (?,?,?,?)";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, 'sdsi', $naam, $procent, $geldigtot, $uses);
+    mysqli_stmt_execute($Statement);
+}

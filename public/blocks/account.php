@@ -5,12 +5,12 @@
                 <div class="bg-white acc-menu">
 
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="btn btn--grey nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Gebruikersprofiel</a>
+                        <a class="btn btn--grey nav-link active" id="v-pills-home-tab" data-toggle="tab" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Gebruikersprofiel</a>
                         <?php if(isset($_SESSION['account']) && $_SESSION['account']['role'] == 'Admin'): ?>
-                            <a class="btn btn--grey nav-link" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-account" aria-selected="false">Account beheer</a>
-                            <a class="btn btn--grey nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Admin instellingen</a>
+                            <a class="btn btn--grey nav-link" id="v-pills-account-tab" data-toggle="tab" href="#v-pills-account" role="tab" aria-controls="v-pills-account" aria-selected="false">Account beheer</a>
+                            <a class="btn btn--grey nav-link" id="v-pills-settings-tab" data-toggle="tab" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Admin instellingen</a>
                         <?php else: ?>
-                            <a class="btn btn--grey nav-link" id="v-pills-orders-tab" data-toggle="pill" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">Mijn bestellingen</a>
+                            <a class="btn btn--grey nav-link" id="v-pills-orders-tab" data-toggle="tab" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">Mijn bestellingen</a>
                         <?php endif; ?>
                         <form class="profile__logout" method="POST" action="">
                             <input name="logoutSubmit" type="submit" class="btn btn--red" value="Uitloggen">
@@ -50,4 +50,24 @@
         </div>
     </div>
 </section>
+<script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var hash = $(e.target).attr('href');
+        if (history.pushState) {
+            history.pushState(null, null, hash);
+        } else {
+            location.hash = hash;
+        }
+    });
 
+    console.log('asdfasdfas' + window.location.hash)
+
+    if(window.location.hash === ''){
+        location.href = '#v-pills-home';
+    }
+
+    var hash = window.location.hash;
+    if (hash) {
+        $('.nav-link[href="' + hash + '"]').tab('show');
+    }
+</script>
