@@ -10,7 +10,6 @@
                 $date = str_split($order['datum'], 11);
                 ?>
                 <div class="order-history__order">
-                    <?php var_dump($order); ?>
                     <div class="accordion order-history__order-header ">
                         <div class="order-history__order-img">
                             <?php if (isset($order['ImagePath'])): ?>
@@ -23,13 +22,13 @@
                         </div>
                         <div class="order-history__order-description">
                             <h4><?= $order['StockItemName'] ?></h4>
+                            <div class="btn btn--order"><?= getOrderStatus($order['datum']); ?></div>
+                            <p>Besteld op: <?= $date[0] ?></p>
+                        </div>
+                        <div class="order-history__delivery">
                             <p>€   <?= round($totalPrice, 2); ?> excl. btw</p>
                             <p>Aantal: <?= $order['aantal'] ?></p>
                             <p>Artikelnummer: <?= $order['ArtikelID'] ?></p>
-                        </div>
-                        <div class="order-history__delivery">
-                            <div class="btn btn--order"><?= $order['orderStatus'] ?></div>
-                            <p>Besteld op: <?= $date[0] ?></p>
                         </div>
                     </div>
                 </div>
@@ -43,29 +42,4 @@
         </div>
     </div>
 </div>
-<script>
-    // Zoek alle blokken met de class "order-history__order"
-    var blocks = document.querySelectorAll('.order-history__order');
-    var button = document.querySelector('button.load-more');
-
-    if(blocks.length <= 10) {
-        button.style.display = 'none';
-    }
-
-    // Geef de eerste 10 blokken de display "block" en de overige blokken de display "none"
-    for (var i = 0; i < blocks.length; i++) {
-        if (i < 10) {
-            blocks[i].style.display = 'block';
-        } else {
-            blocks[i].style.display = 'none';
-        }
-    }
-
-    button.addEventListener('click', function() {
-        for (var i = 0; i < blocks.length; i++) {
-            blocks[i].style.display = 'block';
-        }
-
-        button.style.display = 'none';
-    });
-</script>
+<script src="../../js/order-history.js"></script>

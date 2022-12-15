@@ -161,3 +161,21 @@ function getOrderHistory($userID, $conn) {
     $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
     return $data;
 }
+
+/*
+    Get the date difference between today dnd the
+    date wen the order was placed
+*/
+function getOrderStatus($date) {
+    $today = new DateTime();
+    $orderDate = new DateTime($date);
+
+    $diff = $today->diff($orderDate);
+    $diffFormatted = $diff->format("%a");
+
+    if ($diffFormatted >= 2):
+        return "Bezorgd";
+    else:
+        return "Bestelling wordt verwerkt";
+    endif;
+}

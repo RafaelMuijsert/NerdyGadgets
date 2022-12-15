@@ -3,6 +3,10 @@
     margin-bottom: 24px;
 }
 
+.order-history__order .btn {
+    width: max-content;
+}
+
 .order-history__order:last-child {
     margin-bottom: 0;
 }
