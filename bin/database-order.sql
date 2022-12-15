@@ -7,7 +7,11 @@ USE nerdygadgets;
 ALTER TABLE webshop_order
     ADD userID INT;
 
--- CREATE RULE update_order_status AS
---     ON UPDATE TO webshop_order
---        WHERE (NEW.datum < NOW() - INTERVAL 2 DAY) AND (NEW.orderStatus != 'Bezorgd')
---            DO UPDATE SET orderStatus = 'Bezorgd';
+CREATE TRIGGER update_order_status
+    AFTER UPDATE ON webshop_order
+    FOR EACH ROW
+BEGIN
+    UPDATE webshop_order
+    SET orderStatus = 'Bezorgd'
+    WHERE NOW() > DATE_ADD(datum, INTERVAL 2 DAY);
+END;
