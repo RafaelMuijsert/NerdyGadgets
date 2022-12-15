@@ -2,7 +2,6 @@ USE nerdygadgets;
 ALTER TABLE webshop_order
     ADD orderStatus VARCHAR(64) DEFAULT 'Bestelling wordt verwerkt.';
 
-
 USE nerdygadgets;
 ALTER TABLE webshop_order
     ADD userID INT;
