@@ -14,7 +14,7 @@
                 endif; ?>
                 <div class="order-history__order" <?= $styling ?>>
                     <div class="accordion order-history__order-header ">
-                        <div class="order-history__order-img">
+                        <a href="view.php?id=<?= $order['ArtikelID'] ?>" class="order-history__order-img">
                             <?php if (isset($order['ImagePath'])): ?>
                                 <div class="ImgFram"
                                      style="background-image: url('<?= "/img/stock-item/" . $order['ImagePath']; ?>');"></div>
@@ -22,7 +22,7 @@
                                 <div class="ImgFrame"
                                      style="background-image: url('<?= "/img/stock-group/" . $order['BackupImagePath'] ?>'); background-size: cover;"></div>
                             <?php endif; ?>
-                        </div>
+                        </a>
                         <?php
                             $buttonColor = 'btn--order';
                             $orderStatus = getOrderStatus($order['datum']);

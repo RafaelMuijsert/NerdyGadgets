@@ -1,3 +1,16 @@
+.profile__header {
+    margin-bottom: 24px;
+}
+
+.profile h2 {
+    font-size: 24px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    margin-bottom: 22px;
+    line-height: 1;
+    font-weight: 600;
+    font-style: normal;
+}
+
 .profile__logout {
     width: 100%;
     position: relative;
