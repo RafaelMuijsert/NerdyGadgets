@@ -31,7 +31,7 @@
                 unset($_POST['kortingscode']);
                 $_SESSION['korting'] = getKortingcode($kortingscode, $databaseConnection);
                 $_SESSION['korting']['naam'] = $kortingscode;
-                if (!checkDatum($_SESSION['korting']['naam'], $databaseConnection) && !($_SESSION['korting']['geldigtot'] = '')){
+                if ((!checkDatum($_SESSION['korting']['naam'], $databaseConnection)) || (!checkUses($_SESSION['korting']['naam'], $databaseConnection))){
                     unset($_SESSION['korting']);
                 }
             }

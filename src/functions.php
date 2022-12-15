@@ -92,7 +92,7 @@ function getTotalPrice() {
 }
 function getKortingcode($kortingscode, $databaseConnection){
     $Querry =  "
-            SELECT procent, geldigtot
+            SELECT procent, geldigtot, uses
             FROM webshop_kortingscodes
             WHERE codenaam = ?";
     $Statement = mysqli_prepare($databaseConnection, $Querry);
@@ -112,7 +112,7 @@ function checkDatum($kortingscode, $databaseConnection){
     mysqli_stmt_execute($Statement);
     $result = mysqli_stmt_get_result($Statement);
     $geldigTot = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    if ($geldigTot == NULL){
+    if (($geldigTot == NULL) || ($geldigTot[0]['geldigtot'] == '')){
         return true;
     }
     else {
@@ -141,4 +141,36 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
         print("Ongeldig e-mailadres");
     }
 
+}
+function checkUses($kortingscode, $databaseConnection){
+    $Querry = "
+            SELECT uses
+            FROM webshop_kortingscodes
+            WHERE codenaam = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement,'s', $kortingscode);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    $uses = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    if (($uses == NULL) || ($uses[0]['uses'] > 0 )){
+        return TRUE;
+    }
+    else return FALSE;
+}
+function reduceUses($kortingscode, $databaseConnection){
+    $Querry = "
+            UPDATE webshop_kortingscodes
+            SET uses = uses - 1
+            WHERE codenaam = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, 's', $kortingscode);
+    mysqli_stmt_execute($Statement);
+}
+function kortingscodes($databaseConnection){
+    $Querry = "
+            SELECT * FROM webshop_kortingscodes";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }

@@ -14,7 +14,7 @@
     );
     $shippingTime = '1 day';
     $shippingDate = $dateformatter->format(strtotime("+$shippingTime", mktime(0, 0, 0)));
-    $CHECKOUT_ENABLED = false;
+    $CHECKOUT_ENABLED = true;
 ?>
 <section class="checkout">
     <div class="container">
@@ -150,6 +150,9 @@
                         endforeach;
                         $_SESSION['userinfo'] = '';
                         $_SESSION['cart'] = [];
+                        if (isset($_SESSION['korting'][0]['uses']) && $_SESSION['korting'][0]['uses'] > 0){
+                            reduceUses($_SESSION['korting']['naam'], $databaseConnection);
+                        }
                         unset($_SESSION['korting']);
                         ?>
 

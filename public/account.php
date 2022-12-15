@@ -21,6 +21,7 @@
         echo "<script>window.location.replace('./login.php')</script>";
     endif;
 
+    include "../src/functions.php";
     include "header.php";
     include "./blocks/account.php";
     include "footer.php";
