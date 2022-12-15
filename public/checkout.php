@@ -15,6 +15,9 @@
 
 <?php
     session_start();
+    if(count($_SESSION['cart']) === 0):
+        echo "<script>window.location.replace('./cart.php')</script>";
+    endif;
     include "../src/functions.php";
     include "header.php";
     include "./blocks/checkout.php";
