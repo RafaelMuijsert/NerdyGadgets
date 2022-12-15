@@ -112,3 +112,15 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
     }
 
 }
+function maillistaccount($email, $firstname, $prefixName, $surname, $databaseConnection){
+    $Query = "
+            INSERT INTO webshop_mailinglijst (email, voornaam, tussenvoegsel, achternaam)
+            VALUES (?, ?, ?, ?)";
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param(
+        $Statement,
+        "ssssss",
+        $email,
+        $firstname, $prefixName, $surname, $birthdate, $phonenumber);
+    mysqli_stmt_execute($Statement);
+}

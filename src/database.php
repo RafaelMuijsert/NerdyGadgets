@@ -10,7 +10,7 @@ function connectToDatabase() {
         mysqli_set_charset($connection, 'latin1');
         $databaseAvailable = true;
     } catch (mysqli_sql_exception $e) {
-//        var_dump($e);
+       //var_dump($e);
         $databaseAvailable = false;
     }
     if (!$databaseAvailable) {
