@@ -52,7 +52,6 @@
     <hr>
     <?php
     $results = getOrderHistory($_SESSION['account']['id'], $databaseConnection);
-//    var_dump(count($results));
     if(count($results) >= 1):
         $latestOrder = $results[0];
         $totalPrice = ($latestOrder['TaxRate'] / 100) * $latestOrder['RecommendedRetailPrice'] + $latestOrder['RecommendedRetailPrice']; ?>
