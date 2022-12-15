@@ -50,8 +50,14 @@
         </table>
     </div>
     <hr>
-    <?php var_dump($_SESSION['account']); ?>
-    <?php if($hasPlacedAnOrder): ?>
+    <?php
+    $results = getOrderHistory($_SESSION['account']['id'], $databaseConnection);
+//    var_dump(count($results));
+    if(count($results) >= 1):
+        $latestOrder = $results[0];
+        $totalPrice = ($latestOrder['TaxRate'] / 100) * $latestOrder['RecommendedRetailPrice'] + $latestOrder['RecommendedRetailPrice'];
+
+        var_dump($latestOrder);?>
         <div class="profile__recent-order recent-order">
             <h2>Laatste bestelling</h2>
             <div class="recent-order__order">
@@ -59,18 +65,18 @@
                     <img src="" alt="">
                 </div>
                 <div class="recent-order__desc">
-                    <h4 class="recent-order__title">[Product naam hier]</h4>
+                    <h4 class="recent-order__title"><?= $latestOrder['StockItemName'] ?></h4>
                     <div class="recent-order__price">
-                        €23,45
-                        <span>Inclusief BTW.</span>
+                        €   <?= round($totalPrice, 2); ?>
+                        <span>excl. btw</span>
                     </div>
-                    <div class="recent-order__delivery btn btn--order btn--delivery">Is bezorgd</div>
+                    <div class="recent-order__delivery btn btn--order btn--delivery"><?= $latestOrder['orderStatus'] ?></div>
                 </div>
 
 
             </div>
         </div>
-    <?php else: ?>
+    <?php elseif(isset($_SESSION['account']) && $_SESSION['account']['role'] !== 'Admin'): ?>
         //U heeft nog geen bestellingen geplaatst
     <?php endif; ?>
 </div>

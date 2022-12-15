@@ -31,12 +31,12 @@ function addKlant($firstname, $prefixName, $surname, $birthdate, $email, $phonen
     mysqli_stmt_execute($Statement);
 }
 
-function addOrder($klantID, $land, $street, $housenumber, $postcode, $stad, $comment, $databaseConnection){
+function addOrder($klantID, $land, $street, $housenumber, $postcode, $stad, $comment, $userID, $databaseConnection){
     $Query = "
-            INSERT INTO webshop_order (klantID, straat, postcode, stad, land, huisnummer, opmerkingen)
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+            INSERT INTO webshop_order (klantID, straat, postcode, stad, land, huisnummer, opmerkingen, userID)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "sssssss", $klantID, $street, $postcode, $stad, $land, $housenumber, $comment);
+    mysqli_stmt_bind_param($Statement, "ssssssss", $klantID, $street, $postcode, $stad, $land, $housenumber, $comment, $userID);
     mysqli_stmt_execute($Statement);
 }
 
@@ -141,4 +141,23 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
         print("Ongeldig e-mailadres");
     }
 
+}
+
+/*
+    Get all orders from one account
+*/
+function getOrderHistory($userID, $conn) {
+    $Query = "
+                SELECT * 
+                FROM webshop_order AS O 
+                JOIN webshop_orderregel AS R ON O.OrderID=R.OrderID 
+                JOIN stockitems_archive AS A ON A.StockItemID=R.ArtikelID   
+                JOIN stockitemimages AS I ON I.StockItemID=A.StockItemID
+                WHERE klantID = '$userID'
+                ORDER BY datum ASC";
+    $smt = mysqli_prepare($conn, $Query);
+    mysqli_stmt_execute($smt);
+    $result = mysqli_stmt_get_result($smt);
+    $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $data;
 }

@@ -44,8 +44,23 @@
     background-position: center;
 }
 
-.order-history__order-body {
-    display: none;
-    padding: 16px;
-    background-color: var(--main-bg-color);
+.order-history__order-header .btn {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently */
+    pointer-events: none;
+}
+
+.order-history__load-more {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.order-history__load-more button {
+    width: max-content;
 }
