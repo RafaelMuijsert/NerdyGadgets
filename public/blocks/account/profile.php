@@ -54,7 +54,12 @@
     $results = getOrderHistory($_SESSION['account']['id'], $databaseConnection);
     if(count($results) >= 1):
         $latestOrder = $results[0];
-        $totalPrice = ($latestOrder['TaxRate'] / 100) * $latestOrder['RecommendedRetailPrice'] + $latestOrder['RecommendedRetailPrice']; ?>
+        $buttonColor = 'btn--order';
+        $orderStatus = getOrderStatus($latestOrder['datum']);
+        $date = str_split($latestOrder['datum'], 11);
+        if($orderStatus == 'Bestelling wordt verwerkt'):
+            $buttonColor = 'btn--red';
+        endif; ?>
         <div class="profile__recent-order recent-order">
             <h2>Laatste bestelling</h2>
             <div class="recent-order__order order-history__order-header">
@@ -67,18 +72,9 @@
                              style="background-image: url('<?= "/img/stock-group/" . $latestOrder['BackupImagePath'] ?>'); background-size: cover;"></div>
                     <?php endif; ?>
                 </a>
-
-                <?php
-                    $buttonColor = 'btn--order';
-                    $orderStatus = getOrderStatus($latestOrder['datum']);
-                    $date = str_split($latestOrder['datum'], 11);
-                    if($orderStatus == 'Bestelling wordt verwerkt'):
-                        $buttonColor = 'btn--red';
-                    endif;
-                ?>
                 <div class="order-history__order-description">
                     <h4><?= $latestOrder['StockItemName'] ?></h4>
-                    <div class="order-history__price">€   <?= number_format(round($totalPrice, 2), 2); ?> <span>excl. btw</span></div>
+                    <div class="order-history__price">€   <?= $latestOrder['bedrag']; ?> <span>excl. btw</span></div>
                     <div class="btn <?= $buttonColor ?>"><?= $orderStatus; ?></div>
                 </div>
                 <div class="order-history__order-delivery">

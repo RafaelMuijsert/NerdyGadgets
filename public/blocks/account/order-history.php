@@ -6,11 +6,18 @@
         if(isset($orders) && !empty($orders)):?>
             <p>Zie hieronder uw eerder bestelde producten.</p>
             <?php foreach($orders as $key => $order):
-                $totalPrice = ($order['TaxRate'] / 100) * $order['RecommendedRetailPrice'] + $order['RecommendedRetailPrice'];
                 $date = str_split($order['datum'], 11);
+
                 $styling = '';
                 if (count($orders) == ($key +1)):
                     $styling = "style='margin-bottom: 0 !important;'";
+                endif;
+
+                $buttonColor = 'btn--order';
+                $orderStatus = getOrderStatus($order['datum']);
+
+                if($orderStatus == 'Bestelling wordt verwerkt'):
+                    $buttonColor = 'btn--red';
                 endif; ?>
                 <div class="order-history__order" <?= $styling ?>>
                     <div class="accordion order-history__order-header ">
@@ -23,16 +30,9 @@
                                      style="background-image: url('<?= "/img/stock-group/" . $order['BackupImagePath'] ?>'); background-size: cover;"></div>
                             <?php endif; ?>
                         </a>
-                        <?php
-                            $buttonColor = 'btn--order';
-                            $orderStatus = getOrderStatus($order['datum']);
-                            if($orderStatus == 'Bestelling wordt verwerkt'):
-                                $buttonColor = 'btn--red';
-                            endif;
-                        ?>
                         <div class="order-history__order-description">
                             <h4><?= $order['StockItemName'] ?></h4>
-                            <div class="order-history__price">€   <?= number_format(round($totalPrice, 2), 2); ?> <span>excl. btw</span></div>
+                            <div class="order-history__price">€   <?= $order['bedrag']; ?> <span>excl. btw</span></div>
                             <div class="btn  <?= $buttonColor ?>"><?= $orderStatus; ?></div>
                         </div>
                         <div class="order-history__order-delivery">
@@ -40,14 +40,12 @@
                             <p>Aantal: <?= $order['aantal'] ?></p>
                             <p>Artikelnummer: <?= $order['ArtikelID'] ?></p>
                         </div>
-
                     </div>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
             <p>Helaas, u heeft nog geen producten besteld. <a style="color: #007bff" href="../../browse.php">Bestel nu uw eerste product hier.</a></p>
         <?php endif; ?>
-
         <div class="order-history__load-more">
             <button class="load-more btn btn--order">Laad meer bestellinge zien</button>
         </div>
