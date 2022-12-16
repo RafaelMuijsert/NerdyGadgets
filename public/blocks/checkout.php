@@ -110,7 +110,7 @@
 
                         $postcode = str_replace(' ', '', $_SESSION['userinfo']['postcode']);
 
-                        addKlant(
+                        addCustomer(
                                 $_SESSION['userinfo']['firstname'],
                                 $_SESSION['userinfo']['prefixName'],
                                 $_SESSION['userinfo']['surname'],
@@ -119,7 +119,7 @@
                                 $_SESSION['userinfo']['phone'],
                                 $databaseConnection
                         );
-                        $klantID = findKlant($databaseConnection);
+                        $klantID = findCustomer($databaseConnection);
 
                         addOrder(
                                 $klantID[0]['max(klantID)'],
@@ -145,7 +145,7 @@
                             else $procent = NULL;
                             $total += round(($price * $factor),2) * $quantity;
 
-                            addOrderregel($orderID[0]['max(OrderID)'], $id, $quantity, $total, $procent,$databaseConnection);
+                            addOrderLine($orderID[0]['max(OrderID)'], $id, $quantity, $total, $procent,$databaseConnection);
                             removeStock($id, $quantity, $databaseConnection);
                         endforeach;
                         $_SESSION['userinfo'] = '';

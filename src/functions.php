@@ -7,22 +7,11 @@ function getVoorraadTekst($actueleVoorraad) {
     }
 }
 
-function berekenVerkoopPrijs($adviesPrijs, $btw) {
+function calculateSellPrice($adviesPrijs, $btw) {
     return $btw * $adviesPrijs / 100 + $adviesPrijs;
 }
 
-function getCountry($databaseConnection) {
-    $Query = "
-            SELECT CountryID, CountryName
-            FROM Countries 
-            ORDER BY CountryName ASC";
-    $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_execute($Statement);
-    $Result = mysqli_stmt_get_result($Statement);
-    return mysqli_fetch_all($Result, MYSQLI_ASSOC);
-}
-
-function addKlant($firstname, $prefixName, $surname, $birthdate, $email, $phonenumber, $databaseConnection){
+function addCustomer($firstname, $prefixName, $surname, $birthdate, $email, $phonenumber, $databaseConnection){
     $Query = "
             INSERT INTO webshop_klant (voornaam, tussenvoegsel, achternaam, geboortedatum, email, telefoonnummer)
             VALUES (?, ?, ?, ?, ?, ?)";
@@ -40,7 +29,7 @@ function addOrder($klantID, $land, $street, $housenumber, $postcode, $stad, $com
     mysqli_stmt_execute($Statement);
 }
 
-function addOrderregel($orderID, $artikelID, $aantal, $bedrag, $korting, $databaseConnection){
+function addOrderLine($orderID, $artikelID, $aantal, $bedrag, $korting, $databaseConnection){
     $Query = "
             INSERT INTO webshop_orderregel (orderID, artikelID, aantal, bedrag, procentKorting)
             VALUES (?, ?, ?, ?, ?)";
@@ -59,7 +48,7 @@ function removeStock($stockID, $aantal, $databaseConnection){
     mysqli_stmt_execute($Statement);
 }
 
-function findKlant($databaseConnection){
+function findCustomer($databaseConnection){
     $Query = "
             SELECT max(klantID)
             FROM webshop_klant";
@@ -90,7 +79,7 @@ function getTotalPrice() {
     endforeach;
     return $total;
 }
-function getKortingcode($kortingscode, $databaseConnection){
+function getDiscountCode($kortingscode, $databaseConnection){
     $Querry =  "
             SELECT procent, geldigtot, uses
             FROM webshop_kortingscodes
@@ -102,7 +91,8 @@ function getKortingcode($kortingscode, $databaseConnection){
     $korting =  mysqli_fetch_all($result, MYSQLI_ASSOC);
     return $korting;
 }
-function checkDatum($kortingscode, $databaseConnection){
+
+function checkCodeDate($kortingscode, $databaseConnection) {
     $Querry = "
             SELECT geldigtot
             FROM webshop_kortingscodes
@@ -166,7 +156,7 @@ function reduceUses($kortingscode, $databaseConnection){
     mysqli_stmt_bind_param($Statement, 's', $kortingscode);
     mysqli_stmt_execute($Statement);
 }
-function kortingscodes($databaseConnection){
+function discountCodes($databaseConnection){
     $Querry = "
             SELECT * FROM webshop_kortingscodes";
     $Statement = mysqli_prepare($databaseConnection, $Querry);
@@ -174,7 +164,7 @@ function kortingscodes($databaseConnection){
     $result = mysqli_stmt_get_result($Statement);
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
-function removeKortingscode($kortingID, $databaseConnection){
+function removeDiscountCodes($kortingID, $databaseConnection){
     $Querry = "
             DELETE FROM webshop_kortingscodes
             WHERE kortingID = ?";
@@ -182,7 +172,7 @@ function removeKortingscode($kortingID, $databaseConnection){
     mysqli_stmt_bind_param($Statement, "s", $kortingID);
     mysqli_stmt_execute($Statement);
 }
-function addKortingscode($naam, $procent, $geldigtot, $uses, $databaseConnection){
+function addDiscountCode($naam, $procent, $geldigtot, $uses, $databaseConnection){
     $Querry = "
             INSERT INTO webshop_kortingscodes(codenaam, procent, geldigtot, uses)
             VALUES (?,?,?,?)";
@@ -190,7 +180,7 @@ function addKortingscode($naam, $procent, $geldigtot, $uses, $databaseConnection
     mysqli_stmt_bind_param($Statement, 'sdsi', $naam, $procent, $geldigtot, $uses);
     mysqli_stmt_execute($Statement);
 }
-function updateKortingscode($naam, $procent, $geldigtot, $uses, $databaseConnection){
+function updateDiscountCode($naam, $procent, $geldigtot, $uses, $databaseConnection){
     $Querry = "
             UPDATE webshop_kortingscodes
             SET procent = ?, geldigtot = ?, uses = ?

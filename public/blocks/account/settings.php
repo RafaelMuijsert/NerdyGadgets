@@ -1,12 +1,12 @@
 <?php
 if (isset($_POST['remove'])) {
-    removeKortingscode($_POST['remove'], $databaseConnection);
+    removeDiscountCodes($_POST['remove'], $databaseConnection);
     unset($_POST['remove']);
 }
 $waarschuwing = 0;
 if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
     $gelijk = 0;
-    foreach (kortingscodes($databaseConnection) as $kortingscode){
+    foreach (discountCodes($databaseConnection) as $kortingscode){
         if ($kortingscode['codenaam'] == $_POST['KortingNaam']){
             $gelijk ++;
         }
@@ -27,7 +27,7 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
                     $waarschuwing = 4;
                 }
                 else {
-                    addKortingscode($_POST['KortingNaam'], $_POST['KortingProcent'], $_POST['KortingDate'], $_POST['KortingUses'], $databaseConnection);
+                    addDiscountCode($_POST['KortingNaam'], $_POST['KortingProcent'], $_POST['KortingDate'], $_POST['KortingUses'], $databaseConnection);
                 }
             }
         }
@@ -49,7 +49,7 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
                     $waarschuwing = 5;
                 }
                 else {
-                    updateKortingscode($_POST['KortingNaam'], $_POST['KortingProcent'], $_POST['KortingDate'], $_POST['KortingUses'], $databaseConnection);
+                    updateDiscountCode($_POST['KortingNaam'], $_POST['KortingProcent'], $_POST['KortingDate'], $_POST['KortingUses'], $databaseConnection);
                 }
             }
         }
@@ -93,7 +93,7 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
                 <div class="col-2">Uses</div>
                 <div class="col-2"></div>
             </div>
-            <?php foreach (kortingscodes($databaseConnection) as $kortingscode): ?>
+            <?php foreach (discountCodes($databaseConnection) as $kortingscode): ?>
                 <div class="row">
                     <div class="col-1" style="border-right: 2px solid white"><?php print ($kortingscode['kortingID'])?></div>
                     <div class="col-3" style="width: 30%; border-right: 2px solid white"><?php print ($kortingscode['codenaam'])?></div>

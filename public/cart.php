@@ -23,25 +23,28 @@
         <?php
         $total = 0;
         $zonderKorting = 0;
+        $kortingscode = '';
 
         if (isset($_POST['korting'])){
             unset($_POST['korting']);
             if (isset($_POST['kortingscode'])) {
                 $kortingscode = $_POST['kortingscode'];
                 unset($_POST['kortingscode']);
-                $_SESSION['korting'] = getKortingcode($kortingscode, $databaseConnection);
+                $_SESSION['korting'] = getDiscountCode($kortingscode, $databaseConnection);
                 $_SESSION['korting']['naam'] = $kortingscode;
-                if ((!checkDatum($_SESSION['korting']['naam'], $databaseConnection)) || (!checkUses($_SESSION['korting']['naam'], $databaseConnection))){
+                if ((!checkCodeDate($_SESSION['korting']['naam'], $databaseConnection)) || (!checkUses($_SESSION['korting']['naam'], $databaseConnection))){
                     unset($_SESSION['korting']);
                 }
             }
         }
 
         foreach($_POST as $key => $value):
-            $value = abs($value);
-            $stock = getItemStock($key, $databaseConnection);
-            $value = ($value <= $stock) ? $value : $stock;
-            $_SESSION['cart'][$key] = abs($value);
+            if(is_int($value) || is_float($value)):
+                $value = abs($value);
+                $stock = getItemStock($key, $databaseConnection);
+                $value = ($value <= $stock) ? $value : $stock;
+                $_SESSION['cart'][$key] = abs($value);
+            endif;
         endforeach;
 
         function updateSession($arrayName) {
@@ -81,10 +84,7 @@
                             <h1 class="shopping-cart__title">Winkelmandje</h1>
 
                             <?php
-//                            print_r($_SESSION['korting']);
-//                            print (checkDatum($_SESSION['korting']['naam'], $databaseConnection));
                             if(count($_SESSION['cart']) !== 0): ?>
-
                                 <?php foreach ($_SESSION['cart'] as $key => $item):
                                     $stockItem = getStockItem($key, $databaseConnection);
                                     if (!$stockItem):
@@ -160,7 +160,7 @@
                                 </div>
                                 <hr>
                                 <div class="shopping-cart__total">
-                                    <form method="post">
+                                    <form method="post" action="">
                                         <label for="kortingscode">Kortingscode:</label>
                                         <?php
                                         $value = '';
@@ -170,7 +170,6 @@
                                         <input id="kortingscode" type="text" name="kortingscode" value="<?= $value ?>">
                                         <input class="btn--primary" type="submit" value="Bevestig" name="korting">
                                     </form>
-                                    <b> <?php ?></b>
                                 </div>
                                 <hr>
                                 <div class="text-right">
