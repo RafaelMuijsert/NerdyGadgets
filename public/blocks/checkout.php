@@ -108,7 +108,7 @@
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
                     <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && !$CHECKOUT_DISABLED):
 
-                        $postcode = str_replace(' ', '', $_SESSION['userinfo']['postcode']);
+                        $_SESSION['userinfo']['postcode'] = filterPostalzip($_SESSION['userinfo']['postcode']);
 
                         addKlant(
                                 $_SESSION['userinfo']['firstname'],
@@ -131,7 +131,7 @@
                                 $_SESSION['userinfo']['country'],
                                 $_SESSION['userinfo']['street'],
                                 $_SESSION['userinfo']['housenumber'],
-                                $postcode,
+                                $_SESSION['userinfo']['postcode'],
                                 $_SESSION['userinfo']['city'],
                                 $_SESSION['userinfo']['comment'],
                                 $userID,

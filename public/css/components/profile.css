@@ -11,6 +11,10 @@
     font-style: normal;
 }
 
+.profile .btn {
+    width: max-content;
+}
+
 .profile__logout {
     width: 100%;
     position: relative;

@@ -22,6 +22,7 @@
     endif;
 
     include "../src/functions.php";
+    include "../src/form-functions.php";
     include "header.php";
     include "./blocks/account.php";
     include "footer.php";

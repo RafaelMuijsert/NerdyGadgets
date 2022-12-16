@@ -1,5 +1,6 @@
 <div class="order-history">
     <h1 class="order-history__title">Mijn bestellingen</h1>
+    <hr>
     <div class="order-history__wrapper">
         <?php
         $orders = getOrderHistory($_SESSION['account']['id'], $databaseConnection);

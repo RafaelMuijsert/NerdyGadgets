@@ -17,7 +17,7 @@
         <?php
             session_start();
             include "header.php";
-            include "../src/functions.php"
+            include "../src/functions.php";
         ?>
 
         <?php
