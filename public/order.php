@@ -16,6 +16,7 @@
 <?php
     session_start();
     include "../src/functions.php";
+    include "../src/form-functions.php";
     include "header.php";
     include "./blocks/order.php";
     include "footer.php";

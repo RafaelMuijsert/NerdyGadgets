@@ -19,6 +19,7 @@
 //    $databaseConnection = $GLOBALS['databaseConnection'];
 
     include "../src/functions.php";
+    include "../src/form-functions.php";
     include "header.php";
     include "./blocks/register.php";
     include "footer.php";
