@@ -142,11 +142,14 @@ function checkUses($kortingscode, $databaseConnection){
     mysqli_stmt_execute($Statement);
     $result = mysqli_stmt_get_result($Statement);
     $uses = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    if (($uses == NULL) || ($uses[0]['uses'] > 0 )){
+
+    if ($uses == NULL || $uses[0]['uses'] === NULL || ($uses[0]['uses'] > 0 )){
         return TRUE;
     }
-    else return FALSE;
+
+    return FALSE;
 }
+
 function reduceUses($kortingscode, $databaseConnection){
     $Querry = "
             UPDATE webshop_kortingscodes
