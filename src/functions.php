@@ -190,3 +190,12 @@ function addKortingscode($naam, $procent, $geldigtot, $uses, $databaseConnection
     mysqli_stmt_bind_param($Statement, 'sdsi', $naam, $procent, $geldigtot, $uses);
     mysqli_stmt_execute($Statement);
 }
+function updateKortingscode($naam, $procent, $geldigtot, $uses, $databaseConnection){
+    $Querry = "
+            UPDATE webshop_kortingscodes
+            SET procent = ?, geldigtot = ?, uses = ?
+            WHERE codenaam = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, 'dsis',  $procent, $geldigtot, $uses, $naam);
+    mysqli_stmt_execute($Statement);
+}
