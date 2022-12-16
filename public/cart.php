@@ -162,8 +162,12 @@
                                 <div class="shopping-cart__total">
                                     <form method="post">
                                         <label for="kortingscode">Kortingscode:</label>
-                                        <input id="kortingscode" type="text" name="kortingscode" <?php if (isset($_SESSION['korting'][0]['procent'])) {print ('value="' . $_SESSION['korting']['naam'] . '"');
-                                        } ?>">
+                                        <?php
+                                        $value = '';
+                                        if (isset($_SESSION['korting'][0]['procent'])):
+                                            $value = $_SESSION['korting']['naam'];
+                                        endif; ?>
+                                        <input id="kortingscode" type="text" name="kortingscode" value="<?= $value ?>">
                                         <input class="btn--primary" type="submit" value="Bevestig" name="korting">
                                     </form>
                                     <b> <?php ?></b>

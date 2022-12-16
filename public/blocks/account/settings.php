@@ -93,28 +93,28 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
                 <div class="col-2">Uses</div>
                 <div class="col-2"></div>
             </div>
-            <?php foreach (kortingscodes($databaseConnection) as $kortingscode):?>
-            <div class="row">
-                <div class="col-1" style="border-right: 2px solid white"><?php print ($kortingscode['kortingID'])?></div>
-                <div class="col-3" style="width: 30%; border-right: 2px solid white"><?php print ($kortingscode['codenaam'])?></div>
-                <div class="col-2" style="border-right: 2px solid white"><?php print (round($kortingscode['procent'], 2))?></div>
-                <div class="col-2" style="border-right: 2px solid white"><?php if ($kortingscode['geldigtot'] == ''){
-                    print ("-");
-                    }
-                    else print ($kortingscode['geldigtot'])?></div>
-                <div class="col-2" style="border-right: 2px solid white"><?php if ($kortingscode['uses'] == ''){
+            <?php foreach (kortingscodes($databaseConnection) as $kortingscode): ?>
+                <div class="row">
+                    <div class="col-1" style="border-right: 2px solid white"><?php print ($kortingscode['kortingID'])?></div>
+                    <div class="col-3" style="width: 30%; border-right: 2px solid white"><?php print ($kortingscode['codenaam'])?></div>
+                    <div class="col-2" style="border-right: 2px solid white"><?php print (round($kortingscode['procent'], 2))?></div>
+                    <div class="col-2" style="border-right: 2px solid white"><?php if ($kortingscode['geldigtot'] == ''){
                         print ("-");
-                    }
-                    else print ($kortingscode['uses'])?></div>
-                <div class="col-2" style="border-right: 2px solid white">
-                    <form method="post">
-                        <label style="min-width: min-content; width: 70%" class="btn--primary text-center">
-                            Remove
-                            <input style="display: none" type="submit" name="remove" value="<?php print ($kortingscode['kortingID'])?>">
-                        </label>
-                    </form>
+                        }
+                        else print ($kortingscode['geldigtot'])?></div>
+                    <div class="col-2" style="border-right: 2px solid white"><?php if ($kortingscode['uses'] == ''){
+                            print ("-");
+                        }
+                        else print ($kortingscode['uses'])?></div>
+                    <div class="col-2" style="border-right: 2px solid white">
+                        <form method="post">
+                            <label style="min-width: min-content; width: 70%" class="btn--primary text-center">
+                                Remove
+                                <input style="display: none" type="submit" name="remove" value="<?= $kortingscode['kortingID']; ?>">
+                            </label>
+                        </form>
+                    </div>
                 </div>
-            </div>
             <?php endforeach; ?>
             <form method="post">
                 <div class="row">
