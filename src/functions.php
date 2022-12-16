@@ -152,7 +152,6 @@ function getOrderHistory($userID, $conn) {
                 FROM webshop_order AS O 
                 JOIN webshop_orderregel AS R ON O.OrderID=R.OrderID 
                 JOIN stockitems_archive AS A ON A.StockItemID=R.ArtikelID   
-                JOIN stockitemimages AS I ON I.StockItemID=A.StockItemID
                 WHERE userID = '$userID'
                 ORDER BY datum DESC";
     $smt = mysqli_prepare($conn, $Query);
