@@ -7,10 +7,12 @@ create table if not exists webshop_kortingscodes (
     geldigtot date,
     uses int(4)
 );
-create table if not exists webshop_admininstellingen (
-    instelling varchar(255) PRIMARY KEY,
-    aantal double(4,2) NOT NULL,
-    bijschrift varchar(255)
-);
-insert into webshop_admininstellingen (instelling, aantal)
-values (verzendKostenAantal, 5.99)
+create table webshop_admininstellingen (
+    instellingID int PRIMARY KEY auto_increment,
+    instellingNaam VARCHAR(255) NOT NULL unique,
+    aantal double(4,2)
+    );
+insert into webshop_admininstellingen (instellingNaam, aantal)
+values ('verzendKostenGrens', 25.99);
+insert into webshop_admininstellingen (instellingNaam, aantal)
+values ('verzendKostenAantal', 5.99);
