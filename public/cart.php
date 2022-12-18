@@ -21,10 +21,9 @@
         ?>
 
         <?php
-        $total = 0;
-        $zonderKorting = 0;
+        $_SESSION[ 'total'] = 0;
+        $_SESSION[ 'noDiscount'] = 0;
         $kortingscode = '';
-
         if (isset($_POST['korting'])){
             unset($_POST['korting']);
             if (isset($_POST['kortingscode'])) {
@@ -39,12 +38,12 @@
         }
 
         foreach($_POST as $key => $value):
-            if(is_int($value) || is_float($value)):
+//            if(is_int($value) || is_float($value)):
                 $value = abs($value);
                 $stock = getItemStock($key, $databaseConnection);
                 $value = ($value <= $stock) ? $value : $stock;
                 $_SESSION['cart'][$key] = abs($value);
-            endif;
+//            endif;
         endforeach;
 
         function updateSession($arrayName) {
@@ -119,8 +118,8 @@
                                                 if (isset($_SESSION['korting'][0]['procent'])){
                                                     $factor = (1 - ($_SESSION['korting'][0]['procent'] * 0.01));
                                                 }
-                                                $total += ($price * $factor) * $quantity;
-                                                $zonderKorting += $price * $quantity; ?>
+                                                $_SESSION['total'] += ($price * $factor) * $quantity;
+                                                $_SESSION[ 'noDiscount'] += $price * $quantity; ?>
 
                                                 <input class="btn" name="<?= $stockItem['StockItemID'] ?>" onchange="this.form.submit()" min="1" type="number" value="<?= $quantity ?>" max="<?= $stock ?>">
 
@@ -149,14 +148,28 @@
                                 <hr>
                                 <div class="shopping-cart__total">
                                     <?php if (isset($_SESSION['korting'][0]['procent'])): ?>
-<!--                                    even naar kijken wat moet voor de css, mij lukt dit niet-->
+
                                         <div class="">Prijs</div>
-                                        <div class=" text-right">&euro; <?= (number_format($zonderKorting, 2, '.', ',')) ?></div>
+                                        <div class=" text-right">&euro; <?= (number_format($_SESSION['noDiscount'], 2, '.', ',')) ?></div>
                                         <div class=""><?php print ($_SESSION['korting'][0]['procent'] . "% korting")?></div>
-                                        <div class=" text-right">&euro; <?= (number_format(($zonderKorting - $total), 2, '.', ',')) ?></div>
+                                        <div class=" text-right">&euro; <?= (number_format(($_SESSION['noDiscount'] - $_SESSION['total']), 2, '.', ',')) ?></div>
                                     <?php endif; ?>
+                                    <div class="">Subtotaal</div>
+                                    <div class=" text-right">&euro; <?= (number_format($_SESSION[ 'total'], 2, '.', ',')) ?></div>
+                                    <?php
+                                    if ($_SESSION['total'] < getDeliverycosts($databaseConnection)[1][1]):
+                                        $deliveryCosts = getDeliverycosts($databaseConnection)[0][1];
+                                    else: $deliveryCosts = 0;
+                                    endif;
+                                    $_SESSION['total'] += $deliveryCosts;
+                                    ?>
+                                    <div class="">VerzendKosten</div>
+                                    <div class=" text-right">&euro; <?= (number_format($deliveryCosts, 2, '.', ',')) ?></div>
+                                </div>
+                                <hr>
+                                <div class="shopping-cart__total">
                                     <div class="">Totaal</div>
-                                    <div class=" text-right">&euro; <?= (number_format($total, 2, '.', ',')) ?></div>
+                                    <div class=" text-right">&euro; <?= (number_format($_SESSION['total'], 2, '.', ',')) ?></div>
                                 </div>
                                 <hr>
                                 <div class="shopping-cart__total">

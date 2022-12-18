@@ -1,0 +1,60 @@
+.discount--table {
+    width: 90%;
+    background-color: var(--main-bg-color);
+    border-radius: var(--border-radius) !important;
+    color: var(--text-color);
+}
+.discount--table--cell {
+    border-right: 2px solid white;
+    padding: 2px;
+}
+.discount--table--top {
+    padding: 2px;
+}
+.discount--table--end {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.btn--discount--remove {
+    background-color: var(--accent-red-hover);
+    border-radius: var(--border-radius) !important;
+    color: var(--sub-bg-color);
+    border: none;
+    position: relative;
+    width: 100px;
+}
+.btn--discount--remove:hover {
+    background-color: var(--accent-red);
+    color: var(--sub-bg-color);
+}
+.btn--discount--add {
+    background-color: var(--accent-color);
+    border-radius: var(--border-radius) !important;
+    color: var(--sub-bg-color);
+    border: none;
+    position: relative;
+    width: 100px;
+}
+.btn--discount--add:hover {
+    background-color: var(--accent-color-hover);
+    color: var(--sub-bg-color);
+}
+.input--discount{
+    background-color: white;
+    border-radius: var(--border-radius);
+    border: none;
+}
+.btn--discount--grey {
+    background-color: var(--main-bg-color);
+    border-radius: var(--border-radius) !important;
+    color: var(--text-color);
+    border: none;
+    text-align: left;
+    position: relative;
+    width: auto;
+}
+
+.btn--discount--grey:hover {
+    background-color: var(--primary-color-hover);
+    color: var(--sub-bg-color);
+}

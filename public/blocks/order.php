@@ -13,8 +13,17 @@
                     <h5>Overzicht</h5>
                     <hr>
                     <div class="shopping-cart__total">
+                        <?php if (isset($_SESSION['korting'][0]['procent'])): ?>
+                            <!--                                    even naar kijken wat moet voor de css, mij lukt dit niet-->
+                            <div class="">Prijs</div>
+                            <div class=" text-right">&euro; <?= (number_format($_SESSION[ 'noDiscount'], 2, '.', ',')) ?></div>
+                            <div class=""><?php print ($_SESSION['korting'][0]['procent'] . "% korting")?></div>
+                            <div class=" text-right">&euro; <?= (number_format(($_SESSION[ 'noDiscount'] - $_SESSION[ 'total']), 2, '.', ',')) ?></div>
+                        <?php endif; ?>
                         <div class="">Totaal</div>
-                        € <?= getTotalPrice(); ?>
+                        <div class=" text-right">&euro; <?= (number_format($_SESSION[ 'total'], 2, '.', ',')) ?></div>
+
+                        <!--                        € --><?//= getTotalPrice(); ?>
                     </div>
                 </div>
             </div>

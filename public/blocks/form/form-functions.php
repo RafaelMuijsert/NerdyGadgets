@@ -56,7 +56,7 @@ function loginUser($username, $password, $conn) {
     $result = mysqli_stmt_get_result($statement);
     $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    if($data && password_verify($password, $data[0]['password'])) {
+    if(password_verify($password, $data[0]['password'])) {
         loadUserData($username, $conn);
         $_SESSION['isLoggedIn'] = true;
         unset($_SESSION['login']);

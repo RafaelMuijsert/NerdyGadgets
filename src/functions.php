@@ -192,3 +192,31 @@ function updateDiscountCode($naam, $procent, $geldigtot, $uses, $databaseConnect
     mysqli_stmt_bind_param($Statement, 'dsis',  $procent, $geldigtot, $uses, $naam);
     mysqli_stmt_execute($Statement);
 }
+function getDeliverycosts ($databaseConnection){
+    $Querry = "
+            SELECT instellingNaam, aantal
+            FROM webshop_admininstellingen";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    return mysqli_fetch_all($result);
+}
+
+function updateDeliveryLimit ($deliveryLimit, $databaseConnection){
+    $Querry = "
+            UPDATE webshop_admininstellingen
+            SET aantal = ?
+            WHERE instellingNaam = 'verzendKostenGrens'";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, 'd', $deliveryLimit);
+    mysqli_stmt_execute($Statement);
+}
+function updateDeliveryCosts ($deliveryCosts, $databaseConnection){
+    $Querry = "
+            UPDATE webshop_admininstellingen
+            SET aantal = ?
+            WHERE instellingNaam = 'verzendKostenAantal'";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, 'd', $deliveryCosts);
+    mysqli_stmt_execute($Statement);
+}

@@ -3,6 +3,20 @@ if (isset($_POST['remove'])) {
     removeDiscountCodes($_POST['remove'], $databaseConnection);
     unset($_POST['remove']);
 }
+if (isset($_POST['VerzendKosten']) && $_POST['VerzendKosten'] == 'Verwerk'){
+    if ($_POST['deliveryLimit'] == ''){
+        $_POST['deliveryLimit'] = 0;
+    }
+    if ($_POST['deliveryCosts'] == ''){
+        $_POST['deliveryCosts'] = 0;
+    }
+    $_POST['deliveryLimit'] = str_replace(",", ".", $_POST['deliveryLimit']);
+    $_POST['deliveryCosts'] = str_replace(",", ".", $_POST['deliveryCosts']);
+    updateDeliveryLimit($_POST['deliveryLimit'], $databaseConnection);
+    updateDeliveryCosts($_POST['deliveryCosts'], $databaseConnection);
+    unset($_POST['VerzendKosten']);
+}
+$deliveryCosts = getDeliverycosts($databaseConnection);
 $waarschuwing = 0;
 if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
     $gelijk = 0;
@@ -56,59 +70,68 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
     }
     else $waarschuwing = 1;
 }
+if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'){
+    foreach (discountCodes($databaseConnection) as $key){
+        if ($key['uses'] == 0 && !($key['uses'] == '')){
+            removeDiscountCodes($key['kortingID'], $databaseConnection);
+        }
+        $datum = date("Y-m-d");
+        if (strtotime($key['geldigtot']) < strtotime($datum) && !($key['geldigtot'] == '')){
+            removeDiscountCodes($key['kortingID'], $databaseConnection);
+        }
+    }
+}
 ?>
 <div class="settings">
     <h1 class="settings__title">Admin instellingen</h1>
     <h5>Verzendkosten</h5>
-    <form>
+    <form method="post">
         <div class="row">
             <div class="col-2">
                 <label>Verzendkosten Grens:</label>
             </div>
             <div class="col">
-                <input type="text">
+                <input type="text" name="deliveryLimit" <?php print ('value="' . $deliveryCosts[0][1]) . '"' ?>>
             </div>
         </div>
-
         <div class="row">
             <div class="col-2">
                 <label>Verzendkosten Aantal:</label>
             </div>
             <div class="col">
-                <input type="text">
+                <input type="text" name="deliveryCosts" <?php print ('value="' . $deliveryCosts[1][1]) . '"' ?>>
             </div>
         </div>
-        <input type="submit">
-
+        <input type="submit" name="VerzendKosten" value="Verwerk">
     </form>
-    <br><br>
+    <br>
     <h5>Kortingscodes</h5>
     <div>
-        <div class="table" style="width: 90%; background-color: var(--main-bg-color);border-radius: var(--border-radius) !important;color: var(--text-color);">
+        <div class="table discount--table">
             <div class="row" style="border-bottom: 4px solid white">
-                <div class="col-1">ID</div>
-                <div class="col-3">Kortingscode</div>
-                <div class="col-2">Procent</div>
-                <div class="col-2">Geldig Tot</div>
-                <div class="col-2">Uses</div>
-                <div class="col-2"></div>
+                <div class="col-1 discount--table--top" style="text-align: right">ID</div>
+                <div class="col-3 discount--table--top">Kortingscode</div>
+                <div class="col-2 discount--table--top">Procent</div>
+                <div class="col-2 discount--table--top">Geldig Tot</div>
+                <div class="col-2 discount--table--top">Uses</div>
+                <div class="col-md-auto discount--table--top"></div>
             </div>
             <?php foreach (discountCodes($databaseConnection) as $kortingscode): ?>
                 <div class="row">
-                    <div class="col-1" style="border-right: 2px solid white"><?php print ($kortingscode['kortingID'])?></div>
-                    <div class="col-3" style="width: 30%; border-right: 2px solid white"><?php print ($kortingscode['codenaam'])?></div>
-                    <div class="col-2" style="border-right: 2px solid white"><?php print (round($kortingscode['procent'], 2))?></div>
-                    <div class="col-2" style="border-right: 2px solid white"><?php if ($kortingscode['geldigtot'] == ''){
+                    <div class="col-1 discount--table--cell" style="text-align: right" ><?php print ($kortingscode['kortingID'])?></div>
+                    <div class="col-3 discount--table--cell"><?php print ($kortingscode['codenaam'])?></div>
+                    <div class="col-2 discount--table--cell"><?php print (round($kortingscode['procent'], 2))?></div>
+                    <div class="col-2 discount--table--cell"><?php if ($kortingscode['geldigtot'] == ''){
                         print ("-");
                         }
                         else print ($kortingscode['geldigtot'])?></div>
-                    <div class="col-2" style="border-right: 2px solid white"><?php if ($kortingscode['uses'] == ''){
+                    <div class="col-2 discount--table--cell"><?php if ($kortingscode['uses'] == ''){
                             print ("-");
                         }
                         else print ($kortingscode['uses'])?></div>
-                    <div class="col-2" style="border-right: 2px solid white">
+                    <div class="col-md-auto discount--table--end">
                         <form method="post">
-                            <label style="min-width: min-content; width: 70%" class="btn--primary text-center">
+                            <label class="btn--discount--remove text-center">
                                 Remove
                                 <input style="display: none" type="submit" name="remove" value="<?= $kortingscode['kortingID']; ?>">
                             </label>
@@ -118,21 +141,21 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
             <?php endforeach; ?>
             <form method="post">
                 <div class="row">
-                    <div class="col-1" style="border-right: 2px solid white"></div>
-                    <div class="col-3" style="border-right: 2px solid white">
-                        <input style="width: 100%" type="text" maxlength="10" name="KortingNaam" required>
+                    <div class="col-1 discount--table--cell"></div>
+                    <div class="col-3 discount--table--cell">
+                        <input class="input--discount" style="width: 100%" type="text" maxlength="10" name="KortingNaam" required>
                     </div>
-                    <div class="col-2" style="border-right: 2px solid white">
-                        <input style="width: 100%" type="text" name="KortingProcent" required>
+                    <div class="col-2 discount--table--cell">
+                        <input class="input--discount" style="width: 100%" type="text" name="KortingProcent" required>
                     </div>
-                    <div class="col-2" style="border-right: 2px solid white">
-                        <input style="width: 100%" type="date" name="KortingDate">
+                    <div class="col-2 discount--table--cell">
+                        <input class="input--discount" style="width: 100%" type="date" name="KortingDate">
                     </div>
-                    <div class="col-2" style="border-right: 2px solid white">
-                        <input style="width: 100%" type="text" maxlength="4" name="KortingUses">
+                    <div class="col-2 discount--table--cell">
+                        <input class="input--discount" style="width: 100%" type="text" maxlength="4" name="KortingUses">
                     </div>
-                    <div class="col-2">
-                        <input style="width: 70%; min-width: min-content;" class="btn--primary" type="submit" value="update/add">
+                    <div class="col-md-auto discount--table--end">
+                        <input class="btn--discount--add" type="submit" value="Update/add">
                     </div>
                 </div>
             </form>
@@ -153,7 +176,7 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
             ?>
         </div>
         <form method="post">
-            <input type="submit" name="cleanUp" value="Verwijder ongeldige codes">
+            <input type="submit" class="btn btn--grey" style="width: auto; border: solid black 1px" name="cleanUp" value="Verwijder ongeldige codes">
         </form>
     </div>
 </div>
