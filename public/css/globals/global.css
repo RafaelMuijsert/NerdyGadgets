@@ -41,3 +41,8 @@ a, a:focus, a:active {
 .bg-white--large {
     min-height: 50vh;
 }
+
+#v-pills-tabContent {
+    opacity: 0;
+    transition: var(--transition);
+}

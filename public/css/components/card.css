@@ -2,7 +2,7 @@
 .card {
     display: grid;
     width: 100%;
-    grid-template-columns: 214px auto auto;
+    grid-template-columns: 214px 330px auto;
     border: none;
     margin-bottom: 40px;
 }

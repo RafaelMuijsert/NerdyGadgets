@@ -1,6 +1,3 @@
-<?php
-    include "form/form-functions.php";
-?>
 <section class="login">
     <div class="container">
         <div class="row justify-content-center">

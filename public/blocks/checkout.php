@@ -14,7 +14,7 @@
     );
     $shippingTime = '1 day';
     $shippingDate = $dateformatter->format(strtotime("+$shippingTime", mktime(0, 0, 0)));
-    $CHECKOUT_ENABLED = false;
+    $CHECKOUT_DISABLED = false;
 ?>
 <section class="checkout">
     <div class="container">
@@ -106,9 +106,9 @@
                     </div>
 
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
-                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && $CHECKOUT_ENABLED):
+                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && !$CHECKOUT_DISABLED):
 
-                        $postcode = str_replace(' ', '', $_SESSION['userinfo']['postcode']);
+                        $_SESSION['userinfo']['postcode'] = filterPostalzip($_SESSION['userinfo']['postcode']);
 
                         addKlant(
                                 $_SESSION['userinfo']['firstname'],
@@ -121,14 +121,20 @@
                         );
                         $klantID = findKlant($databaseConnection);
 
+                        $userID = NULL;
+                        if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
+                            $userID = $_SESSION['account']['id'];
+                        endif;
+
                         addOrder(
                                 $klantID[0]['max(klantID)'],
                                 $_SESSION['userinfo']['country'],
                                 $_SESSION['userinfo']['street'],
                                 $_SESSION['userinfo']['housenumber'],
-                                $postcode,
+                                $_SESSION['userinfo']['postcode'],
                                 $_SESSION['userinfo']['city'],
                                 $_SESSION['userinfo']['comment'],
+                                $userID,
                                 $databaseConnection
                         );
                         $orderID = findOrder($databaseConnection);

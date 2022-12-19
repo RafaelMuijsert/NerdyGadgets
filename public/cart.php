@@ -15,9 +15,9 @@
     <body>
 
         <?php
-        session_start();
-        include "header.php";
-        include "../src/functions.php"
+            session_start();
+            include "header.php";
+            include "../src/functions.php";
         ?>
 
         <?php
