@@ -11,6 +11,7 @@ Please see https://github.com/php-pds/skeleton
 - PHP (tested with version 8.1.11)
 - mysqli php extension
 - intl php extension
+- Composer
 
 ## Setup
 
@@ -26,6 +27,11 @@ extension=intl
 ```
 If you are using XAMPP, the mysqli extension should be enabled by default. 
 If this is not the case, or if you are hosting the server a different way, repeat the above step with the mysqli extension.
+
+Lastly, install the composer dependencies by navigating to the project root and running the following command:
+```bash
+$ composer install
+```
 
 ### Make sure the web server root is set to public/ and not to the project root.
 
