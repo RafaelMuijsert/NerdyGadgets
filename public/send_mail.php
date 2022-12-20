@@ -17,4 +17,4 @@ er is met uw e-mail ingelogd bij onze nieuwsbrief.<br>
  Bent u dit wel, klikt u dan op de link hieronder.</strong><br>
 <a href="mailconf.php" class="btn btn--order"> Bevestigen</a>'
 );
-$sendgrid = new \SendGrid('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');
+$sendgrid = new \SendGrid('');

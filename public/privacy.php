@@ -21,37 +21,59 @@ include "../src/functions.php";
         <div class="col-8">
             <div class="order__wrapper bg-white bg-white--large">
 
-<h1>Privacy policy</h1>
+                <h2>Privacy policy</h2>
 
-<p>
-Wie is verantwoordelijk voor de verwerking van mijn persoonsgegevens?<br>
-Nerdygadgets.shop b.v. (“Nerdygadgets.shop”), gevestigd aan de Papendorpseweg 100, 3528 BJ Utrecht, is de verantwoordelijke voor de verwerking van gegevens zoals beschreven in dit privacybeleid.
-<br><br>
-Wanneer is dit privacybeleid van toepassing?<br>
-Dit privacybeleid is van toepassing op alle persoonsgegevens die Nerdygadgets.shop verwerkt van iedereen die weleens contact heeft (gehad) met Nerdygadgets.shop, zoals onze bezoekers, klanten en zakelijke contactpersonen, op alle aan Nerdygadgets.shop gerelateerde domeinen.
-<br><br>
-Wat zijn persoonsgegevens?<br>
-Persoonsgegevens zijn alle gegevens die herleidbaar zijn tot jou als individu. Denk maar aan jouw naam, telefoonnummer, adres of e-mailadres. Maar ook gegevens zoals je IP-adres of Nerdygadgets.shop klantnummer zijn persoonsgegevens. En andere gegevens die uniek zijn voor jou, zoals je Nerdygadgets.shop bestelgeschiedenis of surfgedrag.
-<br><br>
-Van wie verwerken wij persoonsgegevens en hoe krijgen wij deze gegevens?<br>
-Wij verwerken de persoonsgegevens van iedereen die direct of indirect contact heeft (gehad) met Nerdygadgets.shop, zoals (zakelijke) klanten en contactpersonen van partners.
-<br><br>
-We krijgen de gegevens rechtstreeks van jou, wanneer je onze website bezoekt, een account aanmaakt en bepaalde gegevens invult of wanneer je contact zoekt met onze klantenservice.
-<br><br>
-In sommige gevallen ontvangen we jouw gegevens van anderen. Zo krijgen we jouw naam- en adresgegevens wanneer iemand een cadeau direct naar jou verstuurt. Daarnaast kunnen wij gegevens krijgen van andere partijen, bijvoorbeeld wanneer jij die partijen toestemming hebt gegeven om bepaalde gegevens aan ons te verstrekken. Ook doen wij mee aan ‘Project No More Leaks’; een project van de politie om misbruik van gestolen of gelekte inloggegevens op het internet tegen te gaan. Meer informatie daarover vind je op deze pagina.
-<br><br>
-Welke gegevens verwerken wij van jou, waarvoor gebruiken wij die en hoelang worden deze bewaard?<br>
-Gegevens voor het verwerken van jouw bestelling<br>
-Als jij iets bestelt, hebben we bepaalde gegevens van je nodig om jouw bestelling te kunnen bezorgen en je op de hoogte te kunnen houden over je bestelling. Ook voor eventuele retouren of reparaties zijn deze gegevens nodig.
-<br>
-Hiervoor verzamelen wij je naam, e-mailadres, bezorgadres(sen), betaalgegevens en je telefoonnummer.<br>
-<br>
-De gegevens zijn nodig om de overeenkomst uit te voeren die je met ons (of met een van onze verkooppartners) hebt gesloten.
-<br><br>
-Gegevens voor het verwerken van een bestelling van iemand anders, waarbij jouw adres het bezorgadres is<br><br>
-Wanneer iemand een cadeau direct naar jou verstuurt, krijgen wij van diegene jouw naam- en adresgegevens. Die gegevens heeft Nerdygadgets.shop nodig om de bestelling te kunnen bezorgen.
-<br><br>
-Zakelijke klanten kunnen daarnaast cadeaukaarten kopen via onze cadeaukaartenwebsite. Ze kunnen Nerdygadgets.shop daarbij vragen om de cadeaukaarten direct naar de (door de zakelijke koper) aangewezen ontvangers te sturen. Als jij één van die ontvangers bent, ontvangt Nerdygadgets.shop van de zakelijke klant jouw naam en adresgegevens (als de cadeaukaart per post wordt verstuurd) of je naam en e-mailadres (als de cadeaukaart wordt gemaild). Deze gegevens heeft Nerdygadgets.shop nodig om de bestelling te kunnen bezorgen. Nerdygadgets.shop bewaart deze gegevens voor maximaal drie maanden.
+                <p>
+                    <br>
+                <h1>Wie is verantwoordelijk voor de verwerking van mijn persoonsgegevens?</h1>
+                Nerdygadgets.shop b.v. (“Nerdygadgets.shop”), gevestigd aan de Papendorpseweg 100, 3528 BJ Utrecht, is de verantwoordelijke voor de verwerking van gegevens zoals beschreven in dit privacybeleid.
+                <br><br><br>
+                <h1>Wanneer is dit privacybeleid van toepassing?</h1>
+                Dit privacybeleid is van toepassing op alle persoonsgegevens die Nerdygadgets.shop verwerkt van iedereen die weleens contact heeft (gehad) met Nerdygadgets.shop, zoals onze bezoekers, klanten en zakelijke contactpersonen, op alle aan Nerdygadgets.shop gerelateerde domeinen.
+                <br><br><br>
+                <h1>Wat zijn persoonsgegevens?</h1>
+                Persoonsgegevens zijn alle gegevens die herleidbaar zijn tot jou als individu. Denk maar aan jouw naam, telefoonnummer, adres of e-mailadres. Maar ook gegevens zoals je IP-adres of Nerdygadgets.shop klantnummer zijn persoonsgegevens. En andere gegevens die uniek zijn voor jou, zoals je Nerdygadgets.shop bestelgeschiedenis of surfgedrag.
+                <br><br><br>
+                <h1>Van wie verwerken wij persoonsgegevens en hoe krijgen wij deze gegevens?</h1>
+                Wij verwerken de persoonsgegevens van iedereen die direct of indirect contact heeft (gehad) met Nerdygadgets.shop, zoals (zakelijke) klanten en contactpersonen van partners.
+                <br><br>
+                We krijgen de gegevens rechtstreeks van jou, wanneer je onze website bezoekt, een account aanmaakt en bepaalde gegevens invult of wanneer je contact zoekt met onze klantenservice.
+                <br><br>
+                In sommige gevallen ontvangen we jouw gegevens van anderen.
+                <br>
+                Zo krijgen we jouw naam- en adresgegevens wanneer iemand een cadeau direct naar jou verstuurt. <br>
+                Daarnaast kunnen wij gegevens krijgen van andere partijen, bijvoorbeeld wanneer jij die partijen toestemming hebt gegeven om bepaalde gegevens aan ons te verstrekken.
+                <br>
+                Ook doen wij mee aan ‘Project No More Leaks’; een project van de politie om misbruik van gestolen of gelekte inloggegevens op het internet tegen te gaan.
+                <br>
+                Meer informatie daarover vind je op deze pagina.
+                <br><br><br>
+                <h1>Welke gegevens verwerken wij van jou, waarvoor gebruiken wij die en hoelang worden deze bewaard?</h1>
+                Gegevens voor het verwerken van jouw bestelling
+                <br>
+                Als jij iets bestelt, hebben we bepaalde gegevens van je nodig om jouw bestelling te kunnen bezorgen en je op de hoogte te kunnen houden over je bestelling.
+                <br>
+                Ook voor eventuele retouren of reparaties zijn deze gegevens nodig.
+                <br>
+                Hiervoor verzamelen wij je naam, e-mailadres, bezorgadres(sen), betaalgegevens en je telefoonnummer.<br>
+                <br>
+                De gegevens zijn nodig om de overeenkomst uit te voeren die je met ons (of met een van onze verkooppartners) hebt gesloten.
+                <br>
+                Gegevens voor het verwerken van een bestelling van iemand anders, waarbij jouw adres het bezorgadres is.
+                <br>
+                Wanneer iemand een cadeau direct naar jou verstuurt, krijgen wij van diegene jouw naam- en adresgegevens.
+                <br>
+                Die gegevens heeft Nerdygadgets.shop nodig om de bestelling te kunnen bezorgen.
+                <br>
+                Zakelijke klanten kunnen daarnaast cadeaukaarten kopen via onze cadeaukaartenwebsite.
+                <br>
+                Ze kunnen Nerdygadgets.shop daarbij vragen om de cadeaukaarten direct naar de (door de zakelijke koper) aangewezen ontvangers te sturen.
+                <br>
+                Als jij één van die ontvangers bent, ontvangt Nerdygadgets.shop van de zakelijke klant jouw naam en adresgegevens (als de cadeaukaart per post wordt verstuurd) of je naam en e-mailadres (als de cadeaukaart wordt gemaild).
+                <br>
+                Deze gegevens heeft Nerdygadgets.shop nodig om de bestelling te kunnen bezorgen.
+                <br>
+                Nerdygadgets.shop bewaart deze gegevens voor maximaal drie maanden.
 <br><br>
 Gegevens in jouw account<br>
 In jouw persoonlijke account bewaren we de volgende gegevens: je naam, (bezorg- en woon-/ vestigings-) adres(sen), telefoonnummer, e-mailadres, betaalgegevens, cadeaubonnen en cadeaukaarten.
