@@ -46,3 +46,15 @@ a, a:focus, a:active {
     opacity: 0;
     transition: var(--transition);
 }
+
+.alert-success {
+    background-color: var(--accent-color) !important;
+    color: var(--sub-bg-color) !important;
+    border-radius: 10px;
+}
+
+.alert-danger {
+    background-color: var(--accent-red) !important;
+    color: var(--sub-bg-color) !important;
+    border-radius: 10px;
+}

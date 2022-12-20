@@ -18,7 +18,7 @@
                 <?php if($cartUpdate): ?>
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        Hier komt de conversieverhogende maatregel van Jesse
+                        Product is succesfol toegevoegd aan je winkelmand.
                     </div>
                 <?php else: ?>
                     <div class="alert alert-danger alert-dismissible" role="alert">
