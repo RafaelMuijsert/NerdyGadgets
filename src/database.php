@@ -17,11 +17,12 @@ function connectToDatabase() {
         mysqli_set_charset($connection, 'latin1');
         $databaseAvailable = true;
     } catch (mysqli_sql_exception $e) {
-//        var_dump($e);
+        var_dump($e);
+        error_log($e->getMessage());
         $databaseAvailable = false;
     }
     if (!$databaseAvailable) {
-        ?><h2>Website wordt op dit moment onderhouden.</h2><?php
+        ?><h2>Kon geen verbinding maken met de database.</h2><?php
         die();
     }
 

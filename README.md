@@ -14,13 +14,6 @@ Please see https://github.com/php-pds/skeleton
 - Composer
 
 ## Setup
-
-In your Apache configuration, add the following option (usually above the DocumentRoot option):
-```
-SetEnv DB_PASSWORD "[PASSWORD]" 
-```
-Where `[PASSWORD]` = the database password.
-
 Edit php.ini and add the following line under [PHP]:
 ```
 extension=intl
@@ -32,6 +25,8 @@ Lastly, install the composer dependencies by navigating to the project root and 
 ```bash
 $ composer install
 ```
+
+Copy the .env.example file to .env and update the variables.
 
 ### Make sure the web server root is set to public/ and not to the project root.
 
