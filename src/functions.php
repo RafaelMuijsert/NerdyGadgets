@@ -333,3 +333,25 @@ function editUser($firstname, $prefixName, $surname, $birthDate, $phone, $street
 //                        print($e);
     }
 }
+
+function getUser($userID, $databaseConnection) {
+    $query = "SELECT * FROM webshop_user WHERE id = '$userID'";
+    $stmt = mysqli_prepare($databaseConnection, $query);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function getAllUsers($databaseConnection) {
+    $query = "SELECT * FROM webshop_user";
+    $stmt = mysqli_prepare($databaseConnection, $query);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function deleteUser($userID, $databaseConnection) {
+    $query = "DELETE FROM webshop_user WHERE id = '$userID'";
+    $stmt = mysqli_prepare($databaseConnection, $query);
+    mysqli_stmt_execute($stmt);
+}
