@@ -14,7 +14,7 @@
     );
     $shippingTime = '1 day';
     $shippingDate = $dateformatter->format(strtotime("+$shippingTime", mktime(0, 0, 0)));
-    $CHECKOUT_DISABLED = false;
+    $CHECKOUT_ENABLED = false;
 ?>
 <section class="checkout">
     <div class="container">
@@ -106,11 +106,11 @@
                     </div>
 
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
-                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && !$CHECKOUT_DISABLED):
+                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && $CHECKOUT_ENABLED):
 
                         $_SESSION['userinfo']['postcode'] = filterPostalzip($_SESSION['userinfo']['postcode']);
 
-                        addKlant(
+                        addCustomer(
                                 $_SESSION['userinfo']['firstname'],
                                 $_SESSION['userinfo']['prefixName'],
                                 $_SESSION['userinfo']['surname'],
@@ -119,7 +119,7 @@
                                 $_SESSION['userinfo']['phone'],
                                 $databaseConnection
                         );
-                        $klantID = findKlant($databaseConnection);
+                        $klantID = findCustomer($databaseConnection);
 
                         $userID = NULL;
                         if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
@@ -151,11 +151,14 @@
                             else $procent = NULL;
                             $total += round(($price * $factor),2) * $quantity;
 
-                            addOrderregel($orderID[0]['max(OrderID)'], $id, $quantity, $total, $procent,$databaseConnection);
+                            addOrderLine($orderID[0]['max(OrderID)'], $id, $quantity, $total, $procent,$databaseConnection);
                             removeStock($id, $quantity, $databaseConnection);
                         endforeach;
                         $_SESSION['userinfo'] = '';
                         $_SESSION['cart'] = [];
+                        if (isset($_SESSION['korting'][0]['uses']) && $_SESSION['korting'][0]['uses'] > 0){
+                            reduceUses($_SESSION['korting']['naam'], $databaseConnection);
+                        }
                         unset($_SESSION['korting']);
                         ?>
 

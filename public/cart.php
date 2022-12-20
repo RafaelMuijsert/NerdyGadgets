@@ -13,7 +13,18 @@
         <link rel="stylesheet" href="css/main.css" type="text/css">
     </head>
     <body>
-
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+            $('[data-toggle="popover"]').popover({
+                html: true,
+                content: function() {
+                    return $('#popover-content').html();
+                }
+            });
+            $('#example').popover(options)
+        </script>
         <?php
             session_start();
             include "header.php";
@@ -21,27 +32,29 @@
         ?>
 
         <?php
-        $total = 0;
-        $zonderKorting = 0;
-
+        $_SESSION[ 'total'] = 0;
+        $_SESSION[ 'noDiscount'] = 0;
+        $kortingscode = '';
         if (isset($_POST['korting'])){
             unset($_POST['korting']);
             if (isset($_POST['kortingscode'])) {
                 $kortingscode = $_POST['kortingscode'];
                 unset($_POST['kortingscode']);
-                $_SESSION['korting'] = getKortingcode($kortingscode, $databaseConnection);
+                $_SESSION['korting'] = getDiscountCode($kortingscode, $databaseConnection);
                 $_SESSION['korting']['naam'] = $kortingscode;
-                if (!checkDatum($_SESSION['korting']['naam'], $databaseConnection) && !($_SESSION['korting']['geldigtot'] = '')){
+                if ((!checkCodeDate($_SESSION['korting']['naam'], $databaseConnection)) || (!checkUses($_SESSION['korting']['naam'], $databaseConnection))){
                     unset($_SESSION['korting']);
                 }
             }
         }
 
         foreach($_POST as $key => $value):
-            $value = abs($value);
-            $stock = getItemStock($key, $databaseConnection);
-            $value = ($value <= $stock) ? $value : $stock;
-            $_SESSION['cart'][$key] = abs($value);
+//            if(is_int($value) || is_float($value)):
+                $value = abs($value);
+                $stock = getItemStock($key, $databaseConnection);
+                $value = ($value <= $stock) ? $value : $stock;
+                $_SESSION['cart'][$key] = abs($value);
+//            endif;
         endforeach;
 
         function updateSession($arrayName) {
@@ -81,10 +94,7 @@
                             <h1 class="shopping-cart__title">Winkelmandje</h1>
 
                             <?php
-//                            print_r($_SESSION['korting']);
-//                            print (checkDatum($_SESSION['korting']['naam'], $databaseConnection));
                             if(count($_SESSION['cart']) !== 0): ?>
-
                                 <?php foreach ($_SESSION['cart'] as $key => $item):
                                     $stockItem = getStockItem($key, $databaseConnection);
                                     if (!$stockItem):
@@ -119,8 +129,8 @@
                                                 if (isset($_SESSION['korting'][0]['procent'])){
                                                     $factor = (1 - ($_SESSION['korting'][0]['procent'] * 0.01));
                                                 }
-                                                $total += ($price * $factor) * $quantity;
-                                                $zonderKorting += $price * $quantity; ?>
+                                                $_SESSION['total'] += ($price * $factor) * $quantity;
+                                                $_SESSION[ 'noDiscount'] += $price * $quantity; ?>
 
                                                 <input class="btn" name="<?= $stockItem['StockItemID'] ?>" onchange="this.form.submit()" min="1" type="number" value="<?= $quantity ?>" max="<?= $stock ?>">
 
@@ -149,24 +159,42 @@
                                 <hr>
                                 <div class="shopping-cart__total">
                                     <?php if (isset($_SESSION['korting'][0]['procent'])): ?>
-<!--                                    even naar kijken wat moet voor de css, mij lukt dit niet-->
+                                        <div class="">Prijs (<?= ($_SESSION['korting'][0]['procent'] . "% korting")?>)</div>
+                                        <div class=" text-right"><s>&euro; <?= (number_format($_SESSION['noDiscount'], 2, '.', ',')) ?></s> &euro; <?= (number_format(($_SESSION[ 'total']), 2, '.', ',')) ?></div>
+                                    <?php else: ?>
                                         <div class="">Prijs</div>
-                                        <div class=" text-right">&euro; <?= (number_format($zonderKorting, 2, '.', ',')) ?></div>
-                                        <div class=""><?php print ($_SESSION['korting'][0]['procent'] . "% korting")?></div>
-                                        <div class=" text-right">&euro; <?= (number_format(($zonderKorting - $total), 2, '.', ',')) ?></div>
+                                        <div class=" text-right">&euro; <?= (number_format($_SESSION['noDiscount'], 2, '.', ',')) ?></div>
                                     <?php endif; ?>
-                                    <div class="">Totaal</div>
-                                    <div class=" text-right">&euro; <?= (number_format($total, 2, '.', ',')) ?></div>
+                                    <?php
+                                    if ($_SESSION['total'] < getDeliverycosts($databaseConnection)[0][1]):
+                                        $deliveryCosts = getDeliverycosts($databaseConnection)[1][1];
+                                    else: $deliveryCosts = 0;
+                                    endif;
+                                    $_SESSION['deliveryCosts'] = $deliveryCosts;
+                                    $_SESSION['total'] += $_SESSION['deliveryCosts'];
+                                    ?>
+                                    <div class="">
+                                        <abbr title="Gratis verzendkosten vanaf &euro;<?= (getDeliverycosts($databaseConnection)[0][1]) ?>">Verzendkosten</abbr>
+                                    </div>
+                                    <div class="text-right" style="margin-left: auto; margin-right: 0;">&euro; <?= (number_format($deliveryCosts, 2, '.', ',')) ?></div>
                                 </div>
                                 <hr>
                                 <div class="shopping-cart__total">
-                                    <form method="post">
+                                    <div class="">Totaal</div>
+                                    <div class=" text-right">&euro; <?= (number_format($_SESSION['total'], 2, '.', ',')) ?></div>
+                                </div>
+                                <hr>
+                                <div class="shopping-cart__total">
+                                    <form method="post" action="">
                                         <label for="kortingscode">Kortingscode:</label>
-                                        <input id="kortingscode" type="text" name="kortingscode" <?php if (isset($_SESSION['korting'][0]['procent'])) {print ('value="' . $_SESSION['korting']['naam'] . '"');
-                                        } ?>">
+                                        <?php
+                                        $value = '';
+                                        if (isset($_SESSION['korting'][0]['procent'])):
+                                            $value = $_SESSION['korting']['naam'];
+                                        endif; ?>
+                                        <input id="kortingscode" type="text" name="kortingscode" value="<?= $value ?>">
                                         <input class="btn--primary" type="submit" value="Bevestig" name="korting">
                                     </form>
-                                    <b> <?php ?></b>
                                 </div>
                                 <hr>
                                 <div class="text-right">
@@ -185,7 +213,6 @@
             if ( window.history.replaceState ) {
                 window.history.replaceState( null, null, window.location.href );
             }
-
             // Verwijder URL GET-query om dubbele uitvoering te voorkomen op ververs.
             // window.history.pushState("object or string", "Title", "/" + window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
         </script>

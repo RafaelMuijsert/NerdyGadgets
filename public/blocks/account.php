@@ -4,7 +4,7 @@
             <div class="col-3">
                 <div class="bg-white acc-menu">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                        <a class="btn btn--grey nav-link" id="v-pills-home-tab" data-toggle="tab" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Gebruikersprofiel</a>
+                        <a class="btn btn--grey nav-link active" id="v-pills-home-tab" data-toggle="tab" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Gebruikersprofiel</a>
                         <?php if(isset($_SESSION['account']) && $_SESSION['account']['role'] == 'Admin'): ?>
                             <a class="btn btn--grey nav-link" id="v-pills-account-tab" data-toggle="tab" href="#v-pills-account" role="tab" aria-controls="v-pills-account" aria-selected="false">Account beheer</a>
                             <a class="btn btn--grey nav-link" id="v-pills-settings-tab" data-toggle="tab" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Admin instellingen</a>
@@ -22,6 +22,7 @@
                             endif;
                         ?>
                     </div>
+
                 </div>
             </div>
             <div class="col-9">

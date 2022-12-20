@@ -7,22 +7,11 @@ function getVoorraadTekst($actueleVoorraad) {
     }
 }
 
-function berekenVerkoopPrijs($adviesPrijs, $btw) {
+function calculateSellPrice($adviesPrijs, $btw) {
     return $btw * $adviesPrijs / 100 + $adviesPrijs;
 }
 
-function getCountry($databaseConnection) {
-    $Query = "
-            SELECT CountryID, CountryName
-            FROM Countries 
-            ORDER BY CountryName ASC";
-    $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_execute($Statement);
-    $Result = mysqli_stmt_get_result($Statement);
-    return mysqli_fetch_all($Result, MYSQLI_ASSOC);
-}
-
-function addKlant($firstname, $prefixName, $surname, $birthdate, $email, $phonenumber, $databaseConnection){
+function addCustomer($firstname, $prefixName, $surname, $birthdate, $email, $phonenumber, $databaseConnection){
     $Query = "
             INSERT INTO webshop_klant (voornaam, tussenvoegsel, achternaam, geboortedatum, email, telefoonnummer)
             VALUES (?, ?, ?, ?, ?, ?)";
@@ -40,7 +29,7 @@ function addOrder($klantID, $land, $street, $housenumber, $postcode, $stad, $com
     mysqli_stmt_execute($Statement);
 }
 
-function addOrderregel($orderID, $artikelID, $aantal, $bedrag, $korting, $databaseConnection){
+function addOrderLine($orderID, $artikelID, $aantal, $bedrag, $korting, $databaseConnection){
     $Query = "
             INSERT INTO webshop_orderregel (orderID, artikelID, aantal, bedrag, procentKorting)
             VALUES (?, ?, ?, ?, ?)";
@@ -59,7 +48,7 @@ function removeStock($stockID, $aantal, $databaseConnection){
     mysqli_stmt_execute($Statement);
 }
 
-function findKlant($databaseConnection){
+function findCustomer($databaseConnection){
     $Query = "
             SELECT max(klantID)
             FROM webshop_klant";
@@ -90,9 +79,9 @@ function getTotalPrice() {
     endforeach;
     return $total;
 }
-function getKortingcode($kortingscode, $databaseConnection){
+function getDiscountCode($kortingscode, $databaseConnection){
     $Querry =  "
-            SELECT procent, geldigtot
+            SELECT procent, geldigtot, uses
             FROM webshop_kortingscodes
             WHERE codenaam = ?";
     $Statement = mysqli_prepare($databaseConnection, $Querry);
@@ -102,7 +91,8 @@ function getKortingcode($kortingscode, $databaseConnection){
     $korting =  mysqli_fetch_all($result, MYSQLI_ASSOC);
     return $korting;
 }
-function checkDatum($kortingscode, $databaseConnection){
+
+function checkCodeDate($kortingscode, $databaseConnection) {
     $Querry = "
             SELECT geldigtot
             FROM webshop_kortingscodes
@@ -112,7 +102,7 @@ function checkDatum($kortingscode, $databaseConnection){
     mysqli_stmt_execute($Statement);
     $result = mysqli_stmt_get_result($Statement);
     $geldigTot = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    if ($geldigTot == NULL){
+    if (($geldigTot == NULL) || ($geldigTot[0]['geldigtot'] == '')){
         return true;
     }
     else {
@@ -142,7 +132,94 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
     }
 
 }
+function checkUses($kortingscode, $databaseConnection){
+    $Querry = "
+            SELECT uses
+            FROM webshop_kortingscodes
+            WHERE codenaam = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement,'s', $kortingscode);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    $uses = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+    if ($uses == NULL || $uses[0]['uses'] === NULL || ($uses[0]['uses'] > 0 )){
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+function reduceUses($kortingscode, $databaseConnection){
+    $Querry = "
+            UPDATE webshop_kortingscodes
+            SET uses = uses - 1
+            WHERE codenaam = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, 's', $kortingscode);
+    mysqli_stmt_execute($Statement);
+}
+function discountCodes($databaseConnection){
+    $Querry = "
+            SELECT * FROM webshop_kortingscodes";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+function removeDiscountCodes($kortingID, $databaseConnection){
+    $Querry = "
+            DELETE FROM webshop_kortingscodes
+            WHERE kortingID = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, "s", $kortingID);
+    mysqli_stmt_execute($Statement);
+}
+function addDiscountCode($naam, $procent, $geldigtot, $uses, $databaseConnection){
+    $Querry = "
+            INSERT INTO webshop_kortingscodes(codenaam, procent, geldigtot, uses)
+            VALUES (?,?,?,?)";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, 'sdsi', $naam, $procent, $geldigtot, $uses);
+    mysqli_stmt_execute($Statement);
+}
+function updateDiscountCode($naam, $procent, $geldigtot, $uses, $databaseConnection){
+    $Querry = "
+            UPDATE webshop_kortingscodes
+            SET procent = ?, geldigtot = ?, uses = ?
+            WHERE codenaam = ?";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, 'dsis',  $procent, $geldigtot, $uses, $naam);
+    mysqli_stmt_execute($Statement);
+}
+function getDeliverycosts ($databaseConnection){
+    $Querry = "
+            SELECT instellingNaam, aantal
+            FROM webshop_admininstellingen";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    return mysqli_fetch_all($result);
+}
+
+function updateDeliveryLimit ($deliveryLimit, $databaseConnection){
+    $Querry = "
+            UPDATE webshop_admininstellingen
+            SET aantal = ?
+            WHERE instellingNaam = 'verzendKostenGrens'";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, 'd', $deliveryLimit);
+    mysqli_stmt_execute($Statement);
+}
+function updateDeliveryCosts ($deliveryCosts, $databaseConnection){
+    $Querry = "
+            UPDATE webshop_admininstellingen
+            SET aantal = ?
+            WHERE instellingNaam = 'verzendKostenAantal'";
+    $Statement = mysqli_prepare($databaseConnection, $Querry);
+    mysqli_stmt_bind_param($Statement, 'd', $deliveryCosts);
+    mysqli_stmt_execute($Statement);
+}
 /*
     Get all orders from one account
 */
@@ -151,8 +228,10 @@ function getOrderHistory($userID, $conn) {
                 SELECT * 
                 FROM webshop_order AS O 
                 JOIN webshop_orderregel AS R ON O.OrderID=R.OrderID 
-                JOIN stockitems_archive AS A ON A.StockItemID=R.ArtikelID   
+                JOIN stockitems AS A ON A.StockItemID=R.ArtikelID
+                JOIN stockitemimages AS I ON I.StockItemID=A.StockItemID
                 WHERE userID = '$userID'
+                GROUP BY O.OrderID, ArtikelID
                 ORDER BY datum DESC";
     $smt = mysqli_prepare($conn, $Query);
     mysqli_stmt_execute($smt);
