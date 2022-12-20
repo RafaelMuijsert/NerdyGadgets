@@ -184,16 +184,16 @@
                                     <div class=" text-right">&euro; <?= (number_format($_SESSION['total'], 2, '.', ',')) ?></div>
                                 </div>
                                 <hr>
-                                <div class="shopping-cart__total">
-                                    <form method="post" action="">
-                                        <label for="kortingscode">Kortingscode:</label>
+                                <div>
+                                    <form class="shopping-cart__form" method="post" action="">
+<!--                                        <label for="kortingscode">Kortingscode:</label>-->
                                         <?php
                                         $value = '';
                                         if (isset($_SESSION['korting'][0]['procent'])):
                                             $value = $_SESSION['korting']['naam'];
                                         endif; ?>
-                                        <input id="kortingscode" type="text" name="kortingscode" value="<?= $value ?>">
-                                        <input class="btn--primary" type="submit" value="Bevestig" name="korting">
+                                        <input class="input" id="kortingscode" type="text" placeholder="kortingscode" name="kortingscode" value="<?= $value ?>">
+                                        <input class="btn--primary" id="kortingscodeInput" type="submit" value="Bevestig" name="korting">
                                     </form>
                                 </div>
                                 <hr>

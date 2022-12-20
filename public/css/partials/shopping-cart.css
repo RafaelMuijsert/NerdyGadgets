@@ -32,3 +32,17 @@
     font-weight: 200;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.shopping-cart__form {
+    display: flex;
+    width: 100%;
+    column-gap: 16px;
+}
+
+.shopping-cart__form #kortingscode{
+    width: 70%;
+}
+
+.shopping-cart__form #kortingscodeInput{
+    width: 30%;
+}
