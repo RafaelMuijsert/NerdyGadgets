@@ -14,32 +14,19 @@
                             <li><a href="/">Alle categoriën</a></li>
                         </menu>
                     </div>
-                    <div class="footer__brand">
+                    <div class="footer__terms" style="float: bottom; position: relative;">
+                        <menu style="float: bottom; position: relative;">
+                        <a href="cookies.php">Cookies </a>  |
+                        <a href="privacy.php"> Privacy policy </a>  |
+                        <a href="tos.php"> Algemene Voorwaarden </a>  |
+                        <a href="newsletter.php"> Nieuwsbrief </a>  |
+                        <a href="contact.php"> Contact</a>
+                        </menu>
+                    </div>
+                    <div class="footer__brand" style="float: top; height: 200px; position: relative;">
                         <a href="./" class="header__logo" id="LogoA">
                             NG
                         </a>
-                        <ul>
-                            <li>Huppelstraat 21</li>
-                            <li>4466 TR, Japinko</li>
-                            <li>+31 6 43567878</li>
-                            <li>info@nerdygadgets.com</li>
-                        </ul>
-                    </div>
-
-                </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <div class="footer__inner">
-                                    <div class="footer__terms">
-                                        <li><a href="cookies.php">Cookies</a></li>
-                                        <li><a href="privacy.php">Privacy policy</a></li>
-                                        <li><a href="tos.php">Algemene Voorwaarden</a></li>
-                                        <li><a href="newsletter.php">Nieuwsbrief</a></li>
-                                        <li><a href="contact.php">Contact</a></li>
-                                    </div>
-                            </div>
-                        </div>
                     </div>
 
             </div>

@@ -15,32 +15,32 @@
 <?php
 include "header.php";
 include "../src/functions.php";
+include "send_mail.php";
 ?>
+
 <div>
     <h1>Nieuwsbrief</h1>
 </div>
+
 
 <form name="registration" method="post" action="" class="order__form">
 
     <span class="order__form-row order__form-error">
         <?php
-        if(isset($_POST) && isset($_POST['submitRegistration'])):
+        if(isset($_POST) && isset($_POST['submit-email-Registration'])):
 
-            $_SESSION['registration'] = $_POST;
-            $username = $_SESSION['registration']['email'];
+            $_SESSION['email-registration'] = $_POST;
+            $username = $_SESSION['email-registration']['email'];
 
 
                 maillistaccount(
-                    $_SESSION['registration']['email'],
-                    $_SESSION['registration']['firstname'],
-                    $_SESSION['registration']['prefixName'],
-                    $_SESSION['registration']['surname'],
+                    $_SESSION['email-registration']['email'],
+                    $_SESSION['email-registration']['firstname'],
+                    $_SESSION['email-registration']['prefixName'],
+                    $_SESSION['email-registration']['surname'],
                     $databaseConnection,
 
                 );
-                if($exeption == false):
-
-                endif;
         endif;
         ?>
     </span>
@@ -48,8 +48,8 @@ include "../src/functions.php";
     <div class="order__form-row order__form-row--50">
         <?php
         $mail = '';
-        if (isset($_SESSION['registration']['email'])):
-            $mail = $_SESSION['registration']['email'];
+        if (isset($_SESSION['email-registration']['email'])):
+            $mail = $_SESSION['email-registration']['email'];
         endif; ?>
         <label for="email">Email:*</label>
         <input class="input" placeholder="Emailadres" value="<?= $mail ?>" type="email" id="email" name="email" required>
@@ -58,8 +58,8 @@ include "../src/functions.php";
     <div class="order__form-row order__form-row--40">
         <?php
         $firstname = '';
-        if (isset($_SESSION['registration']['firstname'])):
-            $firstname = $_SESSION['registration']['firstname'];
+        if (isset($_SESSION['email-registration']['firstname'])):
+            $firstname = $_SESSION['email-registration']['firstname'];
         endif; ?>
         <label for="firstname">Voornaam:*</label>
         <input class="input" value="<?= $firstname ?>" type="text" id="firstname" name="firstname" required>
@@ -68,8 +68,8 @@ include "../src/functions.php";
     <div class="order__form-row order__form-row--20">
         <?php
         $prefixName = '';
-        if (isset($_SESSION['registration']['prefixName'])):
-            $prefixName = $_SESSION['registration']['prefixName'];
+        if (isset($_SESSION['email-registration']['prefixName'])):
+            $prefixName = $_SESSION['email-registration']['prefixName'];
         endif; ?>
         <label for="prefixName">Tussenvoegsel:</label>
         <input class="input" placeholder="Tussenvoegsel" value="<?= $prefixName ?>" type="text" id="prefixName" name="prefixName">
@@ -78,8 +78,8 @@ include "../src/functions.php";
     <div class="order__form-row order__form-row--40">
         <?php
         $surname = '';
-        if (isset($_SESSION['registration']['surname'])):
-            $surname = $_SESSION['registration']['surname'];
+        if (isset($_SESSION['email-registration']['surname'])):
+            $surname = $_SESSION['email-registration']['surname'];
         endif; ?>
         <label for="surname">Achternaam:*</label>
         <input class="input" placeholder="Achternaam" value="<?= $surname ?>" type="text" id="surname" name="surname" required>
@@ -87,7 +87,7 @@ include "../src/functions.php";
 
     <div class="order__form-row">
         <input TYPE="hidden" NAME="required_fields" VALUE="name, from">
-        <input class="btn btn--order" type="submit" name="submitRegistration" value="Bevestig gegevens">
+        <a href="send_mail.php" class="btn btn--order"> Bevestigen</a>'
     </div>
 </form>
 
