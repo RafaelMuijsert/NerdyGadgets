@@ -1,13 +1,10 @@
 <?php
 $users = getAllUsers($databaseConnection);
 
-//print_r($users);
-
-//if (isset($_POST['editID'])) {
-//    $userID = $_POST['editID'];
-//    $userResult = getUser($userID, $databaseConnection);
-//    print_r($userResult);
-//}
+if (isset($_POST['deleteAccount']['password'])) {
+    $_SESSION['deleteAccount']['password'] = $_POST['deleteAccount']['password'];
+    unset($_POST['deleteAccount']['password']);
+}
 
 if (isset($_POST['update'])) {
     $updated = $_POST['edit'];
@@ -15,19 +12,33 @@ if (isset($_POST['update'])) {
     editUser($updated['firstname'], $updated['prefixName'], $updated['surname'], $updated['birthDate'], $updated['phone'], $updated['street'], $updated['housenumber'], $updated['postcode'], $updated['city'], $updated['id'], $databaseConnection);
 }
 
-if (isset($_POST['deleteID'])) {
+if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) {
     $deleteID = $_POST['deleteID'];
-    deleteUser($deleteID, $databaseConnection);
+    $password = $_SESSION['deleteAccount']['password'];
+    $hashedPassword = $_SESSION['account']['password'];
+
+    if ($deleteID != $_SESSION['account']['id'] && password_verify($password, $hashedPassword)) {
+        unset($_SESSION['deleteAccount']['password']);
+//        deleteUser($deleteID, $databaseConnection);
+        print("<div class='alert alert-success' role='alert'>
+            Account is verwijderd
+        </div>");
+    } else {
+        print("<div class='alert alert-danger' role='alert'>
+            Er is iets misgegaan.
+        </div>");
+        unset($_SESSION['deleteAccount']['password']);
+    }
 }
 ?>
 
 <div class="users">
     <div class="users__header">
         <h1>Account beheer</h1>
-            <hr>
         <?php if (isset($_POST['editID'])):
             $userID = $_POST['editID'];
             $userResult = getUser($userID, $databaseConnection); ?>
+            <hr>
             <form action="" method="post" class="edit-data form__form">
 
                 <input type="text" name="edit[id]" value="<?= @$userResult[0]['id'] ?>" style="display: none">
@@ -75,6 +86,13 @@ if (isset($_POST['deleteID'])) {
 <!--                <input type="email" name="edit[email]" value="--><?php //= @$userResult[0]['email'] ?><!--" placeholder="Email">-->
             </form>
         <?php endif; ?>
+
+        <form action="" method="post" id="passwordForm" <?php if (!isset($_POST['deleteID']) || isset($_POST['deleteAccount']['password'])): ?> style="display: none" <?php endif; ?>>
+            <input type="text" name="deleteID" value="<?= $_POST['deleteID'] ?>" style="display: none">
+            <input type="password" name="deleteAccount[password]" placeholder="Wachtwoord">
+            <button type="submit" name="checkPassword">Wachtwoord checken</button>
+        </form>
+
     </div>
     <table class="table">
         <thead>
@@ -109,16 +127,13 @@ if (isset($_POST['deleteID'])) {
                             <input type="text" name="editID" value="<?= $user['id'] ?>" style="display: none">
                             <input class="btn btn--small btn--primary" type="submit" value="Edit">
                         </form>
-                        <form action="" method="post">
-                            <input type="text" name="deleteID" value="<?= $user['id'] ?>" style="display: none">
-                            <input class="btn btn--small btn--primary" type="submit" value="Delete">
-
-                        </form>
+                        <?php if ($user['id'] != $_SESSION['account']['id']): ?>
+                            <form action="" method="post">
+                                <input type="text" name="deleteID" value="<?= $user['id'] ?>" style="display: none">
+                                <input class="btn btn--small btn--primary" type="submit" value="Delete">
+                            </form>
+                        <?php endif; ?>
                     </td>
-    <!--                <td>-->
-    <!--                    <a href="account.php#v-pills-account?edit=--><?php //= $user['id'] ?><!--" class="btn btn-info">Edit</a>-->
-    <!--                    <a href="account.php#v-pills-account?delete=--><?php //= $user['id'] ?><!--" class="btn btn-danger">Delete</a>-->
-    <!--                </td>-->
                 </tr>
             <?php endforeach; ?>
         </tbody>
