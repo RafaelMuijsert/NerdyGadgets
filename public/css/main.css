@@ -11,6 +11,7 @@
 @import "globals/button.css";
 @import "globals/icons.css";
 @import "globals/input.css";
+@import "globals/form.css";
 
 /* Partials */
 @import "partials/header.css";
@@ -34,4 +35,6 @@
 @import "components/carousel.css";
 @import "components/account-menu.css";
 @import "components/profile.css";
+@import "components/order-history.css";
+@import "components/edit-data.css";
 @import "components/settings-discount.css";

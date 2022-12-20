@@ -1,20 +1,28 @@
 <!-- dit bestand bevat alle code die verbinding maakt met de database -->
 <?php
-
+require __DIR__ . '/../vendor/autoload.php';
 function connectToDatabase() {
     $connection = null;
-
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Set MySQLi to throw exceptions
     try {
-	    $connection = mysqli_connect("localhost", "nerd", getenv("DB_PASSWORD"), "nerdygadgets");
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+        $dotenv->load();
+        $connection = mysqli_connect(
+                $_SERVER['DB_HOST'],
+                $_SERVER['DB_USER'],
+                $_SERVER['DB_PASSWORD'],
+                $_SERVER['DB_NAME'],
+                $_SERVER['DB_PORT']
+        );
         mysqli_set_charset($connection, 'latin1');
         $databaseAvailable = true;
     } catch (mysqli_sql_exception $e) {
-      //  var_dump($e);
+        var_dump($e);
+        error_log($e->getMessage());
         $databaseAvailable = false;
     }
     if (!$databaseAvailable) {
-        ?><h2>Website wordt op dit moment onderhouden.</h2><?php
+        ?><h2>Kon geen verbinding maken met de database.</h2><?php
         die();
     }
 

@@ -14,7 +14,7 @@
     );
     $shippingTime = '1 day';
     $shippingDate = $dateformatter->format(strtotime("+$shippingTime", mktime(0, 0, 0)));
-    $CHECKOUT_ENABLED = true;
+    $CHECKOUT_ENABLED = false;
 ?>
 <section class="checkout">
     <div class="container">
@@ -108,7 +108,7 @@
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
                     <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && $CHECKOUT_ENABLED):
 
-                        $postcode = str_replace(' ', '', $_SESSION['userinfo']['postcode']);
+                        $_SESSION['userinfo']['postcode'] = filterPostalzip($_SESSION['userinfo']['postcode']);
 
                         addCustomer(
                                 $_SESSION['userinfo']['firstname'],
@@ -121,14 +121,20 @@
                         );
                         $klantID = findCustomer($databaseConnection);
 
+                        $userID = NULL;
+                        if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
+                            $userID = $_SESSION['account']['id'];
+                        endif;
+
                         addOrder(
                                 $klantID[0]['max(klantID)'],
                                 $_SESSION['userinfo']['country'],
                                 $_SESSION['userinfo']['street'],
                                 $_SESSION['userinfo']['housenumber'],
-                                $postcode,
+                                $_SESSION['userinfo']['postcode'],
                                 $_SESSION['userinfo']['city'],
                                 $_SESSION['userinfo']['comment'],
+                                $userID,
                                 $databaseConnection
                         );
                         $orderID = findOrder($databaseConnection);

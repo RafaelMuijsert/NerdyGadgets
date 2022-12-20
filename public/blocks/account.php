@@ -3,7 +3,6 @@
         <div class="row">
             <div class="col-3">
                 <div class="bg-white acc-menu">
-
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <a class="btn btn--grey nav-link active" id="v-pills-home-tab" data-toggle="tab" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Gebruikersprofiel</a>
                         <?php if(isset($_SESSION['account']) && $_SESSION['account']['role'] == 'Admin'): ?>
@@ -41,7 +40,7 @@
                             </div>
                         <?php else: ?>
                             <div class="tab-pane fade" id="v-pills-orders" role="tabpanel" aria-labelledby="v-pills-orders-tab">
-                                <?php include 'account/my-orders.php'?>
+                                <?php include 'account/order-history.php' ?>
                             </div>
                         <?php endif; ?>
                     </div>
@@ -50,24 +49,5 @@
         </div>
     </div>
 </section>
-<script>
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        var hash = $(e.target).attr('href');
-        if (history.pushState) {
-            history.pushState(null, null, hash);
-        } else {
-            location.hash = hash;
-        }
-    });
+<script src="../js/account.js"></script>
 
-    console.log('asdfasdfas' + window.location.hash)
-
-    if(window.location.hash === ''){
-        location.href = '#v-pills-home';
-    }
-
-    var hash = window.location.hash;
-    if (hash) {
-        $('.nav-link[href="' + hash + '"]').tab('show');
-    }
-</script>

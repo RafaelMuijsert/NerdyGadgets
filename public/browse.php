@@ -278,6 +278,7 @@
 
                                     <div class="product-sum__right" id="StockItemFrameRight">
                                         <div>
+                                            <div class="h6 text-muted product-sum__number">Artikelnummer: <?= $row["StockItemID"]; ?></div>
                                             <h3 class="product-sum__title" style="width: 82.5%"><?= $row["StockItemName"]; ?></h3>
                                             <span class="product-sum__price"><?= sprintf("€%0.2f", calculateSellPrice($row["RecommendedRetailPrice"], $row["TaxRate"])); ?></span>
                                             <span class="product-sum__btw">Inclusief btw</span>
@@ -286,8 +287,15 @@
                                                 <input class="btn btn--primary" type="submit" value="Toevoegen aan winkelmandje">
                                             </form>
                                         </div>
-
-                                        <h6 class="product-sum__number">Artikelnummer: <?= $row["StockItemID"]; ?></h6>
+                                        <?php
+                                        $itemStock = getItemStock($row['StockItemID'], $databaseConnection);
+                                        if($itemStock > 1000) {
+                                            $itemStock = 'Ruime voorraad beschikbaar';
+                                        } else {
+                                            $itemStock = "Voorraad: $itemStock";
+                                        }
+                                        ?>
+                                        <h6 class="product-sum__number"><?=$itemStock?></h6>
                                     </div>
                                 </div>
 

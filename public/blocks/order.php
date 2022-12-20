@@ -4,7 +4,7 @@
             <div class="col-8">
                 <div class="order__wrapper bg-white bg-white--large">
                     <h2>Gegevens invullen</h2>
-                    <p>Vul in de onderstaande Velden uw in:</p>
+                    <p>Vul in de onderstaande velden uw gegevens in:</p>
                     <?php include 'form/order-form.php'?>
                 </div>
             </div>

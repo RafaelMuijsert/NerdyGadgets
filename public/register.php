@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <title>Reigstreer hier je eigen account - NerdyGadgets</title>
+    <title>Registreer uw eigen account - NerdyGadgets</title>
 
     <!-- Javascript -->
     <script src="js/jquery.min.js"></script>
@@ -19,6 +19,7 @@
 //    $databaseConnection = $GLOBALS['databaseConnection'];
 
     include "../src/functions.php";
+    include "../src/form-functions.php";
     include "header.php";
     include "./blocks/register.php";
     include "footer.php";
