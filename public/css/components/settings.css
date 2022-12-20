@@ -1,0 +1,11 @@
+.settings__delivery-costs {
+    margin-bottom: 32px;
+}
+
+.settings__delivery-costs input {
+    width: 100%;
+}
+
+.settings__discount-title {
+    margin-bottom: 16px;
+}

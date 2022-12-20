@@ -12,7 +12,7 @@
                             <a class="btn btn--grey nav-link" id="v-pills-orders-tab" data-toggle="tab" href="#v-pills-orders" role="tab" aria-controls="v-pills-orders" aria-selected="false">Mijn bestellingen</a>
                         <?php endif; ?>
                         <form class="profile__logout" method="POST" action="">
-                            <input name="logoutSubmit" type="submit" class="btn btn--red" value="Uitloggen">
+                            <input name="logoutSubmit" type="submit" class="btn btn--logout btn--red" value="Uitloggen">
                         </form>
                         <?php
                             if (isset($_POST['logoutSubmit']) && $_POST['logoutSubmit']):
