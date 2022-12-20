@@ -132,6 +132,24 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
     }
 
 }
+function maillistaccount($email, $firstname, $prefixName, $surname, $databaseConnection)
+{
+    try {
+        $Query = "
+                    INSERT INTO webshop_mailinglist (ID, email, voornaam, tussenvoegsel, achternaam)
+                    VALUES (?, ?, ?, ?, ?)";
+        $Statement = mysqli_prepare($databaseConnection, $Query);
+        mysqli_stmt_bind_param(
+            $Statement,
+            "sssss",
+            $userID,
+            $email, $firstname, $prefixName, $surname
+        );
+        mysqli_stmt_execute($Statement);
+    } catch (mysqli_sql_exception $e) {
+        print("Ongeldig e-mailadres");
+    }
+}
 function checkUses($kortingscode, $databaseConnection){
     $Querry = "
             SELECT uses
