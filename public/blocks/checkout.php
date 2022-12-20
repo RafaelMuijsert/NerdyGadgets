@@ -14,7 +14,7 @@
     );
     $shippingTime = '1 day';
     $shippingDate = $dateformatter->format(strtotime("+$shippingTime", mktime(0, 0, 0)));
-    $CHECKOUT_ENABLED = false;
+    $CHECKOUT_ENABLED = true;
 ?>
 <section class="checkout">
     <div class="container">

@@ -100,7 +100,7 @@
         $searchValues = explode(" ", $SearchString);
 
         $queryBuildResult = "";
-        if ($SearchString != ""):
+        if ($SearchString != "" && !str_contains($SearchString, '"') && !str_contains($SearchString, "'")):
             for ($i = 0; $i < count($searchValues); $i++):
                 if ($i != 0):
                     $queryBuildResult .= "AND ";
