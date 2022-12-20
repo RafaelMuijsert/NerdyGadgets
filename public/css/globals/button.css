@@ -140,12 +140,15 @@
     border: none;
     text-align: left;
     position: relative;
-    padding-left: 48px;
 }
 
 .btn--red:hover {
     background-color: var(--accent-red);
     color: var(--sub-bg-color);
+}
+
+.btn--logout {
+    padding-left: 48px;
 }
 
 .btn--small {

@@ -85,27 +85,25 @@ if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'
 <div class="settings">
     <h1 class="settings__title">Admin instellingen</h1>
     <h5>Verzendkosten</h5>
-    <form method="post">
+    <form class="settings__delivery-costs" method="post">
         <div class="row">
-            <div class="col-2">
+            <div class="col-5">
                 <label>Verzendkosten Grens:</label>
+                <input class="input" type="text" name="deliveryLimit" required <?php print ('value="' . $deliveryCosts[0][1]) . '"' ?>>
             </div>
-            <div class="col">
-                <input type="text" name="deliveryLimit" required <?php print ('value="' . $deliveryCosts[0][1]) . '"' ?>>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-2">
+            <div class="col-5">
                 <label>Verzendkosten Aantal:</label>
+                <input class="input" type="text" name="deliveryCosts" required <?php print ('value="' . $deliveryCosts[1][1]) . '"' ?>>
             </div>
-            <div class="col">
-                <input type="text" name="deliveryCosts" required <?php print ('value="' . $deliveryCosts[1][1]) . '"' ?>>
+            <div class="col-2 d-flex align-items-end">
+                <input type="submit" CLASS="btn btn--primary" name="VerzendKosten" value="Verwerk">
             </div>
+
         </div>
-        <input type="submit" CLASS="btn btn--discount--add" name="VerzendKosten" value="Verwerk">
     </form>
+    <hr>
     <br>
-    <h5>Kortingscodes</h5>
+    <h5 class="settings__discount-title">Kortingscodes</h5>
     <div>
         <div class="table discount--table">
             <div class="row" style="border-bottom: 4px solid white">
@@ -131,7 +129,7 @@ if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'
                         else print ($kortingscode['uses'])?></div>
                     <div class="col-md-auto discount--table--end">
                         <form method="post">
-                            <label class="btn--discount--remove text-center">
+                            <label class="text-center btn btn--red btn--small">
                                 Remove
                                 <input style="display: none" type="submit" name="remove" value="<?= $kortingscode['kortingID']; ?>">
                             </label>
@@ -155,7 +153,7 @@ if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'
                         <input class="input--discount" style="width: 100%" type="text" maxlength="4" name="KortingUses">
                     </div>
                     <div class="col-md-auto discount--table--end">
-                        <input class="btn--discount--add" type="submit" value="Update/add">
+                        <input class="btn btn--primary btn--small" type="submit" value="Update">
                     </div>
                 </div>
             </form>
@@ -176,7 +174,7 @@ if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'
             ?>
         </div>
         <form method="post">
-            <input type="submit" class="btn btn--discount--remove" style="width: auto" name="cleanUp" value="Verwijder ongeldige codes">
+            <input type="submit" id="total" class="btn btn--red" style="width: auto" name="cleanUp" value="Verwijder ongeldige codes">
         </form>
     </div>
 </div>
