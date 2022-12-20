@@ -13,7 +13,18 @@
         <link rel="stylesheet" href="css/main.css" type="text/css">
     </head>
     <body>
-
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+            $('[data-toggle="popover"]').popover({
+                html: true,
+                content: function() {
+                    return $('#popover-content').html();
+                }
+            });
+            $('#example').popover(options)
+        </script>
         <?php
         session_start();
         include "header.php";
@@ -148,23 +159,24 @@
                                 <hr>
                                 <div class="shopping-cart__total">
                                     <?php if (isset($_SESSION['korting'][0]['procent'])): ?>
-
+                                        <div class="">Prijs (<?= ($_SESSION['korting'][0]['procent'] . "% korting")?>)</div>
+                                        <div class=" text-right"><s>&euro; <?= (number_format($_SESSION['noDiscount'], 2, '.', ',')) ?></s> &euro; <?= (number_format(($_SESSION[ 'total']), 2, '.', ',')) ?></div>
+                                    <?php else: ?>
                                         <div class="">Prijs</div>
                                         <div class=" text-right">&euro; <?= (number_format($_SESSION['noDiscount'], 2, '.', ',')) ?></div>
-                                        <div class=""><?php print ($_SESSION['korting'][0]['procent'] . "% korting")?></div>
-                                        <div class=" text-right">&euro; <?= (number_format(($_SESSION['noDiscount'] - $_SESSION['total']), 2, '.', ',')) ?></div>
                                     <?php endif; ?>
-                                    <div class="">Subtotaal</div>
-                                    <div class=" text-right">&euro; <?= (number_format($_SESSION[ 'total'], 2, '.', ',')) ?></div>
                                     <?php
-                                    if ($_SESSION['total'] < getDeliverycosts($databaseConnection)[1][1]):
-                                        $deliveryCosts = getDeliverycosts($databaseConnection)[0][1];
+                                    if ($_SESSION['total'] < getDeliverycosts($databaseConnection)[0][1]):
+                                        $deliveryCosts = getDeliverycosts($databaseConnection)[1][1];
                                     else: $deliveryCosts = 0;
                                     endif;
-                                    $_SESSION['total'] += $deliveryCosts;
+                                    $_SESSION['deliveryCosts'] = $deliveryCosts;
+                                    $_SESSION['total'] += $_SESSION['deliveryCosts'];
                                     ?>
-                                    <div class="">VerzendKosten</div>
-                                    <div class=" text-right">&euro; <?= (number_format($deliveryCosts, 2, '.', ',')) ?></div>
+                                    <div class="">
+                                        <abbr title="Gratis verzendkosten vanaf &euro;<?= (getDeliverycosts($databaseConnection)[0][1]) ?>">Verzendkosten</abbr>
+                                    </div>
+                                    <div class="text-right" style="margin-left: auto; margin-right: 0;">&euro; <?= (number_format($deliveryCosts, 2, '.', ',')) ?></div>
                                 </div>
                                 <hr>
                                 <div class="shopping-cart__total">
@@ -201,7 +213,6 @@
             if ( window.history.replaceState ) {
                 window.history.replaceState( null, null, window.location.href );
             }
-
             // Verwijder URL GET-query om dubbele uitvoering te voorkomen op ververs.
             // window.history.pushState("object or string", "Title", "/" + window.location.href.substring(window.location.href.lastIndexOf('/') + 1).split("?")[0]);
         </script>

@@ -4,14 +4,14 @@ if (isset($_POST['remove'])) {
     unset($_POST['remove']);
 }
 if (isset($_POST['VerzendKosten']) && $_POST['VerzendKosten'] == 'Verwerk'){
-    if ($_POST['deliveryLimit'] == ''){
-        $_POST['deliveryLimit'] = 0;
-    }
-    if ($_POST['deliveryCosts'] == ''){
-        $_POST['deliveryCosts'] = 0;
-    }
     $_POST['deliveryLimit'] = str_replace(",", ".", $_POST['deliveryLimit']);
     $_POST['deliveryCosts'] = str_replace(",", ".", $_POST['deliveryCosts']);
+    if ($_POST['deliveryLimit'] == ''){
+        $_POST['deliveryLimit'] = getDeliverycosts($databaseConnection)[0][1];
+    }
+    if ($_POST['deliveryCosts'] == ''){
+        $_POST['deliveryCosts'] = getDeliverycosts($databaseConnection)[1][1];
+    }
     updateDeliveryLimit($_POST['deliveryLimit'], $databaseConnection);
     updateDeliveryCosts($_POST['deliveryCosts'], $databaseConnection);
     unset($_POST['VerzendKosten']);
@@ -25,7 +25,7 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
             $gelijk ++;
         }
     }
-    if (((strlen($_POST['KortingNaam'])) >= 1) && (strlen($_POST['KortingNaam']) <= 10) && ($gelijk == 0)) {
+    if ((strlen($_POST['KortingNaam']) >= 1) && strlen($_POST['KortingNaam'] <= 10) && $gelijk == 0) {
         if (($_POST['KortingProcent'] > 0) && ($_POST['KortingProcent'] < 100)){
             if ($_POST['KortingDate'] == ''){
                 $_POST['KortingDate'] = NULL;
@@ -48,19 +48,19 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
         else $waarschuwing = 2;
     }
     else if (!($gelijk == 0)){
-        if (($_POST['KortingProcent'] > 0) && ($_POST['KortingProcent'] < 100)){
+        if ($_POST['KortingProcent'] > 0 && $_POST['KortingProcent'] < 100){
             if ($_POST['KortingDate'] == ''){
                 $_POST['KortingDate'] = NULL;
             }
             if ($_POST['KortingDate'] < date("Y-m-d") && !($_POST['KortingDate'] == NULL)){
-                $waarschuwing = 4;
+                $waarschuwing = 3;
             }
             else {
                 if ($_POST['KortingUses'] == '') {
                     $_POST['KortingUses'] = NULL;
                 }
                 if ($_POST['KortingUses'] < 1 && !($_POST['KortingUses'] == NULL)) {
-                    $waarschuwing = 5;
+                    $waarschuwing = 4;
                 }
                 else {
                     updateDiscountCode($_POST['KortingNaam'], $_POST['KortingProcent'], $_POST['KortingDate'], $_POST['KortingUses'], $databaseConnection);
@@ -91,7 +91,7 @@ if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'
                 <label>Verzendkosten Grens:</label>
             </div>
             <div class="col">
-                <input type="text" name="deliveryLimit" <?php print ('value="' . $deliveryCosts[0][1]) . '"' ?>>
+                <input type="text" name="deliveryLimit" required <?php print ('value="' . $deliveryCosts[0][1]) . '"' ?>>
             </div>
         </div>
         <div class="row">
@@ -99,10 +99,10 @@ if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'
                 <label>Verzendkosten Aantal:</label>
             </div>
             <div class="col">
-                <input type="text" name="deliveryCosts" <?php print ('value="' . $deliveryCosts[1][1]) . '"' ?>>
+                <input type="text" name="deliveryCosts" required <?php print ('value="' . $deliveryCosts[1][1]) . '"' ?>>
             </div>
         </div>
-        <input type="submit" name="VerzendKosten" value="Verwerk">
+        <input type="submit" CLASS="btn btn--discount--add" name="VerzendKosten" value="Verwerk">
     </form>
     <br>
     <h5>Kortingscodes</h5>
@@ -165,7 +165,7 @@ if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'
                     print ("Geen geldige naam! Probeer opnieuw.");
                 }
                 else if ($waarschuwing == 2){
-                    print ("Geen geldig perentage! Probeer opnieuw.");
+                    print ("Geen geldig percentage! Probeer opnieuw.");
                 }
                 else if ($waarschuwing == 3){
                     print ("Geen geldige datum! Probeer opnieuw!");
@@ -176,7 +176,7 @@ if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'
             ?>
         </div>
         <form method="post">
-            <input type="submit" class="btn btn--grey" style="width: auto; border: solid black 1px" name="cleanUp" value="Verwijder ongeldige codes">
+            <input type="submit" class="btn btn--discount--remove" style="width: auto" name="cleanUp" value="Verwijder ongeldige codes">
         </form>
     </div>
 </div>

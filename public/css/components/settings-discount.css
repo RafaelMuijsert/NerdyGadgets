@@ -28,16 +28,16 @@
     color: var(--sub-bg-color);
 }
 .btn--discount--add {
-    background-color: var(--accent-color);
+    color:#fff;
+    background-color:#007bff;
     border-radius: var(--border-radius) !important;
-    color: var(--sub-bg-color);
     border: none;
     position: relative;
     width: 100px;
 }
 .btn--discount--add:hover {
-    background-color: var(--accent-color-hover);
-    color: var(--sub-bg-color);
+    color:#fff;
+    background-color:#0069d9;
 }
 .input--discount{
     background-color: white;
