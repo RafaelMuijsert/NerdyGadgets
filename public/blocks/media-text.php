@@ -12,7 +12,7 @@
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae.</p>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae.</p>
                 </div>
-                <a href="./" class="btn btn--secundary">
+                <a href="./browse.php?category_id=9" class="btn btn--secundary">
                     <span></span>
                     BEKIJK ALLE PRODUCTEN
                 </a>
