@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <title>Reigstreer hier je eigen account - NerdyGadgets</title>
+    <title>Registreer uw eigen account - NerdyGadgets</title>
 
     <!-- Javascript -->
     <script src="js/jquery.min.js"></script>
