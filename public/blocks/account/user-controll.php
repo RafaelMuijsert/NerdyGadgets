@@ -8,8 +8,9 @@ if (isset($_POST['deleteAccount']['password'])) {
 
 if (isset($_POST['update'])) {
     $updated = $_POST['edit'];
-    print_r($updated);
+//    print_r($updated);
     editUser($updated['firstname'], $updated['prefixName'], $updated['surname'], $updated['birthDate'], $updated['phone'], $updated['street'], $updated['housenumber'], $updated['postcode'], $updated['city'], $updated['id'], $databaseConnection);
+    $users = getAllUsers($databaseConnection);
 }
 
 if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) {
