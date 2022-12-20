@@ -16,6 +16,11 @@
 include "header.php";
 include "../src/functions.php";
 ?>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="order__wrapper bg-white bg-white--large">
+
 <h1>Algemene Voorwaarden</h1>
 <p>
 <h2>Artikel 1 - Definities</h2><br>
@@ -256,5 +261,12 @@ Besteld op*/ontvangen op* [datum bestelling bij diensten of ontvangst bij produc
 
 * Doorhalen wat niet van toepassing is of invullen wat van toepassing is.
 </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include 'footer.php'; ?>
+
 </body>
 </html>

@@ -14,7 +14,7 @@
                             <li><a href="/">Alle categoriën</a></li>
                         </menu>
                     </div>
-                    <div class="footer__terms" style="float: bottom; position: relative;">
+                    <div class="footer__cookies">
                         <menu style="float: bottom; position: relative;">
                         <a href="cookies.php">Cookies </a>  |
                         <a href="privacy.php"> Privacy policy </a>  |

@@ -16,6 +16,11 @@
 include "header.php";
 include "../src/functions.php";
 ?>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="order__wrapper bg-white bg-white--large">
+
 <h1>Privacy policy</h1>
 
 <p>
@@ -296,6 +301,12 @@ Jij hebt het recht om een klacht in te dienen over de wijze waarop wij met jouw 
 Vragen?
 Als je nog vragen hebt over de wijze waarop Nerdygadgets.shop met persoonsgegevens omgaat, neem dan gerust contact op met onze klantenservice. We helpen je graag.
 </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php include 'footer.php'; ?>
 
 </body>
 </html>

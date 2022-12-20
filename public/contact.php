@@ -25,7 +25,7 @@ include "../src/functions.php";
                     <div id="Email" class="tabcontent">
                         <h3>Email</h3>
                         <p>Email: Nerdygadgets.shop</p>
-                        <form action="mailto:jessevaandering@gmail.com" method="POST">
+                        <form action="mailto:s1190870@student.windesheim.nl" method="POST">
                             <div>
                                 <button type="submit">Stuur een mail</button>
                             </div>
@@ -34,8 +34,8 @@ include "../src/functions.php";
                     <br>
                     <div id="Bellen" class="tabcontent">
                         <h3>Bellen</h3>
-                        <p>Telefoonnummer: +31 6 43567878</p>
-                        <div id="copy" style="display: none;">+31 6 43567878</div>
+                        <p>Telefoonnummer: +31 6 18242168</p>
+                        <div id="copy" style="display: none;">+31 6 18242168</div>
                         <button type="button" id="btnCopy">Kopieër nummer</button>
                         <script type="text/javascript">
                             var $body = document.getElementsByTagName('body')[0];
@@ -75,5 +75,8 @@ include "../src/functions.php";
             </div>
         </div>
     </div>
-</body>
 
+<?php include 'footer.php'; ?>
+
+</body>
+</html>
