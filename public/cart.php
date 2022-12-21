@@ -145,14 +145,15 @@
 
                             <?php else: ?>
                                 <h2>Uw winkelmandje is leeg.</h2>
+                                <a style="color: #007bff" href="browse.php">Bladeren door producten...</a>
                             <?php endif; ?>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="shopping-cart__checkout bg-white">
-                            <?php if (empty($_SESSION['cart'])):
-                                print("<h2>Uw winkelmandje is leeg.</h2>");
-                            else: ?>
+                            <?php if (empty($_SESSION['cart'])): ?>
+                                <h2>Uw winkelmandje is leeg.</h2>
+                            <?php else: ?>
                                 <h5>
                                     <b>Overzicht</b>
                                 </h5>
