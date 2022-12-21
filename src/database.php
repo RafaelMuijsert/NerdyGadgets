@@ -6,8 +6,6 @@ function connectToDatabase() {
     $connection = null;
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Set MySQLi to throw exceptions
     try {
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-        $dotenv->load();
         $connection = mysqli_connect(
             getEnvironmentVariable('DB_HOST'),
             getEnvironmentVariable('DB_USER'),
