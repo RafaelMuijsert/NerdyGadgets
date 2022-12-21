@@ -1,4 +1,5 @@
 <?php
+    require_once '../../src/environment.php';
     $total = 0;
     if(count($_POST) > 0):
         $_SESSION['userinfo'] = $_POST;
@@ -130,7 +131,7 @@
                     </div>
                     <br>
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
-                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && strtolower($_ENV['CHECKOUT_ENABLED'] == 'true')):
+                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && strtolower(getEnvironmentVariable('CHECKOUT_ENABLED') == 'true')):
 
                         $_SESSION['userinfo']['postcode'] = filterPostalzip($_SESSION['userinfo']['postcode']);
 
