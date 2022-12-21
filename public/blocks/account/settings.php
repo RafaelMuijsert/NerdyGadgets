@@ -84,6 +84,7 @@ if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'
 ?>
 <div class="settings">
     <h1 class="settings__title">Admin instellingen</h1>
+    <hr>
     <h5>Verzendkosten</h5>
     <form class="settings__delivery-costs" method="post">
         <div class="row">

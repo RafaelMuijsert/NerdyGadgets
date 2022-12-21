@@ -36,6 +36,8 @@ if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) 
 <div class="users">
     <div class="users__header">
         <h1>Account beheer</h1>
+        <hr>
+        <p>Zie hieronder alle geregistreerde gebruikers met de bijbehorende te kunnen bewerken informatie.</p>
         <?php if (isset($_POST['editID'])):
             $userID = $_POST['editID'];
             $userResult = getUser($userID, $databaseConnection); ?>
