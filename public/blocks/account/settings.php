@@ -25,7 +25,7 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
             $gelijk ++;
         }
     }
-    if ((strlen($_POST['KortingNaam']) >= 1) && strlen($_POST['KortingNaam'] <= 10) && $gelijk == 0) {
+    if ((strlen($_POST['KortingNaam']) >= 1) && (strlen($_POST['KortingNaam'])  <= 10) && $gelijk == 0) {
         if (($_POST['KortingProcent'] > 0) && ($_POST['KortingProcent'] < 100)){
             if ($_POST['KortingDate'] == ''){
                 $_POST['KortingDate'] = NULL;
