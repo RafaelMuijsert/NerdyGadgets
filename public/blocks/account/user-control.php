@@ -90,10 +90,10 @@ if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) 
             </form>
         <?php endif; ?>
 
-        <form action="" method="post" id="passwordForm" <?php if (!isset($_POST['deleteID']) || isset($_POST['deleteAccount']['password'])): ?> style="display: none" <?php endif; ?>>
+        <form class="users__delete-form" action="" method="post" id="passwordForm" <?php if (!isset($_POST['deleteID']) || isset($_POST['deleteAccount']['password'])): ?> style="display: none" <?php endif; ?>>
             <input type="text" name="deleteID" value="<?= $_POST['deleteID'] ?>" style="display: none">
-            <input type="password" name="deleteAccount[password]" placeholder="Wachtwoord">
-            <button type="submit" name="checkPassword">Wachtwoord checken</button>
+            <input class="input" type="password" name="deleteAccount[password]" placeholder="Wachtwoord">
+            <input class="btn btn--primary" type="submit" name="checkPassword" value="Wachtwoord checken">
         </form>
 
     </div>
