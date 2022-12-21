@@ -14,7 +14,6 @@
     );
     $shippingTime = '1 day';
     $shippingDate = $dateformatter->format(strtotime("+$shippingTime", mktime(0, 0, 0)));
-    $CHECKOUT_ENABLED = true;
 ?>
 <section class="checkout">
     <div class="container">
@@ -131,7 +130,7 @@
                     </div>
                     <br>
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
-                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && $CHECKOUT_ENABLED):
+                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && strtolower($_ENV['CHECKOUT_ENABLED'] == 'true')):
 
                         $_SESSION['userinfo']['postcode'] = filterPostalzip($_SESSION['userinfo']['postcode']);
 
