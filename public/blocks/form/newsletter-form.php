@@ -1,5 +1,3 @@
-
-
 <form action="send_mail.php" method="POST" class="newsletter__form">
     <?php if(!isset($_SESSION['isLoggedIn'])): ?>
         <div class="form__form-row form__form-row--40">
@@ -31,4 +29,3 @@
         <input type="submit" name="newsletterSubmit" value="Aanmelden" class="btn btn--order">
     </div>
 </form>
-
