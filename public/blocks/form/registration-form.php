@@ -101,7 +101,7 @@
         if (isset($_SESSION['registration']['phone'])):
             $phone = $_SESSION['registration']['phone'];
         endif; ?>
-        <label for="number">Telefoonnummer:</label>
+        <label for="number">Telefoonnummer:*</label>
         <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone" required>
     </div>
 
