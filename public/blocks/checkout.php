@@ -129,7 +129,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <br>
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
                     <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && $CHECKOUT_ENABLED):
 
