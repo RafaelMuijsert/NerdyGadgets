@@ -23,3 +23,7 @@
     font-weight: 200;
     font-style: normal;
 }
+.checkout__products {
+    background: var(--main-bg-color) !important;
+    border-radius: var(--border-radius) !important;
+}

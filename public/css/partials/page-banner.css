@@ -15,6 +15,7 @@
     display: block;
     transform: rotate(90deg) translate(-50%, 0);
     z-index: -1;
+    opacity: 0.8;
 }
 
 .page-banner:after {
@@ -24,12 +25,13 @@
     top: 0;
     border-radius: 100%;
     /*background: conic-gradient(var(--primary-color) 110deg, #0D6CE866);*/
-    background: conic-gradient(from 0.6turn, var(--primary-color), 350deg, rgba(13, 108, 232, 0.4));
+    background: conic-gradient(from 0.9turn, var(--primary-color), 350deg, rgba(13, 108, 232, 0.4));
     width: 1830px;
     height: 2343px;
     display: block;
     transform: translate(50%, -50%);
     z-index: -1;
+    opacity: 0.8;
 }
 
 .page-banner__img {

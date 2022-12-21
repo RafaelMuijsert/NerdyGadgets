@@ -1,28 +1,29 @@
 .discount--table {
-    width: 90%;
+    width: 100%;
     background-color: var(--main-bg-color);
-    border-radius: var(--border-radius) !important;
+    border-radius: var(--border-radius-small) !important;
     color: var(--text-color);
 }
 .discount--table--cell {
     border-right: 2px solid white;
-    padding: 2px;
+    padding: 8px;
 }
 .discount--table--top {
-    padding: 2px;
+    padding: 8px;
+    font-weight: 600;
 }
 .discount--table--end {
-    padding-top: 2px;
-    padding-bottom: 2px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 .btn--discount--remove {
     background-color: var(--accent-red-hover);
-    border-radius: var(--border-radius) !important;
     color: var(--sub-bg-color);
     border: none;
     position: relative;
     width: 100px;
 }
+
 .btn--discount--remove:hover {
     background-color: var(--accent-red);
     color: var(--sub-bg-color);
@@ -30,23 +31,26 @@
 .btn--discount--add {
     color:#fff;
     background-color:#007bff;
-    border-radius: var(--border-radius) !important;
+    border-radius: var(--border-radius-small) !important;
     border: none;
     position: relative;
     width: 100px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
+
 .btn--discount--add:hover {
     color:#fff;
     background-color:#0069d9;
 }
 .input--discount{
     background-color: white;
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-small);
     border: none;
 }
 .btn--discount--grey {
     background-color: var(--main-bg-color);
-    border-radius: var(--border-radius) !important;
+    border-radius: var(--border-radius-small) !important;
     color: var(--text-color);
     border: none;
     text-align: left;

@@ -16,10 +16,10 @@
         <?php if(cartUpdateRequested()): ?>
             <div>
                 <?php if($cartUpdate): ?>
-<!--                    <div class="alert alert-success alert-dismissible" role="alert">-->
-<!--                        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>-->
-<!--                        Hier komt de conversieverhogende maatregel van Jesse-->
-<!--                    </div>-->
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Product is succesvol toegevoegd aan het winkelmandje.
+                    </div>
                 <?php else: ?>
                     <div class="alert alert-danger alert-dismissible" role="alert">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

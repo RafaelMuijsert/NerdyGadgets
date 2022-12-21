@@ -17,7 +17,7 @@
                     ?>
 
                     <form class="login__form" action="" method="POST">
-                        <label for="username">Gebruikersnaam:</label>
+                        <label for="username">Email:</label>
                         <input class="input" placeholder="Gebruikersnaam" type="text" name="username">
 
                         <label for="password">Wachtwoord:</label>
@@ -25,7 +25,7 @@
 
                         <a href="./register.php">Registreer nu!</a>
 
-                        <input name="submitLogin" class="btn btn--order submit" type="submit">
+                        <input name="submitLogin" value="Inloggen" class="btn btn--order submit" type="submit">
                     </form>
                 </div>
             </div>

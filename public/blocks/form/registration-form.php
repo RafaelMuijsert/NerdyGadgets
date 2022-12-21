@@ -3,12 +3,13 @@
     <span class="form__form-row form__form-error">
         <?php
         if(isset($_POST) && isset($_POST['submitRegistration'])):
-
             $_SESSION['registration'] = $_POST;
             $username = $_SESSION['registration']['email'];
             $pwd = $_SESSION['registration']['password'];
             $hashPassword = password_hash($_SESSION['registration']['password'], PASSWORD_DEFAULT);
             $_SESSION['registration']['postcode'] = filterPostalzip($_SESSION['registration']['postcode']);
+
+            $newsLetter = array_key_exists('mail-list', $_SESSION['registration']) ? 1 : 0;
 
             if(inputcheck('registration')):
                 //Create User in the database
@@ -26,7 +27,8 @@
                     $_SESSION['registration']['city'],
                     $databaseConnection,
                     $username,
-                    $pwd
+                    $pwd,
+                    $newsLetter
                 );
             endif;
         endif;
@@ -49,7 +51,7 @@
         if (isset($_SESSION['registration']['password'])):
             $password = $_SESSION['registration']['password'];
         endif; ?>
-        <label for="password">Wachtwoord:*</label>
+        <label for="password">Wachtwoord (minimaal 8 karakters):*</label>
         <input class="input" placeholder="Wachtwoord" value="<?= $password ?>" type="password" id="password" name="password" required>
     </div>
 
@@ -101,7 +103,7 @@
         if (isset($_SESSION['registration']['phone'])):
             $phone = $_SESSION['registration']['phone'];
         endif; ?>
-        <label for="number">Telefoonnummer:</label>
+        <label for="number">Telefoonnummer:*</label>
         <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone" required>
     </div>
 
@@ -151,9 +153,17 @@
         <label for="city">Stad:*</label>
         <input class="input" placeholder="Stad" value="<?= $city ?>" type="text" id="city" name="city" required>
     </div>
+    <div class="form__form ml-4 mr-4 pr-4">
+        <input class="lead form-check-input" name="mail-list" type="checkbox" value="yes" id="mail-check">
+        <label class="form-check-label" for="mail-check">
+            JA ik wil de nieuwste voordeel- en winacties, bergen inspiratie, maar ook verrassende aanbevelingen ontvangen!
+        </label>
+    </div>
 
     <div class="form__form-row">
         <input TYPE="hidden" NAME="required_fields" VALUE="name, from">
         <input class="btn btn--order" type="submit" name="submitRegistration" value="Bevestig gegevens">
     </div>
+
+
 </form>

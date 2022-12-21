@@ -1,4 +1,5 @@
 <?php
+    require_once '../../src/environment.php';
     $total = 0;
     if(count($_POST) > 0):
         $_SESSION['userinfo'] = $_POST;
@@ -14,7 +15,6 @@
     );
     $shippingTime = '1 day';
     $shippingDate = $dateformatter->format(strtotime("+$shippingTime", mktime(0, 0, 0)));
-    $CHECKOUT_ENABLED = false;
 ?>
 <section class="checkout">
     <div class="container">
@@ -64,7 +64,7 @@
             </div>
             <div class="col-8">
                 <div class="checkout__wrapper bg-white bg-white--large">
-                    <h2>Te bestellen producten</h2>
+                    <h2 style="padding-bottom: 18px">Te bestellen producten</h2>
 
                     <div class="checkout__products">
                         <?php
@@ -76,37 +76,62 @@
                             if (isset($_SESSION['korting'][0]['procent'])){
                                 $factor = (1 - ($_SESSION['korting'][0]['procent'] * 0.01));
                             }
-                            $total += round(($price * $factor),2) * $quantity;
                             ?>
-                            <div class="container p-2 mb-3 border d-flex align-items-center">
-                                <div class="row">
-                                    <div class="col-4 display align-middle text-left w-100">
+                            <div class="container d-flex align-items-center">
+                                <div class="row w-100">
+                                    <div class="col-6 display align-middle text-left w-100">
                                         <label for="quantity" class=""><?=$stockItem['StockItemName']?></label>
                                     </div>
-                                    <div class="col text-right align-middle">
-                                        <label>
-                                            <input name="quantity" type="number" disabled value="<?=$quantity?>">
-                                        </label>
+                                    <div class="col-2 text-right align-middle">
+                                        <p>Aantal: <?=$quantity?></p>
                                     </div>
-
-                                    <div class="col text-right">
-                                        <?php if (!isset($_SESSION['korting'][0]['procent'])): ?>
-                                        <p class="">&euro;<?=number_format($price * $quantity, 2)?></p>
-                                        <?php else:
-                                        ?>
-                                        <del><del style="display:inline-block;">&euro;<?=number_format($price * $quantity, 2)?></del></del>
-                                        <p style="display:inline-block;">&emsp;&euro;<?=number_format($price * $factor * $quantity, 2)?></p>
+                                    <div class="col-2 text-right">
+                                        <?php if (isset($_SESSION['korting'][0]['procent'])): ?>
+                                        <del style="display:inline-block;">&euro;<?=number_format($price * $quantity, 2)?></del>
                                         <?php endif; ?>
                                     </div>
+                                    <div class="col-2 text-left">
+                                        <p style="display:inline-block;">&euro;<?=number_format($price * $factor * $quantity, 2)?></p>
+
+                                    </div>
                                 </div>
+
                             </div>
                         <?php endforeach; ?>
 
-                        Totaal: <?= $total ?>
+                        <hr>
+                        <div class="container d-flex align-items-center">
+                            <div class="row w-100">
+                                <div class="col-10  display align-middle text-right w-100">
+                                    <p style="display: inline-block">
+                                        Verzendkosten:
+                                    </p>
+                                </div>
+                                <div class="col-2 text-left">
+                                    <p style="display: inline-block">
+                                        &euro;<?= number_format($_SESSION['deliveryCosts'],2) ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container d-flex align-items-center">
+                            <div class="row w-100">
+                                <div class="col-10  display align-middle text-right w-100">
+                                    <p style="display: inline-block">
+                                        Totaal:
+                                    </p>
+                                </div>
+                                <div class="col-2 text-left">
+                                    <p style="display: inline-block">
+                                        &euro;<?= number_format($_SESSION['total'],2) ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
+                    <br>
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
-                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && $CHECKOUT_ENABLED):
+                    <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && strtolower(getEnvironmentVariable('CHECKOUT_ENABLED') == 'true')):
 
                         $_SESSION['userinfo']['postcode'] = filterPostalzip($_SESSION['userinfo']['postcode']);
 

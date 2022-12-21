@@ -21,10 +21,10 @@
 @import "partials/categories.css";
 @import "partials/product.css";
 @import "partials/shopping-cart.css";
-@import "partials/order.css";
 @import "partials/checkout.css";
 @import "partials/login.css";
 @import "partials/footer.css";
+@import "partials/users.css";
 
 /* Components */
 @import "components/article-header.css";
@@ -38,3 +38,4 @@
 @import "components/order-history.css";
 @import "components/edit-data.css";
 @import "components/settings-discount.css";
+@import "components/settings.css";

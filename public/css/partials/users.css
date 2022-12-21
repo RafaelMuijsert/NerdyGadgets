@@ -1,0 +1,10 @@
+.users__delete-form {
+    display: grid;
+    grid-template-columns: calc(80% - 8px) calc(20% - 8px);
+    column-gap: 16px;
+    margin-bottom: 24px;
+}
+
+.users__delete-form input {
+    width: calc(100% - 8px);
+}

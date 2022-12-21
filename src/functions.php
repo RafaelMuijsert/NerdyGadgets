@@ -111,23 +111,24 @@ function checkCodeDate($kortingscode, $databaseConnection) {
     }
 }
 
-function createUser($email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $databaseConnection, $lgn, $pwd) {
+function createUser($email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $databaseConnection, $lgn, $pwd, $newsletter) {
 
     try {
         $Query = "
-                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglist)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param(
             $Statement,
-            "ssssssssssss",
+            "sssssssssssss",
             $userID,
-            $email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode
+            $email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode, $newsletter
         );
         mysqli_stmt_execute($Statement);
 
         loginUser($lgn, $pwd, $databaseConnection);
     } catch (mysqli_sql_exception $e) {
+        print($e->getMessage());
         print("Ongeldig e-mailadres");
     }
 
@@ -332,4 +333,26 @@ function editUser($firstname, $prefixName, $surname, $birthDate, $phone, $street
         echo "<a style='color: red'><p>De aangepaste gegevens voldoen niet aan de gewenste eisen. Vul de velden opnieuw in.</p></p></a>";
 //                        print($e);
     }
+}
+
+function getUser($userID, $databaseConnection) {
+    $query = "SELECT * FROM webshop_user WHERE id = '$userID'";
+    $stmt = mysqli_prepare($databaseConnection, $query);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function getAllUsers($databaseConnection) {
+    $query = "SELECT * FROM webshop_user";
+    $stmt = mysqli_prepare($databaseConnection, $query);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function deleteUser($userID, $databaseConnection) {
+    $query = "DELETE FROM webshop_user WHERE id = '$userID'";
+    $stmt = mysqli_prepare($databaseConnection, $query);
+    mysqli_stmt_execute($stmt);
 }

@@ -7,7 +7,6 @@
         <hr>
         <?php include './blocks/form/edit-data-form.php'; ?>
     </div>
-    <hr>
     <?php
     $results = getOrderHistory($_SESSION['account']['id'], $databaseConnection);
     if(count($results) >= 1):
@@ -18,6 +17,7 @@
         if($orderStatus == 'Bestelling wordt verwerkt'):
             $buttonColor = 'btn--red';
         endif; ?>
+        <hr>
         <div class="profile__recent-order recent-order">
             <h2>Laatste bestelling</h2>
             <div class="recent-order__order order-history__order-header">
