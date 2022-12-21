@@ -8,7 +8,7 @@
                     <span></span>
                     BEKIJK DIT PRODUCT
                 </a>
-            </div>v
+            </div>
             <div class="col-5">
                 <div class="page-banner__img">
                     <img src="../img/product/The%20gu%20(white).png" alt="">
