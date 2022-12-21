@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl">
     <head>
-        <title>Categoriën - NerdyGadgets</title>
+        <title>Categorieën - NerdyGadgets</title>
 
         <!-- Javascript -->
         <script src="js/jquery.min.js"></script>

@@ -11,7 +11,7 @@
                             <li><a href="/">Novelties</a></li>
                             <li><a href="/">Kleding</a></li>
                             <li><a href="/">USB Novelties</a></li>
-                            <li><a href="/">Alle categoriën</a></li>
+                            <li><a href="/">Alle categorieën</a></li>
                         </ul>
                     </div>
                     <div class="footer__brand" style="float: top; height: 200px; position: relative;">

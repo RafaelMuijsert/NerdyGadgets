@@ -33,7 +33,7 @@
                         </div>
                         <?php if(isset($_SESSION['account']) && $_SESSION['account']['role'] == 'Admin'): ?>
                             <div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">
-                                <?php include 'account/user-controll.php' ?>
+                                <?php include 'account/user-control.php' ?>
                             </div>
                             <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
                                 <?php include 'account/settings.php'?>
