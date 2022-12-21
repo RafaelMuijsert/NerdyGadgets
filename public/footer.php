@@ -29,7 +29,7 @@
                             <a href="newsletter.php"> Nieuwsbrief </a>
                             <a href="contact.php"> Contact</a>
                         </ul>
-                        <div><a href="/">©Huttenhuis Installatietechniek 2021</a></div>
+                        <div><a href="/">©Nerdygadgets 2022</a></div>
                     </div>
                 </div>
             </div>
