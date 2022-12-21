@@ -8,12 +8,13 @@ Please see https://github.com/php-pds/skeleton
 
 ## Dependencies
 - A web server (apache is preferred)
-- PHP (tested with version 8.1.11)
+- PHP (tested with version 7.4+)
 - mysqli php extension
 - intl php extension
 - Composer
 
 ## Setup
+### Manual setup
 Edit php.ini and add the following line under [PHP]:
 ```
 extension=intl
@@ -28,7 +29,57 @@ $ composer install
 
 Copy the .env.example file to .env and update the variables.
 
-### Make sure the web server root is set to public/ and not to the project root.
+Make sure the web server root is set to public/ and not to the project root.
+
+### Using Docker
+Build the image by navigating to the project directory and running the following command
+```bash
+$ docker build -t nerdygadgets .
+```
+Then you can run the image using `docker run`
+```bash
+$ docker run -p 80:80 -t nerdygadgets
+```
+
+
+### Using docker-compose (recommended)
+Provided below are a couple of example docker-compose files.
+Don't forget to create a .env file containing all deployment-specific variables. 
+It is recommended that you copy the .env.example file found in the project root.
+#### NerdyGadgets
+```yaml
+version: "3.3"
+services:
+  nerdygadgets:
+    build: 'https://github.com/hemmeDev/NerdyGadgets.git#main'
+    restart: always
+    ports:
+      - 80:80
+    env_file:
+      - .env
+```
+#### With MariaDB:
+```yaml
+version: "3.3"
+services:
+  nerdygadgets:
+    build: 'https://github.com/hemmeDev/NerdyGadgets.git#main'
+    restart: always
+    ports:
+      - 80:80
+    env_file:
+      - .env
+
+  db:
+    image: mariadb
+    restart: always
+    ports:
+      - 33646:3306
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: 'true'
+    volumes:
+      - ./db:/var/lib/mysql
+```
 
 ## Testing
 Given below is the shell command that can be used to connect to the primary database in case you want to perform manual operations.

@@ -1,5 +1,5 @@
 <?php
-    require_once '../../src/environment.php';
+    include_once __DIR__ . '/../../src/environment.php';
     $total = 0;
     if(count($_POST) > 0):
         $_SESSION['userinfo'] = $_POST;
