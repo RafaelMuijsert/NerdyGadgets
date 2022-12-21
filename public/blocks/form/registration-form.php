@@ -51,7 +51,7 @@
         if (isset($_SESSION['registration']['password'])):
             $password = $_SESSION['registration']['password'];
         endif; ?>
-        <label for="password">Wachtwoord:*</label>
+        <label for="password">Wachtwoord (minimaal 8 karakters):*</label>
         <input class="input" placeholder="Wachtwoord" value="<?= $password ?>" type="password" id="password" name="password" required>
     </div>
 
