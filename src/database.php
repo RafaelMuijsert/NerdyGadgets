@@ -156,6 +156,9 @@ Add $quantity of $id to cart. Returns false if available stock is less than $qua
 */
 function addToCart($id, $quantity, $connection) {
     $quantity = abs($quantity);
+    if($quantity == 0) {
+        return false;
+    }
     $stock = getItemStock($id, $connection);
 
     $cartQuantity = 0;

@@ -45,6 +45,9 @@
         foreach($_POST as $key => $value):
 //            if(is_int($value) || is_float($value)):
                 $value = abs($value);
+                if($value == 0) {
+                    continue;
+                }
                 $stock = getItemStock($key, $databaseConnection);
                 $value = ($value <= $stock) ? $value : $stock;
                 $_SESSION['cart'][$key] = abs($value);
@@ -90,10 +93,16 @@
                             <?php
                             if(count($_SESSION['cart']) !== 0): ?>
                                 <?php foreach ($_SESSION['cart'] as $key => $item):
+
                                     $stockItem = getStockItem($key, $databaseConnection);
                                     if (!$stockItem):
                                         continue;
-                                    endif; ?>
+                                    endif;
+                                    $quantity = $_SESSION['cart'][$stockItem['StockItemID']];
+                                    if($quantity == 0) {
+                                        continue;
+                                    }
+                                    ?>
                                     <div class="card">
                                         <a href="view.php?id=<?= $key ?>" class="card__img">
                                             <?php if($stockItemImage = getStockItemImage($key, $databaseConnection)): ?>
@@ -116,7 +125,6 @@
                                         <div class="card__count">
                                             <form method='post'>
                                                 <?php
-                                                $quantity = $_SESSION['cart'][$stockItem['StockItemID']];
                                                 $stock = getItemStock($stockItem['StockItemID'], $databaseConnection);
                                                 $price = round($stockItem['SellPrice'], 2);
                                                 $factor = 1;
