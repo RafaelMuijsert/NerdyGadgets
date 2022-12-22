@@ -108,7 +108,7 @@ function inputcheck($sessionArray, $bool) {
             return false;
         }
     } else {
-        if (strpos($_SESSION[$sessionArray]['comment'], "<") !== false) {
+        if (isset($_SESSION[$sessionArray]['comment']) && strpos($_SESSION[$sessionArray]['comment'], "<") !== false) {
             print("Opmerking is niet correct ingevuld!");
             return false;
         }

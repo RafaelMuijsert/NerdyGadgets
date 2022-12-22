@@ -2,7 +2,9 @@
     <span class="form__form-row form__form-error">
         <?php if(isset($_POST) && isset($_POST['submitEditData'])):
             $_SESSION['editAccount'] = $_POST;
-            if(inputcheck('editAccount')):
+            $_SESSION['editAccount']['postcode'] = str_replace(' ', '', $_SESSION['editAccount']['postcode']);
+            if(inputcheck('editAccount', false)):
+                $_SESSION['editAccount']['postcode'] = filterPostalZip($_SESSION['editAccount']['postcode']);
                 //Edit User in the database
                 editUser(
                     $_SESSION['editAccount']['firstname'],
