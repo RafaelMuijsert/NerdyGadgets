@@ -25,6 +25,7 @@
 @import "partials/login.css";
 @import "partials/footer.css";
 @import "partials/users.css";
+@import "partials/newsletter.css";
 
 /* Components */
 @import "components/article-header.css";

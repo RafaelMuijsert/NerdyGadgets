@@ -17,58 +17,6 @@ function loadUserData($username, $conn) {
 }
 
 /*
-    Login user and redirect to profile page
-*/
-
-
-//function loginUser($username, $password, $conn) {
-//    $Query = "SELECT password FROM webshop_user WHERE email = '$username'";
-//    $statement = mysqli_prepare($conn, $Query);
-//    mysqli_stmt_execute($statement);
-//    $result = mysqli_stmt_get_result($statement);
-//    $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//
-//    if(password_verify($password, $data[0]['password'])) {
-//        loadUserData($username, $conn);
-//        $_SESSION['isLoggedIn'] = true;
-//        unset($_SESSION['login']);
-//        unset($_SESSION['registration']);
-//        echo "<script>window.location.replace('./account.php')</script>";
-//    } else {
-//        echo "<a style='color: red'>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</a>";
-//    }
-//
-//}
-
-function loginUser($username, $password, $conn) {
-
-    // Block SQL Injection
-    $username = str_replace("'", "", $username);
-    $username = str_replace('"', '', $username);
-
-    $password = str_replace("'", "", $password);
-    $password = str_replace('"', '', $password);
-
-    // Setup Query
-    $Query = "SELECT password FROM webshop_user WHERE email = '$username'";
-    $statement = mysqli_prepare($conn, $Query);
-    mysqli_stmt_execute($statement);
-    $result = mysqli_stmt_get_result($statement);
-    $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-    if(password_verify($password, $data[0]['password'])) {
-        loadUserData($username, $conn);
-        $_SESSION['isLoggedIn'] = true;
-        unset($_SESSION['login']);
-        unset($_SESSION['registration']);
-        echo "<script>window.location.replace('./account.php')</script>";
-    } else {
-        echo "<a style='color: red'><p>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</p></p></a>";
-    }
-
-}
-
-/*
     Validate User emailadres input
 */
 function validate_email($email) {
@@ -128,23 +76,35 @@ function validate_phone_number($phone) {
 */
 function inputcheck($sessionArray) {
 
-    if (!preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $_SESSION[$sessionArray]['housenumber'])) {
-        print("Huisnummer is niet correct ingevuld!");
-        return false;
-    } elseif(!preg_match('/^[0-9]{4}[a-zA-Z]{2}$/', $_SESSION[$sessionArray]['postcode'])) {
-        print("Postcode is niet correct ingevuld!");
-        return false;
-    } elseif (!ctype_alpha($_SESSION[$sessionArray]['street'])) {
-        print("Straatnaam is niet correct ingevuld!");
-        return false;
-    } elseif (isset($_SESSION[$sessionArray]['email']) && validate_email($_SESSION[$sessionArray]['email'])) {
+    if (isset($_SESSION[$sessionArray]['email']) && validate_email($_SESSION[$sessionArray]['email'])) {
         print("Emailadres is niet correct ingevuld!");
+        return false;
+    } elseif (isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
+        print("Wachtwoord mag niet leeg zijn en moet langer dan 8 karakters lang zijn!");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['firstname'])) {
+        print("Voornaam is niet correct ingevuld!");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['prefixName'])) {
+        print("Tussenvoegsel is niet correct ingevuld!");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['surname'])) {
+        print("Achternaam is niet correct ingevuld!");
         return false;
     } elseif (validate_phone_number($_SESSION[$sessionArray]['phone'])) {
         print("Telefoonnummer is niet correct ingevuld!");
         return false;
-    } elseif (isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
-        print("Wachtwoord mag niet leeg zijn en moet langer dan 8 karakters lang zijn!");
+    } elseif (!ctype_alpha($_SESSION[$sessionArray]['street'])) {
+        print("Straatnaam is niet correct ingevuld!");
+        return false;
+    } elseif (!preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $_SESSION[$sessionArray]['housenumber'])) {
+        print("Huisnummer is niet correct ingevuld!");
+        return false;
+    } elseif(!preg_match("/^[1-9][0-9]{3} {1}(?!SA|SD|SS)[A-Z]{2}$/", $_SESSION[$sessionArray]['postcode'])) {
+        print("Postcode is niet correct ingevuld!");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['firstname'])) {
+        print("Stad is niet correct ingevuld!");
         return false;
     }
 

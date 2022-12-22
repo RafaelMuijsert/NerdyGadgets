@@ -15,6 +15,11 @@
     margin: 0 8px 16px 8px;
 }
 
+.form__form-row--100 {
+    width: calc(100% - 16px);
+    float: none;
+}
+
 .form__form-row--50 {
     width: calc(50% - 16px);
 }

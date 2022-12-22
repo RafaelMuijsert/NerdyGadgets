@@ -7,7 +7,6 @@
                         <h2>Nieuwsbrief</h2>
                     </div>
 
-                    <form name="registration" method="post" action="" class="order__form">
 
                     <span class="order__form-row order__form-error">
                         <?php
@@ -26,16 +25,15 @@
                         endif;
                         ?>
                     </span>
-                        <br>
-                        <h1>Blijf up-to-date met onze Nieuwsbrief!</h1>
-                        <h1>Meld je NU aan voor de volgende voordelen:</h1>
+                    <br>
+                    <h5 style="font-weight: 500">Blijf up-to-date met onze Nieuwsbrief!</h5>
+                    <ul class="newsletter__pros">
                         <li>U krijgt als enige kortingscodes!</li>
                         <li>U weet als een van de eerste de opkomende aanbiedingen!</li>
                         <li>U weet als eerste van nieuwe producten!</li>
-                        <br>
-
-                        <?php include "form/newsletter-form.php" ?>
-                    </form>
+                    </ul>
+                    <br>
+                    <?php include "form/newsletter-form.php" ?>
                 </div>
             </div>
         </div>
