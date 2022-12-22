@@ -78,7 +78,7 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
 
     try {
         $Query = "
-                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglistU)
+                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglist)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param(
@@ -100,7 +100,7 @@ function maillistaccount($email, $firstname, $prefixName, $surname, $databaseCon
 {
     try {
         $Query = "
-                    INSERT INTO webshop_mailinglist (ID, email, voornaam, tussenvoegsel, achternaam)
+                    INSERT INTO webshop_mailinglist (id, email, voornaam, tussenvoegsel, achternaam)
                     VALUES (?, ?, ?, ?, ?)";
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param(
@@ -292,14 +292,14 @@ function loginUser($username, $password, $conn) {
     return 0;
 }
 
-function editUser($firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $userID, $conn) {
+function editUser($firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $userID, $mailinglist, $conn) {
     try {
-        $stmt = $conn->prepare("UPDATE webshop_user SET voornaam = ?, tussenvoegsel = ?, achternaam = ?, geboortedatum = ?, telefoonnummer = ?, stad = ?, straat = ?, huisnummer = ?, postcode = ? WHERE id = ?");
-        $stmt->bind_param("ssssssssss", $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode, $userID);
+        $stmt = $conn->prepare("UPDATE webshop_user SET voornaam = ?, tussenvoegsel = ?, achternaam = ?, geboortedatum = ?, telefoonnummer = ?, stad = ?, straat = ?, huisnummer = ?, postcode = ?, mailinglist = ? WHERE id = ?");
+        $stmt->bind_param("sssssssssss", $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode, $mailinglist, $userID);
         $stmt->execute();
     } catch (mysqli_sql_exception $e) {
         echo "<a style='color: red'><p>De aangepaste gegevens voldoen niet aan de gewenste eisen. Vul de velden opnieuw in.</p></p></a>";
-//                        print($e);
+                        print("<p>$e</p>");
     }
 }
 

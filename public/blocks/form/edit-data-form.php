@@ -3,6 +3,9 @@
         <?php if(isset($_POST) && isset($_POST['submitEditData'])):
             $_SESSION['editAccount'] = $_POST;
             $_SESSION['editAccount']['postcode'] = filterPostalzip($_SESSION['editAccount']['postcode']);
+
+            $mailinglist = array_key_exists('mailinglist', $_SESSION['editAccount']) ? 1 : 0;
+
             if(inputcheck('editAccount')):
                 //Edit User in the database
                 editUser(
@@ -16,6 +19,7 @@
                     $_SESSION['editAccount']['postcode'],
                     $_SESSION['editAccount']['city'],
                     $_SESSION['account']['id'],
+                    $mailinglist,
                     $databaseConnection
                 );
             endif;
@@ -80,6 +84,12 @@
     <div class="form__form-row form__form-row--50">
         <label for="city">Stad:*</label>
         <input class="input" placeholder="Stad" value="<?= $city ?>" type="text" id="city" name="city" required>
+    </div>
+    <div class="form__form ml-4 mr-4 pr-4">
+        <input class="lead form-check-input" name="mailinglist" type="checkbox" value="yes" id="mailinglist" checked>
+        <label class="form-check-label" for="mailinglist">
+            JA ik wil de nieuwste voordeel- en winacties, bergen inspiratie, maar ook verrassende aanbevelingen ontvangen!
+        </label>
     </div>
 
     <div class="form__form-row">
