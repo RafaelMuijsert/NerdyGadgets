@@ -6,13 +6,17 @@
                     <div class="footer__nav">
                         <span>Pagina's</span>
                         <ul>
-                            <li><a href="browse.php?category_id=1">Novelties Items</a></li>
-                            <li><a href="browse.php?category_id=2">Clothing</a></li>
-                            <li><a href="browse.php?category_id=4">T-Shirts</a></li>
-                            <li><a href="browse.php?category_id=6">Computing Novelties</a></li>
-                            <li><a href="browse.php?category_id=7">USB Novelties</a></li>
-                            <li><a href="browse.php?category_id=9">Toys</a></li>
-                            <li><a href="categories.php">Alle categorieën</a></li>
+                            <?php
+                            $HeaderStockGroups = getHeaderStockGroups($databaseConnection);
+                            foreach ($HeaderStockGroups as $HeaderStockGroup): ?>
+                            <li>
+                                <a href="browse.php?category_id=<?= $HeaderStockGroup['StockGroupID']; ?>"
+                                   class="HrefDecoration"><?= $HeaderStockGroup['StockGroupName']; ?></a>
+                            </li>
+                            <?php endforeach; ?>
+                            <li>
+                                <a href="categories.php" class="HrefDecoration">Alle categorieën</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="footer__brand" style="float: top; height: 200px; position: relative;">
