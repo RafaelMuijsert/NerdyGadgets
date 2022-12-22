@@ -1,0 +1,16 @@
+.newsletter__pros {
+    list-style-type: decimal;
+    row-gap: 8px;
+    display: grid;
+    padding-left: 18px;
+    padding-top: 10px;
+}
+
+.newsletter__form {
+    width: calc(100% + 16px);
+    margin-left: -8px;
+}
+
+.newsletter__form .btn--order {
+    width: max-content !important;
+}

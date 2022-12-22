@@ -22,6 +22,7 @@
 session_start();
 include "header.php";
 include "../src/functions.php";
+include "../src/form-functions.php";
 include "./blocks/newsletter.php";
 ?>
 

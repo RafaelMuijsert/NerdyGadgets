@@ -78,7 +78,7 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
 
     try {
         $Query = "
-                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglist)
+                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglistU)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param(
@@ -262,29 +262,34 @@ function loadUserData($username, $conn) {
 */
 function loginUser($username, $password, $conn) {
 
-    // Block SQL Injection
-    $username = str_replace("'", "", $username);
-    $username = str_replace('"', '', $username);
+    // SQL injection proof
+    $usernameCheck = str_contains($username, '"') || str_contains($username, "'");
+    $pwdCheck = str_contains($password, '"') || str_contains($password, "'");
 
-    $password = str_replace("'", "", $password);
-    $password = str_replace('"', '', $password);
+    if (!$usernameCheck && !$pwdCheck) {
 
-    // Setup Query
-    $Query = "SELECT password FROM webshop_user WHERE email = '$username'";
-    $statement = mysqli_prepare($conn, $Query);
-    mysqli_stmt_execute($statement);
-    $result = mysqli_stmt_get_result($statement);
-    $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        // Setup Query
+        $Query = "SELECT password FROM webshop_user WHERE email = '$username'";
+        $statement = mysqli_prepare($conn, $Query);
+        mysqli_stmt_execute($statement);
+        $result = mysqli_stmt_get_result($statement);
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    if($data && password_verify($password, $data[0]['password'])) {
-        loadUserData($username, $conn);
-        $_SESSION['isLoggedIn'] = true;
-        unset($_SESSION['login']);
-        unset($_SESSION['registration']);
-        echo "<script>window.location.replace('./account.php')</script>";
-    } else {
-        echo "<a style='color: red'><p>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</p></p></a>";
+        if(password_verify($password, $data[0]['password'])) {
+            loadUserData($username, $conn);
+            $_SESSION['isLoggedIn'] = true;
+            unset($_SESSION['login']);
+            unset($_SESSION['registration']);
+            echo "<script>window.location.replace('./account.php')</script>";
+            return 1;
+        } else {
+            echo "<a style='color: red'><p>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</p></p></a>";
+            return 0;
+        }
     }
+
+    echo "<a style='color: red'><p>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</p></p></a>";
+    return 0;
 }
 
 function editUser($firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $userID, $conn) {
