@@ -19,7 +19,7 @@ function findCustomer($databaseConnection){
     mysqli_stmt_execute($Statement);
     $Result = mysqli_stmt_get_result($Statement);
     $klantID = mysqli_fetch_all($Result, MYSQLI_ASSOC);
-    return ($klantID[0]['max(klantID)'] + 1);
+    return ($klantID[0]['max(klantID)']);
 }
 
 function findOrder($databaseConnection){
@@ -30,7 +30,7 @@ function findOrder($databaseConnection){
     mysqli_stmt_execute($Statement);
     $Result = mysqli_stmt_get_result($Statement);
     $orderID = mysqli_fetch_all($Result, MYSQLI_ASSOC);
-    return ($orderID[0]['max(OrderID)'] + 1);
+    return ($orderID[0]['max(OrderID)']);
 }
 
 function getTotalPrice() {
@@ -396,7 +396,7 @@ function itemStockUpdate ($databaseConnection){
     return true;
 }
 
-function processOrder ($customerID ,$userID ,$orderID ,$databaseConnection){
+function processOrder ($userID ,$databaseConnection){
     //------------------- Indien gedoe, uncomment hier onder en onderaan de functie voor testen -------------------
 //    $Query = "SET foreign_key_checks = 0";
 //    $stmt = mysqli_prepare($databaseConnection, $Query);
@@ -410,12 +410,15 @@ function processOrder ($customerID ,$userID ,$orderID ,$databaseConnection){
         return;
     }
 
+    $customerID = findCustomer($databaseConnection);
+
     // Hier wordt vervolgens de Order aangemaakt
     if (!addOrder($customerID, $userID, $databaseConnection)) {
         mysqli_rollback($databaseConnection);
         return;
     }
 
+    $orderID = findOrder($databaseConnection);
     // Hier worden de orderregels aangemaakt
     if (!addOrderLine($orderID, $databaseConnection)) {
         mysqli_rollback($databaseConnection);

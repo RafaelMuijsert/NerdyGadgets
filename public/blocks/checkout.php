@@ -134,13 +134,11 @@
                     <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && $CHECKOUT_ENABLED):
 
                         $_SESSION['userinfo']['postcode'] = filterPostalzip($_SESSION['userinfo']['postcode']);
-                        $klantID = findCustomer($databaseConnection);
-                        $orderID = findOrder($databaseConnection);
                         $userID = NULL;
                         if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
                             $userID = $_SESSION['account']['id'];
                         endif;
-                        processOrder($klantID ,$userID ,$orderID, $databaseConnection);
+                        processOrder($userID, $databaseConnection);
                         $_SESSION['userinfo'] = '';
                         $_SESSION['cart'] = [];
                         if (isset($_SESSION['korting'][0]['uses']) && $_SESSION['korting'][0]['uses'] > 0){
