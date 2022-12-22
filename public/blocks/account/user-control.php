@@ -20,7 +20,7 @@ if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) 
 
     if ($deleteID != $_SESSION['account']['id'] && password_verify($password, $hashedPassword)) {
         unset($_SESSION['deleteAccount']['password']);
-//        deleteUser($deleteID, $databaseConnection);
+        deleteUser($deleteID, $databaseConnection);
         print("<div class='alert alert-success' role='alert'>
             Account is verwijderd
         </div>");
@@ -133,7 +133,7 @@ if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) 
                         <?php if ($user['id'] != $_SESSION['account']['id']): ?>
                             <form action="" method="post">
                                 <input type="text" name="deleteID" value="<?= $user['id'] ?>" style="display: none">
-                                <input class="btn btn--small btn--primary" type="submit" value="Delete">
+                                <input class="btn btn--small btn--red text-center" type="submit" value="Delete">
                             </form>
                         <?php endif; ?>
                     </td>
