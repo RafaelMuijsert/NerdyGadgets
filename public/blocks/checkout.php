@@ -134,51 +134,11 @@
                     <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && strtolower(getEnvironmentVariable('CHECKOUT_ENABLED') == 'true')):
 
                         $_SESSION['userinfo']['postcode'] = filterPostalzip($_SESSION['userinfo']['postcode']);
-
-                        addCustomer(
-                                $_SESSION['userinfo']['firstname'],
-                                $_SESSION['userinfo']['prefixName'],
-                                $_SESSION['userinfo']['surname'],
-                                $_SESSION['userinfo']['birthDate'],
-                                $_SESSION['userinfo']['email'],
-                                $_SESSION['userinfo']['phone'],
-                                $databaseConnection
-                        );
-                        $klantID = findCustomer($databaseConnection);
-
                         $userID = NULL;
                         if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
                             $userID = $_SESSION['account']['id'];
                         endif;
-
-                        addOrder(
-                                $klantID[0]['max(klantID)'],
-                                $_SESSION['userinfo']['country'],
-                                $_SESSION['userinfo']['street'],
-                                $_SESSION['userinfo']['housenumber'],
-                                $_SESSION['userinfo']['postcode'],
-                                $_SESSION['userinfo']['city'],
-                                $_SESSION['userinfo']['comment'],
-                                $userID,
-                                $databaseConnection
-                        );
-                        $orderID = findOrder($databaseConnection);
-
-                        foreach ($_SESSION['cart'] as $id => $quantity):
-                            $total = 0;
-                            $factor = 1;
-                            $stockItem = getStockItem($id, $GLOBALS['databaseConnection']);
-                            $price = round($stockItem['SellPrice'], 2);
-                            if (isset($_SESSION['korting'][0]['procent'])){
-                                $factor = (1 - ($_SESSION['korting'][0]['procent'] * 0.01));
-                                $procent = $_SESSION['korting'][0]['procent'];
-                            }
-                            else $procent = NULL;
-                            $total += round(($price * $factor),2) * $quantity;
-
-                            addOrderLine($orderID[0]['max(OrderID)'], $id, $quantity, $total, $procent,$databaseConnection);
-                            removeStock($id, $quantity, $databaseConnection);
-                        endforeach;
+                        processOrder($userID, $databaseConnection);
                         $_SESSION['userinfo'] = '';
                         $_SESSION['cart'] = [];
                         if (isset($_SESSION['korting'][0]['uses']) && $_SESSION['korting'][0]['uses'] > 0){

@@ -11,43 +11,6 @@ function calculateSellPrice($adviesPrijs, $btw) {
     return $btw * $adviesPrijs / 100 + $adviesPrijs;
 }
 
-function addCustomer($firstname, $prefixName, $surname, $birthdate, $email, $phonenumber, $databaseConnection){
-    $Query = "
-            INSERT INTO webshop_klant (voornaam, tussenvoegsel, achternaam, geboortedatum, email, telefoonnummer)
-            VALUES (?, ?, ?, ?, ?, ?)";
-    $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "ssssss", $firstname, $prefixName, $surname, $birthdate, $email, $phonenumber);
-    mysqli_stmt_execute($Statement);
-}
-
-function addOrder($klantID, $land, $street, $housenumber, $postcode, $stad, $comment, $userID, $databaseConnection){
-    $Query = "
-            INSERT INTO webshop_order (klantID, straat, postcode, stad, land, huisnummer, opmerkingen, userID)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "ssssssss", $klantID, $street, $postcode, $stad, $land, $housenumber, $comment, $userID);
-    mysqli_stmt_execute($Statement);
-}
-
-function addOrderLine($orderID, $artikelID, $aantal, $bedrag, $korting, $databaseConnection){
-    $Query = "
-            INSERT INTO webshop_orderregel (orderID, artikelID, aantal, bedrag, procentKorting)
-            VALUES (?, ?, ?, ?, ?)";
-    $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "ssidd", $orderID, $artikelID, $aantal, $bedrag, $korting);
-    mysqli_stmt_execute($Statement);
-}
-
-function removeStock($stockID, $aantal, $databaseConnection){
-    $Query = "
-            UPDATE stockitemholdings
-            SET QuantityOnHand = (QuantityOnHand - ?)
-            WHERE StockItemID = ?";
-    $Statement = mysqli_prepare($databaseConnection, $Query);
-    mysqli_stmt_bind_param($Statement, "ii", $aantal, $stockID);
-    mysqli_stmt_execute($Statement);
-}
-
 function findCustomer($databaseConnection){
     $Query = "
             SELECT max(klantID)
@@ -56,7 +19,7 @@ function findCustomer($databaseConnection){
     mysqli_stmt_execute($Statement);
     $Result = mysqli_stmt_get_result($Statement);
     $klantID = mysqli_fetch_all($Result, MYSQLI_ASSOC);
-    return $klantID;
+    return ($klantID[0]['max(klantID)']);
 }
 
 function findOrder($databaseConnection){
@@ -67,7 +30,7 @@ function findOrder($databaseConnection){
     mysqli_stmt_execute($Statement);
     $Result = mysqli_stmt_get_result($Statement);
     $orderID = mysqli_fetch_all($Result, MYSQLI_ASSOC);
-    return $orderID;
+    return ($orderID[0]['max(OrderID)']);
 }
 
 function getTotalPrice() {
@@ -355,4 +318,123 @@ function deleteUser($userID, $databaseConnection) {
     $query = "DELETE FROM webshop_user WHERE id = '$userID'";
     $stmt = mysqli_prepare($databaseConnection, $query);
     mysqli_stmt_execute($stmt);
+}
+
+
+function addCustomer ($databaseConnection){
+    $Query = "
+            INSERT INTO webshop_klant (voornaam, tussenvoegsel, achternaam, geboortedatum, email, telefoonnummer)
+            VALUES (?, ?, ?, ?, ?, ?)";
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "ssssss",
+        $_SESSION['userinfo']['firstname'],
+        $_SESSION['userinfo']['prefixName'],
+        $_SESSION['userinfo']['surname'],
+        $_SESSION['userinfo']['birthDate'],
+        $_SESSION['userinfo']['email'],
+        $_SESSION['userinfo']['phone']);
+    if (!mysqli_stmt_execute($Statement)){
+        return false;
+    }
+    else return true;
+}
+
+function addOrder ($customerID, $userID, $databaseConnection){
+    $Query = "
+            INSERT INTO webshop_order (klantID, straat, postcode, stad, land, huisnummer, opmerkingen, userID)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "ssssssss",
+        $customerID,
+        $_SESSION['userinfo']['street'],
+        $_SESSION['userinfo']['postcode'],
+        $_SESSION['userinfo']['city'],
+        $_SESSION['userinfo']['country'],
+        $_SESSION['userinfo']['housenumber'],
+        $_SESSION['userinfo']['comment'],
+        $userID);
+    if (!mysqli_stmt_execute($Statement)){
+        return false;
+    }
+    else return true;
+}
+
+function addOrderLine ($orderID, $databaseConnection){
+    foreach ($_SESSION['cart'] as $id => $quantity) {
+        $total = 0;
+        $factor = 1;
+        $stockItem = getStockItem($id, $GLOBALS['databaseConnection']);
+        $price = round($stockItem['SellPrice'], 2);
+        if (isset($_SESSION['korting'][0]['procent'])) {
+            $factor = (1 - ($_SESSION['korting'][0]['procent'] * 0.01));
+            $procent = $_SESSION['korting'][0]['procent'];
+        } else $procent = NULL;
+        $total += round(($price * $factor), 2) * $quantity;
+        $Query = "
+                INSERT INTO webshop_orderregel (orderID, artikelID, aantal, bedrag, procentKorting)
+                VALUES (?, ?, ?, ?, ?)";
+        $Statement = mysqli_prepare($databaseConnection, $Query);
+        mysqli_stmt_bind_param($Statement, "ssidd", $orderID, $id, $quantity, $total, $procent);
+        if (!mysqli_stmt_execute($Statement)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function itemStockUpdate ($databaseConnection){
+    foreach ($_SESSION['cart'] as $id => $quantity) {
+        $Query = "
+                UPDATE stockitemholdings
+                SET QuantityOnHand = (QuantityOnHand - ?)
+                WHERE StockItemID = ?";
+        $Statement = mysqli_prepare($databaseConnection, $Query);
+        mysqli_stmt_bind_param($Statement, "ii", $quantity, $id);
+        if (!mysqli_stmt_execute($Statement)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function processOrder ($userID ,$databaseConnection){
+    //------------------- Indien gedoe, uncomment hier onder en onderaan de functie voor testen -------------------
+//    $Query = "SET foreign_key_checks = 0";
+//    $stmt = mysqli_prepare($databaseConnection, $Query);
+//    mysqli_stmt_execute($stmt);
+
+    mysqli_begin_transaction($databaseConnection);
+
+    // Hier onder wordt eerst de klant aangemaakt
+    if (!addCustomer($databaseConnection)){
+        mysqli_rollback($databaseConnection);
+        return;
+    }
+
+    $customerID = findCustomer($databaseConnection);
+
+    // Hier wordt vervolgens de Order aangemaakt
+    if (!addOrder($customerID, $userID, $databaseConnection)) {
+        mysqli_rollback($databaseConnection);
+        return;
+    }
+
+    $orderID = findOrder($databaseConnection);
+    // Hier worden de orderregels aangemaakt
+    if (!addOrderLine($orderID, $databaseConnection)) {
+        mysqli_rollback($databaseConnection);
+        return;
+    }
+
+    // Hier worden de opslag aangepast
+    if (!itemStockUpdate($databaseConnection)) {
+        mysqli_rollback($databaseConnection);
+        return;
+    }
+    mysqli_commit($databaseConnection);
+
+    // ------------------- Enable voor testen -------------------
+//    $Query = "SET foreign_key_checks = 1";
+//    $stmt = mysqli_prepare($databaseConnection, $Query);
+//    mysqli_stmt_execute($stmt);
 }
