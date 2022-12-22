@@ -12,7 +12,7 @@
                             <li><a href="browse.php?category_id=6">Computing Novelties</a></li>
                             <li><a href="browse.php?category_id=7">USB Novelties</a></li>
                             <li><a href="browse.php?category_id=9">Toys</a></li>
-                            <li><a href="categories.php.php">Alle categorieën</a></li>
+                            <li><a href="categories.php">Alle categorieën</a></li>
                         </ul>
                     </div>
                     <div class="footer__brand" style="float: top; height: 200px; position: relative;">
