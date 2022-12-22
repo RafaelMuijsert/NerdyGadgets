@@ -1,9 +1,9 @@
 <?php
     include_once __DIR__ . '/../../src/environment.php';
     $total = 0;
-    if(count($_POST) > 0):
-        $_SESSION['userinfo'] = $_POST;
-    endif;
+//    if(count($_POST) > 0):
+//        $_SESSION['userinfo'] = $_POST;
+//    endif;
     $databaseConnection = $GLOBALS['databaseConnection'];
     $dateformatter = new IntlDateFormatter(
         'nl_NL',
@@ -133,7 +133,6 @@
                     <a href="?action=pay" class="btn btn--order">Ga naar betalen</a>
                     <?php if(isset($_GET['action']) && $_GET['action'] == 'pay' && strtolower(getEnvironmentVariable('CHECKOUT_ENABLED') == 'true')):
 
-                        $_SESSION['userinfo']['postcode'] = filterPostalzip($_SESSION['userinfo']['postcode']);
                         $userID = NULL;
                         if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
                             $userID = $_SESSION['account']['id'];

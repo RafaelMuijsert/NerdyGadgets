@@ -122,31 +122,3 @@ function validate_phone_number($phone) {
 
     return true;
 }
-
-/*
-    Check input fields for correct data
-*/
-function inputcheck($sessionArray) {
-
-    if (!preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $_SESSION[$sessionArray]['housenumber'])) {
-        print("Huisnummer is niet correct ingevuld!");
-        return false;
-    } elseif(!preg_match('/^[0-9]{4}[a-zA-Z]{2}$/', $_SESSION[$sessionArray]['postcode'])) {
-        print("Postcode is niet correct ingevuld!");
-        return false;
-    } elseif (!ctype_alpha($_SESSION[$sessionArray]['street'])) {
-        print("Straatnaam is niet correct ingevuld!");
-        return false;
-    } elseif (isset($_SESSION[$sessionArray]['email']) && validate_email($_SESSION[$sessionArray]['email'])) {
-        print("Emailadres is niet correct ingevuld!");
-        return false;
-    } elseif (validate_phone_number($_SESSION[$sessionArray]['phone'])) {
-        print("Telefoonnummer is niet correct ingevuld!");
-        return false;
-    } elseif (isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
-        print("Wachtwoord mag niet leeg zijn en moet langer dan 8 karakters lang zijn!");
-        return false;
-    }
-
-    return true;
-}

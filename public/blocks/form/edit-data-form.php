@@ -2,7 +2,6 @@
     <span class="form__form-row form__form-error">
         <?php if(isset($_POST) && isset($_POST['submitEditData'])):
             $_SESSION['editAccount'] = $_POST;
-            $_SESSION['editAccount']['postcode'] = filterPostalzip($_SESSION['editAccount']['postcode']);
             if(inputcheck('editAccount')):
                 //Edit User in the database
                 editUser(
@@ -53,8 +52,8 @@
     </div>
 
     <div class="form__form-row">
-        <label for="birthDate">Geboortedatum:*</label>
-        <input class="input" placeholder="Geboortedatum" value="<?= $birthDate ?>" type="date" id="birthDate" name="birthDate" required>
+        <label for="birthDate">Geboortedatum:</label>
+        <input class="input" placeholder="Geboortedatum" value="<?= $birthDate ?>" type="date" id="birthDate" name="birthDate">
     </div>
 
     <div class="form__form-row form__form-row--50">
