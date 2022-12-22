@@ -91,13 +91,66 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
 
         loginUser($lgn, $pwd, $databaseConnection);
     } catch (mysqli_sql_exception $e) {
-        print($e->getMessage());
+        error_log($e->getMessage());
         print("Ongeldig e-mailadres");
     }
 
 }
-function maillistaccount($email, $firstname, $prefixName, $surname, $databaseConnection)
-{
+
+/*
+    Check input fields for correct data
+*/
+function inputcheck($sessionArray, $bool) {
+
+    if($bool) {
+        if (isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
+            print("Wachtwoord mag niet leeg zijn en moet langer dan 8 karakters lang zijn!");
+            return false;
+        }
+    } else {
+        if (isset($_SESSION[$sessionArray]['comment']) && strpos($_SESSION[$sessionArray]['comment'], "<") !== false) {
+            print("Opmerking is niet correct ingevuld!");
+            return false;
+        }
+    }
+
+    if (isset($_SESSION[$sessionArray]['email']) && !filter_var($_SESSION[$sessionArray]['email'], FILTER_VALIDATE_EMAIL)) {
+        print("Emailadres is niet correct ingevuld!");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['firstname'])) {
+        print("Voornaam is niet correct ingevuld!");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['prefixName'])) {
+        print("Tussenvoegsel is niet correct ingevuld!");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['surname'])) {
+        print("Achternaam is niet correct ingevuld!");
+        return false;
+    } elseif (validate_phone_number($_SESSION[$sessionArray]['phone'])) {
+        print("Telefoonnummer is niet correct ingevuld!");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['street'])) {
+        print("Straatnaam is niet correct ingevuld!");
+        return false;
+    } elseif (!preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $_SESSION[$sessionArray]['housenumber'])) {
+        print("Huisnummer is niet correct ingevuld!");
+        return false;
+    } elseif(!preg_match("/^[1-9][0-9]{3}(?!SA|SD|SS)[a-zA-Z]{2}$/", $_SESSION[$sessionArray]['postcode'])) {
+        print("Postcode is niet correct ingevuld!");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['city'])) {
+        print("Stad is niet correct ingevuld!");
+        return false;
+    }
+
+    if(empty($_SESSION[$sessionArray]['birthDate'])) {
+        $_SESSION[$sessionArray]['birthDate'] = NULL;
+    }
+
+    return true;
+}
+
+function maillistaccount($email, $firstname, $prefixName, $surname, $databaseConnection){
     try {
         $Query = "
                     INSERT INTO webshop_mailinglist (id, email, voornaam, tussenvoegsel, achternaam)

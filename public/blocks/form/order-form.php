@@ -1,4 +1,17 @@
-<form method="post" action="checkout.php" class="form__form">
+
+<form method="post" action="" class="form__form">
+    <span class="form__form-row form__form-error">
+        <?php
+        if(isset($_POST['orderSubmit'])):
+            $_SESSION['userinfo'] = $_POST;
+            $_SESSION['userinfo']['postcode'] = str_replace(' ', '', $_SESSION['userinfo']['postcode']);
+            if(inputcheck('userinfo', false)):
+                $_SESSION['userinfo']['postcode'] = filterPostalZip($_SESSION['userinfo']['postcode']);
+                echo "<script>window.location.replace('./checkout.php')</script>";
+            endif;
+        endif;
+        ?>
+    </span>
 
     <div class="form__form-row form__form-row--40">
         <?php
@@ -44,8 +57,8 @@
         elseif(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
             $birthDate = $_SESSION['account']['geboortedatum'];
         endif; ?>
-        <label for="birthDate">Geboortedatum:*</label>
-        <input class="input" placeholder="Geboortedatum" value="<?= $birthDate ?>" type="date" id="birthDate" name="birthDate" required>
+        <label for="birthDate">Geboortedatum:</label>
+        <input class="input" placeholder="Geboortedatum" value="<?= $birthDate ?>" type="date" id="birthDate" name="birthDate">
     </div>
 
     <div class="form__form-row">
@@ -139,6 +152,6 @@
 
     <div class="form__form-row">
         <input TYPE="hidden" NAME="required_fields" VALUE="name, from">
-        <input class="btn btn--order" type="submit" value="Bevestig gegevens">
+        <input class="btn btn--order" name="orderSubmit" type="submit" value="Bevestig gegevens">
     </div>
 </form>

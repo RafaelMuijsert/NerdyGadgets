@@ -8,12 +8,13 @@
             $username = $_SESSION['registration']['email'];
             $pwd = $_SESSION['registration']['password'];
             $hashPassword = password_hash($_SESSION['registration']['password'], PASSWORD_DEFAULT);
-            $_SESSION['registration']['postcode'] = filterPostalzip($_SESSION['registration']['postcode']);
-
+            $_SESSION['registration']['postcode'] = str_replace(' ', '', $_SESSION['registration']['postcode']);
             $newsLetter = array_key_exists('mail-list', $_SESSION['registration']) ? 1 : 0;
 
-            if(inputcheck('registration')):
-                //Create User in the database
+            if(inputcheck('registration', true)):
+                $_SESSION['registration']['postcode'] = filterPostalZip($_SESSION['registration']['postcode']);
+
+                //Create User in the database$addSpace
                 createUser(
                     $_SESSION['registration']['email'],
                     $hashPassword,
@@ -92,8 +93,8 @@
         if (isset($_SESSION['registration']['birthDate'])):
             $birthDate = $_SESSION['registration']['birthDate'];
         endif; ?>
-        <label for="birthDate">Geboortedatum:*</label>
-        <input class="input" placeholder="Geboortedatum" value="<?= $birthDate ?>" type="date" id="birthDate" name="birthDate" required>
+        <label for="birthDate">Geboortedatum:</label>
+        <input class="input" placeholder="Geboortedatum" value="<?= $birthDate ?>" type="date" id="birthDate" name="birthDate">
     </div>
 
 

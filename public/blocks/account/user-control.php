@@ -1,6 +1,65 @@
 <?php
 $users = getAllUsers($databaseConnection);
 
+function editInputCheck($sessionArray): bool
+{
+    if (preg_match('/[0-9\/\\<>]/', $sessionArray['firstname'])) {
+//        print("Voornaam is niet correct ingevuld!");
+        print("<div class='alert alert-danger' role='alert'>
+            Voornaam is niet correct ingevuld!
+        </div>");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $sessionArray['prefixName'])) {
+//        print("Tussenvoegsel is niet correct ingevuld!");
+        print("<div class='alert alert-danger' role='alert'>
+            Tussenvoegsel is niet correct ingevuld!
+        </div>");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $sessionArray['surname'])) {
+//        print("Achternaam is niet correct ingevuld!");
+        print("<div class='alert alert-danger' role='alert'>
+            Achternaam is niet correct ingevuld!
+        </div>");
+        return false;
+    } elseif (validate_phone_number($sessionArray['phone'])) {
+//        print("Telefoonnummer is niet correct ingevuld!");
+        print("<div class='alert alert-danger' role='alert'>
+            Telefoonnummer is niet correct ingevuld!
+        </div>");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $sessionArray['street'])) {
+//        print("Straatnaam is niet correct ingevuld!");
+        print("<div class='alert alert-danger' role='alert'>
+            Straatnaam is niet correct ingevuld!
+        </div>");
+        return false;
+    } elseif (!preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $sessionArray['housenumber'])) {
+//        print("Huisnummer is niet correct ingevuld!");
+        print("<div class='alert alert-danger' role='alert'>
+            Huisnummer is niet correct ingevuld!
+        </div>");
+        return false;
+    } elseif(!preg_match("/^[1-9][0-9]{3}(?!SA|SD|SS)[a-zA-Z]{2}$/", $sessionArray['postcode'])) {
+//        print("Postcode is niet correct ingevuld!");
+        print("<div class='alert alert-danger' role='alert'>
+            Postcode is niet correct ingevuld!
+        </div>");
+        return false;
+    } elseif (preg_match('/[0-9\/\\<>]/', $sessionArray['city'])) {
+//        print("Stad is niet correct ingevuld!");
+        print("<div class='alert alert-danger' role='alert'>
+            Stad is niet correct ingevuld!
+        </div>");
+        return false;
+    }
+
+    if(empty($sessionArray['birthDate'])) {
+        $sessionArray['birthDate'] = NULL;
+    }
+
+    return true;
+}
+
 if (isset($_POST['deleteAccount']['password'])) {
     $_SESSION['deleteAccount']['password'] = $_POST['deleteAccount']['password'];
     unset($_POST['deleteAccount']['password']);
@@ -9,8 +68,10 @@ if (isset($_POST['deleteAccount']['password'])) {
 if (isset($_POST['update'])) {
     $updated = $_POST['edit'];
 //    print_r($updated);
-    editUser($updated['firstname'], $updated['prefixName'], $updated['surname'], $updated['birthDate'], $updated['phone'], $updated['street'], $updated['housenumber'], $updated['postcode'], $updated['city'], $updated['id'], $databaseConnection);
-    $users = getAllUsers($databaseConnection);
+    if (editInputCheck($updated)) {
+        editUser($updated['firstname'], $updated['prefixName'], $updated['surname'], $updated['birthDate'], $updated['phone'], $updated['street'], $updated['housenumber'], $updated['postcode'], $updated['city'], $updated['id'], $databaseConnection);
+        $users = getAllUsers($databaseConnection);
+    }
 }
 
 if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) {
@@ -40,7 +101,8 @@ if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) 
         <p>Zie hieronder alle geregistreerde gebruikers met de bijbehorende te kunnen bewerken informatie.</p>
         <?php if (isset($_POST['editID'])):
             $userID = $_POST['editID'];
-            $userResult = getUser($userID, $databaseConnection); ?>
+            $userResult = getUser($userID, $databaseConnection);
+            ?>
             <hr>
             <form action="" method="post" class="edit-data form__form">
 
@@ -83,7 +145,7 @@ if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) 
                 </div>
 
                 <div class="form__form-row form__form-row--100">
-                    <input type="submit" name="update" value="Update" class="btn btn--primary">
+                    <input type="submit" name="update" value="Opslaan" class="btn btn--primary">
                 </div>
 
 <!--                <input type="email" name="edit[email]" value="--><?php //= @$userResult[0]['email'] ?><!--" placeholder="Email">-->

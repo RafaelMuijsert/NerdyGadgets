@@ -7,6 +7,9 @@
             $mailinglist = array_key_exists('mailinglist', $_SESSION['editAccount']) ? 1 : 0;
 
             if(inputcheck('editAccount')):
+            $_SESSION['editAccount']['postcode'] = str_replace(' ', '', $_SESSION['editAccount']['postcode']);
+            if(inputcheck('editAccount', false)):
+                $_SESSION['editAccount']['postcode'] = filterPostalZip($_SESSION['editAccount']['postcode']);
                 //Edit User in the database
                 editUser(
                     $_SESSION['editAccount']['firstname'],
