@@ -288,7 +288,7 @@
                                             </form>
                                         </div>
                                         <?php
-                                        $itemStock = getItemStock($row['StockItemID'], $databaseConnection);
+                                        $itemStock = $row['QuantityOnHand'];
                                         if($itemStock > 1000) {
                                             $itemStock = 'Ruime voorraad beschikbaar';
                                         } else {

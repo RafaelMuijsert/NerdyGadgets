@@ -1,50 +1,43 @@
 # NerdyGadgets
 
-A beautiful webshop that just works™ on my machine.
+A beautiful and complete webshop
 
 
 ## Project structure
-Please see https://github.com/php-pds/skeleton
+We used [this](https://github.com/php-pds/skeleton) skeleton to structure our project.
 
-## Dependencies
-- A web server (apache is preferred)
-- PHP (tested with version 7.4+)
-- mysqli php extension
-- intl php extension
+## Getting started
+There are two ways of setting up a development environment for NerdyGadgets:
+1. Using Docker
+2. Manual setup
+
+Regardless of the method you prefer, you must first configure a couple environment variables. 
+Head to the project root and copy the provided `.env.example` file to `.env` 
+
+Then simply edit the variables inside `.env` to fit your needs.
+
+### Using Docker
+Setting up a development environment using Docker is very easy. Simply navigate to the project root and run the following shell command:
+```bash
+$ docker compose -f docker-compose.dev.yaml up --build
+```
+This will take care of setting up the environment. Any changes made will be immediately reflected since the project root is mounted as a volume.
+
+### Manual setup
+To configure a development environment manually, you must first install the following dependencies:
+- A web server (apache is recommended)
+- PHP (tested with version 7.4+) with the following extensions: mysqli, intl
 - Composer
 
-## Setup
-### Manual setup
-Edit php.ini and add the following line under [PHP]:
-```
-extension=intl
-```
-If you are using XAMPP, the mysqli extension should be enabled by default. 
-If this is not the case, or if you are hosting the server a different way, repeat the above step with the mysqli extension.
-
-Lastly, install the composer dependencies by navigating to the project root and running the following command:
+Navigate to the project root and install the required PHP dependencies
 ```bash
 $ composer install
 ```
+Configure the web server so that the document root is pointed to public/
 
-Copy the .env.example file to .env and update the variables.
-
-Make sure the web server root is set to public/ and not to the project root.
-
-### Using Docker
-Build the image by navigating to the project directory and running the following command
-```bash
-$ docker build -t nerdygadgets .
-```
-Then you can run the image using `docker run`
-```bash
-$ docker run -p 80:80 -t nerdygadgets
-```
-
-
-### Using docker-compose (recommended)
+## Deployment using docker-compose (recommended)
 Provided below are a couple of example docker-compose files.
-Don't forget to create a .env file containing all deployment-specific variables. 
+Remember to create a .env file containing all deployment-specific variables. 
 It is recommended that you copy the .env.example file found in the project root.
 #### NerdyGadgets
 ```yaml
@@ -80,10 +73,3 @@ services:
     volumes:
       - ./db:/var/lib/mysql
 ```
-
-## Testing
-Given below is the shell command that can be used to connect to the primary database in case you want to perform manual operations.
-```bash
-$ sudo mariadb --host='nerdygadgets.shop' --port=33646 --user='nerd' --password='[PASSWORD]' 'nerdygadgets'
-```
-

@@ -23,7 +23,11 @@
                 <?php else: ?>
                     <div class="alert alert-danger alert-dismissible" role="alert">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        Er zijn geen producten meer op voorraad. Probeer het later nog eens
+                        <?php if (intval($_POST['itemQuantity']) == 0): ?>
+                        Voer een geldig getal in
+                        <?php else: ?>
+                        Er zijn helaas geen <?=$_POST['itemQuantity']?> producten meer op voorraad. Probeer het later nog eens
+                        <?php endif; ?>
                     </div>
                 <?php endif ?>
             </div>

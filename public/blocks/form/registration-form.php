@@ -4,7 +4,6 @@
         <?php
         if(isset($_POST) && isset($_POST['submitRegistration'])):
             $_SESSION['registration'] = $_POST;
-        var_dump($_SESSION['registration']);
             $username = $_SESSION['registration']['email'];
             $pwd = $_SESSION['registration']['password'];
             $hashPassword = password_hash($_SESSION['registration']['password'], PASSWORD_DEFAULT);
@@ -27,10 +26,10 @@
                     $_SESSION['registration']['housenumber'],
                     $_SESSION['registration']['postcode'],
                     $_SESSION['registration']['city'],
-                    $newsLetter,
                     $databaseConnection,
                     $username,
                     $pwd,
+                    $newsLetter
                 );
             endif;
         endif;
