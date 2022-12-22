@@ -148,7 +148,7 @@
                                         <?php if ($stockItem['IsChillerStock']): ?>
                                         <tr>
                                             <td>Temperatuur</td>
-                                            <td class="text-right ml-2">
+                                            <td id="temperature-label" class="text-right ml-2">
                                                 <?= getColdroomTemperature($databaseConnection) ?> °C
                                             </td>
                                         </tr>
@@ -179,6 +179,16 @@
         <?php include "footer.php"; ?>
 
         <script>
+            async function updateTemperature() {
+                const response = await fetch('/temperature.php');
+                if(!response.ok) {
+                    return false;
+                }
+                const temperature = await response.text();
+                document.getElementById('temperature-label').innerText = `${temperature} °C`;
+            }
+            setInterval(updateTemperature, 3000);
+
             if ( window.history.replaceState ) {
                 window.history.replaceState( null, null, window.location.href );
             }

@@ -1,4 +1,3 @@
-<!-- dit bestand bevat alle code die verbinding maakt met de database -->
 <?php
 require __DIR__ . '/environment.php';
 require __DIR__ . '/../vendor/autoload.php';
@@ -24,7 +23,7 @@ function connectToDatabase() {
         ?><h2>Kon geen verbinding maken met de database.</h2><?php
         die();
     }
-
+    $GLOBALS['databaseConnection'] = $connection;
     return $connection;
 }
 
