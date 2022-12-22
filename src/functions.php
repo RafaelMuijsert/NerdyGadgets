@@ -78,7 +78,7 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
 
     try {
         $Query = "
-                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglistU)
+                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglist)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param(
@@ -91,7 +91,7 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
 
         loginUser($lgn, $pwd, $databaseConnection);
     } catch (mysqli_sql_exception $e) {
-        print($e->getMessage());
+        error_log($e->getMessage());
         print("Ongeldig e-mailadres");
     }
 
