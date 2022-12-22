@@ -1,3 +1,4 @@
+
 <form name="registration" method="post" action="" class="edit-data form__form">
     <span class="form__form-row form__form-error">
         <?php if(isset($_POST) && isset($_POST['submitEditData'])):
@@ -43,6 +44,7 @@
         $housenumber = (isset($_POST['housenumber']) ? $_POST['housenumber'] : $_SESSION['account']['huisnummer']);
         $postalZip = (isset($_POST['postcode']) ? $_POST['postcode'] : $_SESSION['account']['postcode']);
         $city = (isset($_POST['city']) ? $_POST['city'] : $_SESSION['account']['stad']);
+        $newsletter = (isset($_POST['mailinglist']) ? $_POST['mailinglist'] : $_SESSION['account']['mailinglist']);
     ?>
 
     <div class="form__form-row form__form-row--40">
@@ -90,7 +92,7 @@
         <input class="input" placeholder="Stad" value="<?= $city ?>" type="text" id="city" name="city" required>
     </div>
     <div class="form__form ml-4 mr-4 pr-4">
-        <input class="lead form-check-input" name="mailinglist" type="checkbox" value="yes" id="mailinglist" checked>
+        <input class="lead form-check-input" name="newsletter" type="checkbox" value="<?= $newsletter ?>" id="mailinglist" onclick="popup()">
         <label class="form-check-label" for="mailinglist">
             JA ik wil de nieuwste voordeel- en winacties, bergen inspiratie, maar ook verrassende aanbevelingen ontvangen!
         </label>
@@ -99,5 +101,10 @@
     <div class="form__form-row">
         <input TYPE="hidden" NAME="required_fields" VALUE="name, from">
         <input class="btn btn--order" type="submit" name="submitEditData" value="Gegevens opslaan">
+        <script>
+            function popup() {
+                alert("Je hebt je succesfull ingeschreven voor de nieuwsbrief!");
+            }
+        </script>
     </div>
 </form>
