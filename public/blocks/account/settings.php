@@ -4,8 +4,8 @@ if (isset($_POST['remove'])) {
     unset($_POST['remove']);
 }
 if (isset($_POST['VerzendKosten']) && $_POST['VerzendKosten'] == 'Verwerk'){
-    $_POST['deliveryLimit'] = str_replace(",", ".", $_POST['deliveryLimit']);
-    $_POST['deliveryCosts'] = str_replace(",", ".", $_POST['deliveryCosts']);
+    $_POST['deliveryLimit'] = is_float(str_replace(",", ".", $_POST['deliveryLimit']));
+    $_POST['deliveryCosts'] = is_float(str_replace(",", ".", $_POST['deliveryCosts']));
     if ($_POST['deliveryLimit'] == ''){
         $_POST['deliveryLimit'] = getDeliverycosts($databaseConnection)[0][1];
     }
