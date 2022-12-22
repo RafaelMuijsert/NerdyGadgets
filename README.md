@@ -1,19 +1,25 @@
 # NerdyGadgets
 
-A beautiful webshop that just works™ on my machine.
+A beautiful and complete webshop
 
 
 ## Project structure
 Please see https://github.com/php-pds/skeleton
 
 ## Dependencies
-- A web server (apache is preferred)
-- PHP (tested with version 7.4+)
-- mysqli php extension
-- intl php extension
+- A web server (apache is recommended)
+- PHP (tested with version 7.4+) with the following extensions: mysqli, intl
 - Composer
 
 ## Setup
+Copy the .env.example file to .env and update the variables.
+
+### Development with Docker
+To set up a development-ready environment with Docker, simply navigate to the project root and run the following command:
+```bash
+$ docker compose -f docker-compose.dev.yaml up --build
+```
+
 ### Manual setup
 Edit php.ini and add the following line under [PHP]:
 ```
@@ -27,20 +33,7 @@ Lastly, install the composer dependencies by navigating to the project root and 
 $ composer install
 ```
 
-Copy the .env.example file to .env and update the variables.
-
 Make sure the web server root is set to public/ and not to the project root.
-
-### Using Docker
-Build the image by navigating to the project directory and running the following command
-```bash
-$ docker build -t nerdygadgets .
-```
-Then you can run the image using `docker run`
-```bash
-$ docker run -p 80:80 -t nerdygadgets
-```
-
 
 ### Using docker-compose (recommended)
 Provided below are a couple of example docker-compose files.
