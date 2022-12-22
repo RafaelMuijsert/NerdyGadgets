@@ -6,12 +6,13 @@
                     <div class="footer__nav">
                         <span>Pagina's</span>
                         <ul>
-                            <li><a href="/">T-shirts</a></li>
-                            <li><a href="/">Chocolade</a></li>
-                            <li><a href="/">Novelties</a></li>
-                            <li><a href="/">Kleding</a></li>
-                            <li><a href="/">USB Novelties</a></li>
-                            <li><a href="/">Alle categorieën</a></li>
+                            <li><a href="browse.php?category_id=1">Novelties Items</a></li>
+                            <li><a href="browse.php?category_id=2">Clothing</a></li>
+                            <li><a href="browse.php?category_id=4">T-Shirts</a></li>
+                            <li><a href="browse.php?category_id=6">Computing Novelties</a></li>
+                            <li><a href="browse.php?category_id=7">USB Novelties</a></li>
+                            <li><a href="browse.php?category_id=9">Toys</a></li>
+                            <li><a href="categories.php.php">Alle categorieën</a></li>
                         </ul>
                     </div>
                     <div class="footer__brand" style="float: top; height: 200px; position: relative;">
