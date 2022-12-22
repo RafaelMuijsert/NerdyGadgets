@@ -5,8 +5,8 @@
 
         <!-- Javascript -->
         <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
         <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <script src="js/resizer.js"></script>
 
         <!-- Style sheets-->
@@ -17,12 +17,6 @@
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             })
-            $('[data-toggle="popover"]').popover({
-                html: true,
-                content: function() {
-                    return $('#popover-content').html();
-                }
-            });
             $('#example').popover(options)
         </script>
         <?php
@@ -174,8 +168,8 @@
                                     $_SESSION['deliveryCosts'] = $deliveryCosts;
                                     $_SESSION['total'] += $_SESSION['deliveryCosts'];
                                     ?>
-                                    <div class="">
-                                        <abbr title="Gratis verzendkosten vanaf &euro;<?= (getDeliverycosts($databaseConnection)[0][1]) ?>">Verzendkosten</abbr>
+                                    <div class="">Verzendkosten
+                                        <a style="text-decoration: underline dotted;" href="#" data-toggle="popover" data-content="<?= ("Gratis verzend kosten vanaf €" . getDeliverycosts($databaseConnection)[0][1]) ?>">?</a>
                                     </div>
                                     <div class="text-right" style="margin-left: auto; margin-right: 0;">&euro; <?= (number_format($deliveryCosts, 2, '.', ',')) ?></div>
                                 </div>
@@ -194,7 +188,7 @@
                                             $value = $_SESSION['korting']['naam'];
                                         endif; ?>
                                         <input class="input" id="kortingscode" type="text" placeholder="kortingscode" name="kortingscode" value="<?= $value ?>">
-                                        <input class="btn--primary" id="kortingscodeInput" type="submit" value="Bevestig" name="korting">
+                                        <input class="btn--primary" id="kortingscodeInput" type="submit" value="Bevestig" name="Korting">
                                     </form>
                                 </div>
                                 <hr>
@@ -211,6 +205,9 @@
         <?php include "footer.php"; ?>
 
         <script>
+            $(document).ready(function(){
+                $('[data-toggle="popover"]').popover();
+            });
             if ( window.history.replaceState ) {
                 window.history.replaceState( null, null, window.location.href );
             }
