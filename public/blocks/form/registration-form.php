@@ -155,7 +155,7 @@
         <input class="input" placeholder="Stad" value="<?= $city ?>" type="text" id="city" name="city" required>
     </div>
     <div class="form__form ml-4 mr-4 pr-4">
-        <input class="lead form-check-input" name="mail-list" type="checkbox" value="yes" id="mail-check" onclick="popup()">
+        <input class="lead form-check-input" name="mail-list" type="checkbox" value="no" id="mail-check" onclick="popup()">
         <script>
             function popup() {
                 alert("Je hebt je succesfull ingeschreven voor de nieuwsbrief!");
