@@ -25,6 +25,7 @@
         <label for="email">Email:*</label>
         <input type="email" class="input" value="<?= $mail ?>" placeholder="Email" style="width: 100%">
     </div>
+    <br>
     <div class="oder__form-row">
         <input type="submit" name="newsletterSubmit" value="Aanmelden" class="btn btn--order">
     </div>
