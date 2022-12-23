@@ -27,7 +27,7 @@ include "../src/functions.php";
                         <p>Email: Nerdygadgets.shop</p>
                         <form action="mailto:s1190870@student.windesheim.nl" method="POST">
                             <div>
-                                <button type="submit">Stuur een mail</button>
+                                <button class="btn btn--primary" type="submit">Stuur een mail</button>
                             </div>
                         </form>
                     </div>
@@ -36,7 +36,7 @@ include "../src/functions.php";
                         <h3>Bellen</h3>
                         <p>Telefoonnummer: +31 6 18242168</p>
                         <div id="copy" style="display: none;">+31 6 18242168</div>
-                        <button type="button" id="btnCopy">Kopieër nummer</button>
+                        <button class="btn btn--primary" type="button" id="btnCopy">Kopieër nummer</button>
                         <script type="text/javascript">
                             var $body = document.getElementsByTagName('body')[0];
                             var $btnCopy = document.getElementById('btnCopy');
