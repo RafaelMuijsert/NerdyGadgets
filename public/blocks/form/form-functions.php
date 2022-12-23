@@ -54,12 +54,9 @@ function validate_phone_number($phone) {
     $phone = preg_replace("/[^0-9]/", "", $phone);
 
     // Check if the phone number is at least 10 digits long
-    if (strlen($phone) < 10) {
-        return false;
-    }
-
-    // Check if the phone number starts with a valid country code (31)
-    if (substr($phone, 0, 2) != "31") {
+    if (strlen($phone) == 0 ) {
+        return true;
+    } elseif (strlen($phone) < 10) {
         return false;
     }
 

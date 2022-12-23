@@ -33,12 +33,20 @@ function validate_email($email) {
     Validate User mobile phone input
 */
 function validate_phone_number($phone) {
+    if (empty($phone)) {
+        return false;
+    }
 
     // Remove any non-numeric characters from the phone number
     $phone = preg_replace("/[^0-9]/", "", $phone);
 
     // Check if the phone number is at least 10 digits long
-    if (strlen($phone) < 10) {
+     if (strlen($phone) < 10) {
+        return true;
+    }
+
+    // Check if the phone number has a valid area code (2-9)
+    if (!in_array(substr($phone, 2, 1), array("2", "3", "4", "5", "6", "7", "8", "9"))) {
         return true;
     }
 
@@ -47,7 +55,8 @@ function validate_phone_number($phone) {
 
 /*
     Filter Postal Zip code
+    Filter Postal Zip code
 */
-function filterPostalZip($postal){
+function filterPostalZip($postal) {
     return strtoupper(trim($postal));
 }

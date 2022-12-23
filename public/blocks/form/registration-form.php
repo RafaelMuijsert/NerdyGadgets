@@ -105,7 +105,7 @@
             $phone = $_SESSION['registration']['phone'];
         endif; ?>
         <label for="number">Telefoonnummer:*</label>
-        <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone" required>
+        <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone">
     </div>
 
     <div class="form__form-row form__form-row--50">

@@ -63,13 +63,13 @@
     </div>
 
     <div class="form__form-row">
-        <label for="birthDate">Geboortedatum:*</label>
-        <input class="input" placeholder="Geboortedatum" value="<?= $birthDate ?>" type="date" id="birthDate" name="birthDate" required>
+        <label for="birthDate">Geboortedatum:</label>
+        <input class="input" placeholder="Geboortedatum" value="<?= $birthDate ?>" type="date" id="birthDate" name="birthDate">
     </div>
 
     <div class="form__form-row form__form-row--50">
         <label for="number">Telefoonnummer:*</label>
-        <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone" required>
+        <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone">
     </div>
 
     <div class="form__form-row form__form-row--40">

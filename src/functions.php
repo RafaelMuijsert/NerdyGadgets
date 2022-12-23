@@ -78,7 +78,7 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
 
     try {
         $Query = "
-                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglist)
+                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglistU)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param(
@@ -92,9 +92,22 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
         loginUser($lgn, $pwd, $databaseConnection);
     } catch (mysqli_sql_exception $e) {
         error_log($e->getMessage());
+        print $e;
         print("Ongeldig e-mailadres");
     }
 
+}
+
+
+/*
+ *  Remove SQL vulnerability
+ * */
+function sqlInjection($value) {
+    if (str_contains($value, "'") || str_contains($value, '"')) {
+        return true;
+    }
+
+    return false;
 }
 
 /*
@@ -103,7 +116,7 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
 function inputcheck($sessionArray, $bool) {
 
     if($bool) {
-        if (isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
+        if (sqlInjection($_SESSION[$sessionArray]['password']) || isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
             print("Wachtwoord mag niet leeg zijn en moet langer dan 8 karakters lang zijn!");
             return false;
         }
@@ -114,37 +127,41 @@ function inputcheck($sessionArray, $bool) {
         }
     }
 
-    if (isset($_SESSION[$sessionArray]['email']) && !filter_var($_SESSION[$sessionArray]['email'], FILTER_VALIDATE_EMAIL)) {
+    if (sqlInjection($_SESSION[$sessionArray]['email']) || isset($_SESSION[$sessionArray]['email']) && !filter_var($_SESSION[$sessionArray]['email'], FILTER_VALIDATE_EMAIL)) {
         print("Emailadres is niet correct ingevuld!");
         return false;
-    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['firstname'])) {
+    } elseif (sqlInjection($_SESSION[$sessionArray]['firstname']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['firstname'])) {
         print("Voornaam is niet correct ingevuld!");
         return false;
-    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['prefixName'])) {
+    } elseif (sqlInjection($_SESSION[$sessionArray]['prefixName']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['prefixName'])) {
         print("Tussenvoegsel is niet correct ingevuld!");
         return false;
-    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['surname'])) {
+    } elseif (sqlInjection($_SESSION[$sessionArray]['surname']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['surname'])) {
         print("Achternaam is niet correct ingevuld!");
         return false;
     } elseif (validate_phone_number($_SESSION[$sessionArray]['phone'])) {
         print("Telefoonnummer is niet correct ingevuld!");
         return false;
-    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['street'])) {
+    } elseif (sqlInjection($_SESSION[$sessionArray]['street']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['street'])) {
         print("Straatnaam is niet correct ingevuld!");
         return false;
-    } elseif (!preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $_SESSION[$sessionArray]['housenumber'])) {
+    } elseif (sqlInjection($_SESSION[$sessionArray]['housenumber']) || !preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $_SESSION[$sessionArray]['housenumber'])) {
         print("Huisnummer is niet correct ingevuld!");
         return false;
-    } elseif(!preg_match("/^[1-9][0-9]{3}(?!SA|SD|SS)[a-zA-Z]{2}$/", $_SESSION[$sessionArray]['postcode'])) {
+    } elseif(sqlInjection($_SESSION[$sessionArray]['postcode']) || !preg_match("/^[1-9][0-9]{3}(?!SA|SD|SS)[a-zA-Z]{2}$/", $_SESSION[$sessionArray]['postcode'])) {
         print("Postcode is niet correct ingevuld!");
         return false;
-    } elseif (preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['city'])) {
+    } elseif (sqlInjection($_SESSION[$sessionArray]['city']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['city'])) {
         print("Stad is niet correct ingevuld!");
         return false;
     }
 
     if(empty($_SESSION[$sessionArray]['birthDate'])) {
         $_SESSION[$sessionArray]['birthDate'] = NULL;
+    }
+
+    if(empty($_SESSION[$sessionArray]['phone'])) {
+        $_SESSION[$sessionArray]['phone'] = NULL;
     }
 
     return true;
