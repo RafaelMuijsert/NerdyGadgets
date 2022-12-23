@@ -18,7 +18,7 @@
 
                     <form class="login__form" action="" method="POST">
                         <label for="username">Email:</label>
-                        <input class="input" placeholder="Gebruikersnaam" type="text" name="username">
+                        <input class="input" placeholder="Email" type="text" name="username">
 
                         <label for="password">Wachtwoord:</label>
                         <input class="input" placeholder="Wachtwoord" type="password" name="password">

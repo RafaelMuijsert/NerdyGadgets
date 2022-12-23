@@ -196,7 +196,7 @@
                                             $value = $_SESSION['korting']['naam'];
                                         endif; ?>
                                         <input class="input" id="kortingscode" type="text" placeholder="kortingscode" name="kortingscode" value="<?= $value ?>">
-                                        <input class="btn--primary" id="kortingscodeInput" type="submit" value="Bevestig" name="Korting">
+                                        <input class="btn--primary" id="kortingscodeInput" type="submit" value="Bevestig" name="korting">
                                     </form>
                                 </div>
                                 <hr>
