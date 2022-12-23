@@ -137,7 +137,7 @@ if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) 
                 </div>
 
                 <div class="form__form-row form__form-row--50">
-                    <input class="input" type="text" name="edit[postcode]" value="<?= substr(@$userResult[0]['postcode'],0,4) . ' ' . substr(@$userResult[0]['postcode'],4, 2)?>" placeholder="Postcode">
+                    <input class="input" type="text" name="edit[postcode]" value="<?= @$userResult[0]['postcode'] ?>" placeholder="Postcode">
                 </div>
 
                 <div class="form__form-row form__form-row--50">

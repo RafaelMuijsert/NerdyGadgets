@@ -84,7 +84,7 @@
 
     <div class="form__form-row form__form-row--50">
         <label for="postcode">Postcode:*</label>
-        <input class="input" placeholder="Vul hier in..." value="<?= substr($postalZip,0,4) . ' ' . substr($postalZip,4, 2) ?>" type="text" id="postcode" name="postcode" required>
+        <input class="input" placeholder="Vul hier in..." value="<?= $postalZip ?>" type="text" id="postcode" name="postcode" required>
     </div>
 
     <div class="form__form-row form__form-row--50">
