@@ -67,9 +67,9 @@ if (isset($_POST['deleteAccount']['password'])) {
 
 if (isset($_POST['update'])) {
     $updated = $_POST['edit'];
-//    print_r($updated);
+    $updated['mail-list'] = array_key_exists('mail-list', $updated) ? 1 : 0;
     if (editInputCheck($updated)) {
-        editUser($updated['firstname'], $updated['prefixName'], $updated['surname'], $updated['birthDate'], $updated['phone'], $updated['street'], $updated['housenumber'], $updated['postcode'], $updated['city'], $updated['id'], $databaseConnection);
+        editUser($updated['firstname'], $updated['prefixName'], $updated['surname'], $updated['birthDate'], $updated['phone'], $updated['street'], $updated['housenumber'], $updated['postcode'], $updated['city'], $updated['id'], $updated['mail-list'], $databaseConnection);
         $users = getAllUsers($databaseConnection);
     }
 }
@@ -142,6 +142,14 @@ if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) 
 
                 <div class="form__form-row form__form-row--50">
                     <input class="input" type="text" name="edit[city]" value="<?= @$userResult[0]['stad'] ?>" placeholder="Stad">
+                </div>
+                <div class="form__form ml-4 mr-4 pr-4">
+                    <input <?php if($userResult[0]['mailinglist'] == 1) { print('checked'); } ?> class="lead form-check-input" name="edit[mail-list]" type="checkbox" value="yes" id="mail-check">
+                    <script>
+                    </script>
+                    <label class="form-check-label" for="mail-check">
+                        Inschrijven voor de niewsbrief
+                    </label>
                 </div>
 
                 <div class="form__form-row form__form-row--100">
