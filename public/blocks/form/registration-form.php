@@ -155,9 +155,12 @@
         <input class="input" placeholder="Stad" value="<?= $city ?>" type="text" id="city" name="city" required>
     </div>
     <div class="form__form ml-4 mr-4 pr-4">
+        <?php
+        $newsLetter = '';
+        if (isset($_SESSION['registration']['mailinglist'])):
+            $newsLetter = $_SESSION['registration']['mailinglist'];
+        endif; ?>
         <input class="lead form-check-input" name="mail-list" type="checkbox" value="yes" id="mail-check">
-        <script>
-        </script>
         <label class="form-check-label" for="mail-check">
             JA ik wil de nieuwste voordeel- en winacties, bergen inspiratie, maar ook verrassende aanbevelingen ontvangen!
         </label>
