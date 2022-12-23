@@ -46,7 +46,7 @@ function validate_phone_number($phone) {
     }
 
     // Check if the phone number has a valid area code (2-9)
-    if (!in_array(substr($phone, 2, 1), array("1", "2", "3", "4", "5", "6", "7", "8", "9"))) {
+    if (!in_array(substr($phone, 2, 1), array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"))) {
         return true;
     }
 
