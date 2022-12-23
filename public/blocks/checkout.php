@@ -30,7 +30,7 @@
 
                         $postalzip = $_SESSION['userinfo']['postcode'];
                         $city = $_SESSION['userinfo']['city'];
-                        $adress = $_SESSION['userinfo']['street'];
+                        $adress = $_SESSION['userinfo']['street'] . ' ' . $_SESSION['userinfo']['housenumber'];
                     ?>
 
                     <ul>
