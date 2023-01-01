@@ -68,7 +68,7 @@
     </div>
 
     <div class="form__form-row form__form-row--50">
-        <label for="number">Telefoonnummer:*</label>
+        <label for="number">Telefoonnummer:</label>
         <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone">
     </div>
 
