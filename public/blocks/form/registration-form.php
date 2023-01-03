@@ -10,7 +10,7 @@
             $_SESSION['registration']['postcode'] = str_replace(' ', '', $_SESSION['registration']['postcode']);
             $newsLetter = array_key_exists('mail-list', $_SESSION['registration']) ? 1 : 0;
 
-            if(inputcheck('registration', true)):
+            if(inputcheck('registration', 'register')):
                 $_SESSION['registration']['postcode'] = filterPostalZip($_SESSION['registration']['postcode']);
 
                 //Create User in the database$addSpace
@@ -104,8 +104,8 @@
         if (isset($_SESSION['registration']['phone'])):
             $phone = $_SESSION['registration']['phone'];
         endif; ?>
-        <label for="number">Telefoonnummer:*</label>
-        <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone" required>
+        <label for="number">Telefoonnummer:</label>
+        <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone">
     </div>
 
     <div class="form__form-row form__form-row--50">
@@ -155,12 +155,9 @@
         <input class="input" placeholder="Stad" value="<?= $city ?>" type="text" id="city" name="city" required>
     </div>
     <div class="form__form ml-4 mr-4 pr-4">
-        <?php
-        $newsLetter = '';
-        if (isset($_SESSION['registration']['mailinglist'])):
-            $newsLetter = $_SESSION['registration']['mailinglist'];
-        endif; ?>
         <input class="lead form-check-input" name="mail-list" type="checkbox" value="yes" id="mail-check">
+        <script>
+        </script>
         <label class="form-check-label" for="mail-check">
             JA ik wil de nieuwste voordeel- en winacties, bergen inspiratie, maar ook verrassende aanbevelingen ontvangen!
         </label>

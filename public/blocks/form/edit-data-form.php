@@ -7,9 +7,9 @@
 
             $mailinglist = array_key_exists('mailinglist', $_SESSION['editAccount']) ? 1 : 0;
 
-            if(inputcheck('editAccount', false)):
+            if(inputcheck('editAccount', 'edit-data')):
                 $_SESSION['editAccount']['postcode'] = str_replace(' ', '', $_SESSION['editAccount']['postcode']);
-                if(inputcheck('editAccount', false)):
+                if(inputcheck('editAccount', 'edit-data')):
                     $_SESSION['editAccount']['postcode'] = filterPostalZip($_SESSION['editAccount']['postcode']);
                     //Edit User in the database
                     editUser(
@@ -69,7 +69,7 @@
 
     <div class="form__form-row form__form-row--50">
         <label for="number">Telefoonnummer:</label>
-        <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone">
+        <input class="input" placeholder="T elefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone">
     </div>
 
     <div class="form__form-row form__form-row--40">
@@ -92,7 +92,14 @@
         <input class="input" placeholder="Stad" value="<?= $city ?>" type="text" id="city" name="city" required>
     </div>
     <div class="form__form ml-4 mr-4 pr-4">
-        <input <?php if(array_key_exists('mailinglist', $_SESSION['editAccount'])) { print('checked'); }?> class="lead form-check-input" name="mailinglist" type="checkbox" value="<?= $newsletter ?>" id="mailinglist">
+<!--        --><?php //var_dump($_SESSION); ?>
+        <?php
+            $status = '';
+            if(isset($_SESSION['account']) && array_key_exists('mailinglist', $_SESSION['account']) && $_SESSION['account']['mailinglist'] == 1):
+                $status = 'checked';
+            endif;
+        ?>
+        <input <?= $status ?> class="lead form-check-input" name="mailinglist" type="checkbox" value="<?= $newsletter ?>" id="mailinglist">
         <label  class="form-check-label" for="mailinglist">
             JA ik wil de nieuwste voordeel- en winacties, bergen inspiratie, maar ook verrassende aanbevelingen ontvangen!
         </label>

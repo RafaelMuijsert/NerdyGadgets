@@ -33,15 +33,13 @@ function validate_email($email) {
     Validate User mobile phone input
 */
 function validate_phone_number($phone) {
-    if (empty($phone)) {
-        return false;
-    }
-
     // Remove any non-numeric characters from the phone number
     $phone = preg_replace("/[^0-9]/", "", $phone);
 
     // Check if the phone number is at least 10 digits long
-     if (strlen($phone) < 10) {
+    if (strlen($phone) == 0 ) {
+        return false;
+    } elseif (strlen($phone) < 10) {
         return true;
     }
 
@@ -55,8 +53,11 @@ function validate_phone_number($phone) {
 
 /*
     Filter Postal Zip code
-    Filter Postal Zip code
 */
 function filterPostalZip($postal) {
-    return strtoupper(trim($postal));
+    $firstFour = substr($postal, 0, 4);
+    $result = $firstFour . ' ';
+    $result .= substr($postal, 4);
+    $result = strtoupper($result);
+    return $result;
 }

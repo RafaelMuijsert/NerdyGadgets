@@ -92,7 +92,7 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
         loginUser($lgn, $pwd, $databaseConnection);
     } catch (mysqli_sql_exception $e) {
         error_log($e->getMessage());
-//        print $e;
+        print $e;
         print ("Er is iets fout gegaan! check alle gegevens opnieuw!");
 //        print("Ongeldig e-mailadres");
     }
@@ -114,24 +114,40 @@ function sqlInjection($value) {
 /*
     Check input fields for correct data
 */
-function inputcheck($sessionArray, $bool) {
+function inputcheck($sessionArray, $formName) {
 
-    if($bool) {
+    if($formName == 'register') {
         if (sqlInjection($_SESSION[$sessionArray]['password']) || isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
             print("Wachtwoord mag niet leeg zijn en moet langer dan 8 karakters lang zijn!");
             return false;
         }
-    } else {
+    } elseif ($formName == 'order') {
         if (isset($_SESSION[$sessionArray]['comment']) && strpos($_SESSION[$sessionArray]['comment'], "<") !== false) {
             print("Opmerking is niet correct ingevuld!");
             return false;
         }
+    } elseif ($formName == 'order' | $formName =='register') {
+        if (sqlInjection($_SESSION[$sessionArray]['email']) || isset($_SESSION[$sessionArray]['email']) && !filter_var($_SESSION[$sessionArray]['email'], FILTER_VALIDATE_EMAIL)) {
+            print("Emailadres is niet correct ingevuld!");
+            return false;
+        }
     }
+
+//    if($bool) {
+//        if (sqlInjection($_SESSION[$sessionArray]['password']) || isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
+//            print("Wachtwoord mag niet leeg zijn en moet langer dan 8 karakters lang zijn!");
+//            return false;
+//        }
+//    } else {
+//        if (isset($_SESSION[$sessionArray]['comment']) && strpos($_SESSION[$sessionArray]['comment'], "<") !== false) {
+//            print("Opmerking is niet correct ingevuld!");
+//            return false;
+//        }
+//    }
+
     $postcode = filterPostalZip($_SESSION[$sessionArray]['postcode']);
-    if (sqlInjection($_SESSION[$sessionArray]['email']) || isset($_SESSION[$sessionArray]['email']) && !filter_var($_SESSION[$sessionArray]['email'], FILTER_VALIDATE_EMAIL)) {
-        print("Emailadres is niet correct ingevuld!");
-        return false;
-    } elseif (sqlInjection($_SESSION[$sessionArray]['firstname']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['firstname'])) {
+
+    if (sqlInjection($_SESSION[$sessionArray]['firstname']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['firstname'])) {
         print("Voornaam is niet correct ingevuld!");
         return false;
     } elseif (sqlInjection($_SESSION[$sessionArray]['prefixName']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['prefixName'])) {
@@ -149,7 +165,7 @@ function inputcheck($sessionArray, $bool) {
     } elseif (sqlInjection($_SESSION[$sessionArray]['housenumber']) || !preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $_SESSION[$sessionArray]['housenumber'])) {
         print("Huisnummer is niet correct ingevuld!");
         return false;
-    } elseif(sqlInjection($postcode) || !preg_match("/^[1-9][0-9]{3}(?!SA|SD|SS)[a-zA-Z]{2}$/", $postcode)) {
+    } elseif(sqlInjection($postcode) || !preg_match("/^[1-9][0-9]{3} (?!SA|SD|SS)[a-zA-Z]{2}$/", $postcode)) {
         print("Postcode is niet correct ingevuld!");
         return false;
     } elseif (sqlInjection($_SESSION[$sessionArray]['city']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['city'])) {
@@ -282,7 +298,7 @@ function getOrderHistory($userID, $conn) {
                 FROM webshop_order AS O 
                 JOIN webshop_orderregel AS R ON O.OrderID=R.OrderID 
                 JOIN stockitems AS A ON A.StockItemID=R.ArtikelID
-                JOIN stockitemimages AS I ON I.StockItemID=A.StockItemID
+                LEFT JOIN stockitemimages AS I ON I.StockItemID=A.StockItemID
                 WHERE userID = '$userID'
                 GROUP BY O.OrderID, ArtikelID
                 ORDER BY datum DESC";
@@ -397,7 +413,7 @@ function deleteUser($userID, $databaseConnection) {
 }
 
 
-function addCustomer ($databaseConnection){
+function addCustomer($databaseConnection){
     $Query = "
             INSERT INTO webshop_klant (voornaam, tussenvoegsel, achternaam, geboortedatum, email, telefoonnummer)
             VALUES (?, ?, ?, ?, ?, ?)";
@@ -413,6 +429,7 @@ function addCustomer ($databaseConnection){
 }
 
 function addOrder ($customerID, $userID, $databaseConnection){
+    var_dump($_SESSION['userinfo']['postcode']);
     $Query = "
             INSERT INTO webshop_order (klantID, straat, postcode, stad, land, huisnummer, opmerkingen, userID)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -429,7 +446,7 @@ function addOrder ($customerID, $userID, $databaseConnection){
     return mysqli_stmt_execute($Statement);
 }
 
-function addOrderLine ($orderID, $databaseConnection){
+function addOrderLine($orderID, $databaseConnection) {
     foreach ($_SESSION['cart'] as $id => $quantity) {
         $total = 0;
         $factor = 1;

@@ -34,6 +34,7 @@ div.order-history__order:last-child {
     height: 240px;
     background-color: var(--sub-bg-color);
     border-radius: var(--border-radius-small);
+    overflow: hidden;
 }
 
 .order-history__order-img div {
