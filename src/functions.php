@@ -424,7 +424,6 @@ function addCustomer($databaseConnection){
 }
 
 function addOrder ($customerID, $userID, $databaseConnection){
-    var_dump($_SESSION['userinfo']['postcode']);
     $Query = "
             INSERT INTO webshop_order (klantID, straat, postcode, stad, land, huisnummer, opmerkingen, userID)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
