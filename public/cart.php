@@ -29,6 +29,7 @@
         $_SESSION[ 'total'] = 0;
         $_SESSION[ 'noDiscount'] = 0;
         $kortingscode = '';
+        $correctDiscount = true;
         if (isset($_POST['korting'])){
             unset($_POST['korting']);
             if (isset($_POST['kortingscode'])) {
@@ -36,8 +37,13 @@
                 unset($_POST['kortingscode']);
                 $_SESSION['korting'] = getDiscountCode($kortingscode, $databaseConnection);
                 $_SESSION['korting']['naam'] = $kortingscode;
+                if (!isset($_SESSION['korting'][0]['codenaam']) && $kortingscode != ''){
+                    $correctDiscount = false;
+                }
+
                 if ((!checkCodeDate($_SESSION['korting']['naam'], $databaseConnection)) || (!checkUses($_SESSION['korting']['naam'], $databaseConnection))){
                     unset($_SESSION['korting']);
+                    $correctDiscount = false;
                 }
             }
         }
@@ -198,6 +204,12 @@
                                         <input class="input" id="kortingscode" type="text" placeholder="kortingscode" name="kortingscode" value="<?= $value ?>">
                                         <input class="btn--primary" id="kortingscodeInput" type="submit" value="Bevestig" name="korting">
                                     </form>
+                                    <div class="text-warning">
+                                        <?php
+                                        if (!$correctDiscount) {
+                                            print("Ongeldige kortingscode! Probeer opnieuw.");
+                                        }
+                                        ?></div>
                                 </div>
                                 <hr>
                                 <div class="text-right">
