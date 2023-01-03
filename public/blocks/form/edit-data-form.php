@@ -4,29 +4,26 @@
         <?php if(isset($_POST) && isset($_POST['submitEditData'])):
             $_SESSION['editAccount'] = $_POST;
             $_SESSION['editAccount']['postcode'] = filterPostalzip($_SESSION['editAccount']['postcode']);
-
             $mailinglist = array_key_exists('mailinglist', $_SESSION['editAccount']) ? 1 : 0;
 
-            if(inputcheck('editAccount', false)):
-                $_SESSION['editAccount']['postcode'] = str_replace(' ', '', $_SESSION['editAccount']['postcode']);
-                if(inputcheck('editAccount', false)):
-                    $_SESSION['editAccount']['postcode'] = filterPostalZip($_SESSION['editAccount']['postcode']);
-                    //Edit User in the database
-                    editUser(
-                        $_SESSION['editAccount']['firstname'],
-                        $_SESSION['editAccount']['prefixName'],
-                        $_SESSION['editAccount']['surname'],
-                        $_SESSION['editAccount']['birthDate'],
-                        $_SESSION['editAccount']['phone'],
-                        $_SESSION['editAccount']['street'],
-                        $_SESSION['editAccount']['housenumber'],
-                        $_SESSION['editAccount']['postcode'],
-                        $_SESSION['editAccount']['city'],
-                        $_SESSION['account']['id'],
-                        $mailinglist,
-                        $databaseConnection
-                    );
-                endif;
+            if(inputcheck('editAccount', 'edit-data')):
+                //Edit User in the database
+                editUser(
+                    $_SESSION['editAccount']['firstname'],
+                    $_SESSION['editAccount']['prefixName'],
+                    $_SESSION['editAccount']['surname'],
+                    $_SESSION['editAccount']['birthDate'],
+                    $_SESSION['editAccount']['phone'],
+                    $_SESSION['editAccount']['street'],
+                    $_SESSION['editAccount']['housenumber'],
+                    $_SESSION['editAccount']['postcode'],
+                    $_SESSION['editAccount']['city'],
+                    $_SESSION['account']['id'],
+                    $mailinglist,
+                    $databaseConnection
+                );
+
+                loadUserData($_SESSION['account']['email'], $databaseConnection);
             endif;
         endif; ?>
     </span>
@@ -68,8 +65,8 @@
     </div>
 
     <div class="form__form-row form__form-row--50">
-        <label for="number">Telefoonnummer:*</label>
-        <input class="input" placeholder="Telefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone">
+        <label for="number">Telefoonnummer:</label>
+        <input class="input" placeholder="T elefoonnummer" value="<?= $phone ?>" type="tel" id="phone" name="phone">
     </div>
 
     <div class="form__form-row form__form-row--40">
@@ -92,7 +89,14 @@
         <input class="input" placeholder="Stad" value="<?= $city ?>" type="text" id="city" name="city" required>
     </div>
     <div class="form__form ml-4 mr-4 pr-4">
-        <input <?php if(array_key_exists('mailinglist', $_SESSION['editAccount'])) { print('checked'); }?> class="lead form-check-input" name="mailinglist" type="checkbox" value="<?= $newsletter ?>" id="mailinglist">
+<!--        --><?php //var_dump($_SESSION); ?>
+        <?php
+            $status = '';
+            if(isset($_SESSION['account']) && array_key_exists('mailinglist', $_SESSION['account']) && $_SESSION['account']['mailinglist'] == 1):
+                $status = 'checked';
+            endif;
+        ?>
+        <input <?= $status ?> class="lead form-check-input" name="mailinglist" type="checkbox" value="<?= $newsletter ?>" id="mailinglist">
         <label  class="form-check-label" for="mailinglist">
             JA ik wil de nieuwste voordeel- en winacties, bergen inspiratie, maar ook verrassende aanbevelingen ontvangen!
         </label>

@@ -35,7 +35,7 @@
                                         <?php if (isset($stockItemImage)): ?>
 
                                             <?php if(count($stockItemImage) == 0): ?>
-                                                <div class="product__img" id="ImageFrame" style="background-image: url('img/stock-group/<?= $stockItem['BackupImagePath']; ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
+                                                <div class="product__img product__img--full" id="ImageFrame" style="background-image: url('img/stock-group/<?= $stockItem['BackupImagePath']; ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
                                             <?php elseif (count($stockItemImage) == 1): ?>
                                                 <div class="product__img" id="ImageFrame" style="background-image: url('img/stock-item/<?= $stockItemImage[0]['ImagePath']; ?>'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
                                             <?php elseif (count($stockItemImage) >= 2): ?>

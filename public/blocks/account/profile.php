@@ -28,6 +28,10 @@
                     <?php elseif (isset($latestOrder['BackupImagePath'])): ?>
                         <div class="ImgFrame"
                              style="background-image: url('<?= "/img/stock-group/" . $latestOrder['BackupImagePath'] ?>'); background-size: cover;"></div>
+                    <?php elseif(isset($latestOrder['IsChillerStock']) && $latestOrder['IsChillerStock'] == 1): ?>
+                        <div class="product__img product__img--full" id="ImageFrame" style="background-image: url('img/stock-group/Chocolate.jpg'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
+                    <?php else: ?>
+                        <div class="product__img product__img--full" id="ImageFrame" style="background-image: url('img/stock-group/Toys.jpg'); background-size: 300px; background-repeat: no-repeat; background-position: center;"></div>
                     <?php endif; ?>
                 </a>
                 <div class="order-history__order-description">

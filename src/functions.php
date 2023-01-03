@@ -92,8 +92,8 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
         loginUser($lgn, $pwd, $databaseConnection);
     } catch (mysqli_sql_exception $e) {
         error_log($e->getMessage());
-        print $e;
-        print("Ongeldig e-mailadres");
+//        print $e;
+        print ("Er is iets fout gegaan! Check alle gegevens opnieuw!");
     }
 
 }
@@ -113,24 +113,28 @@ function sqlInjection($value) {
 /*
     Check input fields for correct data
 */
-function inputcheck($sessionArray, $bool) {
+function inputcheck($sessionArray, $formName) {
 
-    if($bool) {
+    if($formName == 'register') {
         if (sqlInjection($_SESSION[$sessionArray]['password']) || isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
             print("Wachtwoord mag niet leeg zijn en moet langer dan 8 karakters lang zijn!");
             return false;
         }
-    } else {
+    } elseif ($formName == 'order') {
         if (isset($_SESSION[$sessionArray]['comment']) && strpos($_SESSION[$sessionArray]['comment'], "<") !== false) {
             print("Opmerking is niet correct ingevuld!");
             return false;
         }
+    } elseif ($formName == 'order' | $formName =='register') {
+        if (sqlInjection($_SESSION[$sessionArray]['email']) || isset($_SESSION[$sessionArray]['email']) && !filter_var($_SESSION[$sessionArray]['email'], FILTER_VALIDATE_EMAIL)) {
+            print("Emailadres is niet correct ingevuld!");
+            return false;
+        }
     }
 
-    if (sqlInjection($_SESSION[$sessionArray]['email']) || isset($_SESSION[$sessionArray]['email']) && !filter_var($_SESSION[$sessionArray]['email'], FILTER_VALIDATE_EMAIL)) {
-        print("Emailadres is niet correct ingevuld!");
-        return false;
-    } elseif (sqlInjection($_SESSION[$sessionArray]['firstname']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['firstname'])) {
+    $postcode = filterPostalZip($_SESSION[$sessionArray]['postcode']);
+
+    if (sqlInjection($_SESSION[$sessionArray]['firstname']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['firstname'])) {
         print("Voornaam is niet correct ingevuld!");
         return false;
     } elseif (sqlInjection($_SESSION[$sessionArray]['prefixName']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['prefixName'])) {
@@ -148,10 +152,12 @@ function inputcheck($sessionArray, $bool) {
     } elseif (sqlInjection($_SESSION[$sessionArray]['housenumber']) || !preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $_SESSION[$sessionArray]['housenumber'])) {
         print("Huisnummer is niet correct ingevuld!");
         return false;
-    } elseif(sqlInjection($_SESSION[$sessionArray]['postcode']) || !preg_match("/^[1-9][0-9]{3}(?!SA|SD|SS)[a-zA-Z]{2}$/", $_SESSION[$sessionArray]['postcode'])) {
+    }
+    elseif(sqlInjection($postcode) || !preg_match("/^[1-9][0-9]{3} (?!SA|SD|SS)[a-zA-Z]{2}$/", $postcode)) {
         print("Postcode is niet correct ingevuld!");
         return false;
-    } elseif (sqlInjection($_SESSION[$sessionArray]['city']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['city'])) {
+    }
+    elseif (sqlInjection($_SESSION[$sessionArray]['city']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['city'])) {
         print("Stad is niet correct ingevuld!");
         return false;
     }
@@ -163,6 +169,12 @@ function inputcheck($sessionArray, $bool) {
     if(empty($_SESSION[$sessionArray]['phone'])) {
         $_SESSION[$sessionArray]['phone'] = NULL;
     }
+
+    if(!isset($_SESSION[$sessionArray]['mailinglist']) || empty($_SESSION[$sessionArray]['mailinglist'])) {
+        $_SESSION[$sessionArray]['mailinglist'] = 0;
+    }
+
+//    var_dump($_SESSION[$sessionArray]);
 
     return true;
 }
@@ -209,7 +221,7 @@ function reduceUses($kortingscode, $databaseConnection){
             WHERE codenaam = ?";
     $Statement = mysqli_prepare($databaseConnection, $Querry);
     mysqli_stmt_bind_param($Statement, 's', $kortingscode);
-    mysqli_stmt_execute($Statement);
+    return mysqli_stmt_execute($Statement);
 }
 function discountCodes($databaseConnection){
     $Querry = "
@@ -281,7 +293,7 @@ function getOrderHistory($userID, $conn) {
                 FROM webshop_order AS O 
                 JOIN webshop_orderregel AS R ON O.OrderID=R.OrderID 
                 JOIN stockitems AS A ON A.StockItemID=R.ArtikelID
-                JOIN stockitemimages AS I ON I.StockItemID=A.StockItemID
+                LEFT JOIN stockitemimages AS I ON I.StockItemID=A.StockItemID
                 WHERE userID = '$userID'
                 GROUP BY O.OrderID, ArtikelID
                 ORDER BY datum DESC";
@@ -396,7 +408,7 @@ function deleteUser($userID, $databaseConnection) {
 }
 
 
-function addCustomer ($databaseConnection){
+function addCustomer($databaseConnection){
     $Query = "
             INSERT INTO webshop_klant (voornaam, tussenvoegsel, achternaam, geboortedatum, email, telefoonnummer)
             VALUES (?, ?, ?, ?, ?, ?)";
@@ -408,10 +420,7 @@ function addCustomer ($databaseConnection){
         $_SESSION['userinfo']['birthDate'],
         $_SESSION['userinfo']['email'],
         $_SESSION['userinfo']['phone']);
-    if (!mysqli_stmt_execute($Statement)){
-        return false;
-    }
-    else return true;
+    return mysqli_stmt_execute($Statement);
 }
 
 function addOrder ($customerID, $userID, $databaseConnection){
@@ -428,13 +437,10 @@ function addOrder ($customerID, $userID, $databaseConnection){
         $_SESSION['userinfo']['housenumber'],
         $_SESSION['userinfo']['comment'],
         $userID);
-    if (!mysqli_stmt_execute($Statement)){
-        return false;
-    }
-    else return true;
+    return mysqli_stmt_execute($Statement);
 }
 
-function addOrderLine ($orderID, $databaseConnection){
+function addOrderLine($orderID, $databaseConnection) {
     foreach ($_SESSION['cart'] as $id => $quantity) {
         $total = 0;
         $factor = 1;
@@ -451,7 +457,7 @@ function addOrderLine ($orderID, $databaseConnection){
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param($Statement, "ssidd", $orderID, $id, $quantity, $total, $procent);
         if (!mysqli_stmt_execute($Statement)) {
-            return false;
+            return mysqli_stmt_execute($Statement);
         }
     }
     return true;
@@ -465,11 +471,8 @@ function itemStockUpdate ($databaseConnection){
                 WHERE StockItemID = ?";
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param($Statement, "ii", $quantity, $id);
-        if (!mysqli_stmt_execute($Statement)) {
-            return false;
-        }
+        return mysqli_stmt_execute($Statement);
     }
-    return true;
 }
 
 function processOrder ($userID ,$databaseConnection){
@@ -506,6 +509,16 @@ function processOrder ($userID ,$databaseConnection){
         mysqli_rollback($databaseConnection);
         return;
     }
+
+    // Hier wordt de kortingscode behandeld
+    if (isset($_SESSION['korting'][0]['uses']) && $_SESSION['korting'][0]['uses'] > 0){
+        if (!reduceUses($_SESSION['korting']['naam'], $databaseConnection)){
+            mysqli_rollback($databaseConnection);
+            return;
+        }
+    }
+    unset($_SESSION['korting']);
+
     mysqli_commit($databaseConnection);
 
     // ------------------- Enable voor testen -------------------

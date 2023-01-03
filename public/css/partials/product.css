@@ -2,6 +2,10 @@
     /* */
 }
 
+.product__img--full {
+    background-size: cover !important;
+}
+
 .product__header {
     margin-bottom: 40px;
     display: grid;

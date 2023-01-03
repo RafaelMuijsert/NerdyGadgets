@@ -5,7 +5,7 @@
         if(isset($_POST['orderSubmit'])):
             $_SESSION['userinfo'] = $_POST;
             $_SESSION['userinfo']['postcode'] = str_replace(' ', '', $_SESSION['userinfo']['postcode']);
-            if(inputcheck('userinfo', false)):
+            if(inputcheck('userinfo', 'order')):
                 $_SESSION['userinfo']['postcode'] = filterPostalZip($_SESSION['userinfo']['postcode']);
                 echo "<script>window.location.replace('./checkout.php')</script>";
             endif;

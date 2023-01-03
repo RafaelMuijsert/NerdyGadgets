@@ -140,10 +140,6 @@
                         processOrder($userID, $databaseConnection);
                         $_SESSION['userinfo'] = '';
                         $_SESSION['cart'] = [];
-                        if (isset($_SESSION['korting'][0]['uses']) && $_SESSION['korting'][0]['uses'] > 0){
-                            reduceUses($_SESSION['korting']['naam'], $databaseConnection);
-                        }
-                        unset($_SESSION['korting']);
                         ?>
 
                         <script>
