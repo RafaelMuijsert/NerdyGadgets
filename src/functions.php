@@ -457,8 +457,11 @@ function addOrderLine($orderID, $databaseConnection) {
                 VALUES (?, ?, ?, ?, ?)";
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param($Statement, "ssidd", $orderID, $id, $quantity, $total, $procent);
-        return mysqli_stmt_execute($Statement);
+        if (!mysqli_stmt_execute($Statement)) {
+            return mysqli_stmt_execute($Statement);
+        }
     }
+    return true;
 }
 
 function itemStockUpdate ($databaseConnection){
