@@ -92,9 +92,8 @@ function createUser($email, $password, $firstname, $prefixName, $surname, $birth
         loginUser($lgn, $pwd, $databaseConnection);
     } catch (mysqli_sql_exception $e) {
         error_log($e->getMessage());
-        print $e;
-        print ("Er is iets fout gegaan! check alle gegevens opnieuw!");
-//        print("Ongeldig e-mailadres");
+//        print $e;
+        print ("Er is iets fout gegaan! Check alle gegevens opnieuw!");
     }
 
 }
@@ -133,18 +132,6 @@ function inputcheck($sessionArray, $formName) {
         }
     }
 
-//    if($bool) {
-//        if (sqlInjection($_SESSION[$sessionArray]['password']) || isset($_SESSION[$sessionArray]['password']) && strlen($_SESSION[$sessionArray]['password']) < 8) {
-//            print("Wachtwoord mag niet leeg zijn en moet langer dan 8 karakters lang zijn!");
-//            return false;
-//        }
-//    } else {
-//        if (isset($_SESSION[$sessionArray]['comment']) && strpos($_SESSION[$sessionArray]['comment'], "<") !== false) {
-//            print("Opmerking is niet correct ingevuld!");
-//            return false;
-//        }
-//    }
-
     $postcode = filterPostalZip($_SESSION[$sessionArray]['postcode']);
 
     if (sqlInjection($_SESSION[$sessionArray]['firstname']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['firstname'])) {
@@ -165,10 +152,12 @@ function inputcheck($sessionArray, $formName) {
     } elseif (sqlInjection($_SESSION[$sessionArray]['housenumber']) || !preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $_SESSION[$sessionArray]['housenumber'])) {
         print("Huisnummer is niet correct ingevuld!");
         return false;
-    } elseif(sqlInjection($postcode) || !preg_match("/^[1-9][0-9]{3} (?!SA|SD|SS)[a-zA-Z]{2}$/", $postcode)) {
+    }
+    elseif(sqlInjection($postcode) || !preg_match("/^[1-9][0-9]{3} (?!SA|SD|SS)[a-zA-Z]{2}$/", $postcode)) {
         print("Postcode is niet correct ingevuld!");
         return false;
-    } elseif (sqlInjection($_SESSION[$sessionArray]['city']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['city'])) {
+    }
+    elseif (sqlInjection($_SESSION[$sessionArray]['city']) || preg_match('/[0-9\/\\<>]/', $_SESSION[$sessionArray]['city'])) {
         print("Stad is niet correct ingevuld!");
         return false;
     }
@@ -180,6 +169,12 @@ function inputcheck($sessionArray, $formName) {
     if(empty($_SESSION[$sessionArray]['phone'])) {
         $_SESSION[$sessionArray]['phone'] = NULL;
     }
+
+    if(!isset($_SESSION[$sessionArray]['mailinglist']) || empty($_SESSION[$sessionArray]['mailinglist'])) {
+        $_SESSION[$sessionArray]['mailinglist'] = 0;
+    }
+
+//    var_dump($_SESSION[$sessionArray]);
 
     return true;
 }

@@ -55,6 +55,7 @@ function validate_phone_number($phone) {
     Filter Postal Zip code
 */
 function filterPostalZip($postal) {
+    $postal = str_replace(' ', '', $postal);
     $firstFour = substr($postal, 0, 4);
     $result = $firstFour . ' ';
     $result .= substr($postal, 4);

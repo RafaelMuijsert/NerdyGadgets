@@ -4,29 +4,26 @@
         <?php if(isset($_POST) && isset($_POST['submitEditData'])):
             $_SESSION['editAccount'] = $_POST;
             $_SESSION['editAccount']['postcode'] = filterPostalzip($_SESSION['editAccount']['postcode']);
-
             $mailinglist = array_key_exists('mailinglist', $_SESSION['editAccount']) ? 1 : 0;
 
             if(inputcheck('editAccount', 'edit-data')):
-                $_SESSION['editAccount']['postcode'] = str_replace(' ', '', $_SESSION['editAccount']['postcode']);
-                if(inputcheck('editAccount', 'edit-data')):
-                    $_SESSION['editAccount']['postcode'] = filterPostalZip($_SESSION['editAccount']['postcode']);
-                    //Edit User in the database
-                    editUser(
-                        $_SESSION['editAccount']['firstname'],
-                        $_SESSION['editAccount']['prefixName'],
-                        $_SESSION['editAccount']['surname'],
-                        $_SESSION['editAccount']['birthDate'],
-                        $_SESSION['editAccount']['phone'],
-                        $_SESSION['editAccount']['street'],
-                        $_SESSION['editAccount']['housenumber'],
-                        $_SESSION['editAccount']['postcode'],
-                        $_SESSION['editAccount']['city'],
-                        $_SESSION['account']['id'],
-                        $mailinglist,
-                        $databaseConnection
-                    );
-                endif;
+                //Edit User in the database
+                editUser(
+                    $_SESSION['editAccount']['firstname'],
+                    $_SESSION['editAccount']['prefixName'],
+                    $_SESSION['editAccount']['surname'],
+                    $_SESSION['editAccount']['birthDate'],
+                    $_SESSION['editAccount']['phone'],
+                    $_SESSION['editAccount']['street'],
+                    $_SESSION['editAccount']['housenumber'],
+                    $_SESSION['editAccount']['postcode'],
+                    $_SESSION['editAccount']['city'],
+                    $_SESSION['account']['id'],
+                    $mailinglist,
+                    $databaseConnection
+                );
+
+                loadUserData($_SESSION['account']['email'], $databaseConnection);
             endif;
         endif; ?>
     </span>
