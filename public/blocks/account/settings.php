@@ -123,7 +123,7 @@ if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'
                     <div class="col-2 discount--table--cell"><?php if ($kortingscode['geldigtot'] == ''){
                         print ("-");
                         }
-                        else print ($kortingscode['geldigtot'])?></div>
+                        else print (date("d-m-Y", strtotime($kortingscode['geldigtot'])))?></div>
                     <div class="col-2 discount--table--cell"><?php if ($kortingscode['uses'] == ''){
                             print ("-");
                         }

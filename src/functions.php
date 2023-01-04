@@ -44,9 +44,9 @@ function getTotalPrice() {
 }
 function getDiscountCode($kortingscode, $databaseConnection){
     $Querry =  "
-            SELECT procent, geldigtot, uses
+            SELECT  codenaam, procent, geldigtot, uses 
             FROM webshop_kortingscodes
-            WHERE codenaam = ?";
+            WHERE codenaam = BINARY ?";
     $Statement = mysqli_prepare($databaseConnection, $Querry);
     mysqli_stmt_bind_param($Statement, "s", $kortingscode);
     mysqli_stmt_execute($Statement);
