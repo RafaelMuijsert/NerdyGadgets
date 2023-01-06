@@ -357,7 +357,7 @@ function loginUser($username, $password, $conn) {
         $data =  mysqli_fetch_all($result, MYSQLI_ASSOC);
 
         // Compare stored password with given password
-        if(isset($data[0]) && password_verify($password, $data[0]['password'])) {\
+        if(isset($data[0]) && password_verify($password, $data[0]['password'])) {
 
             // Load all unnecessary data & change loggedIn status to true
             loadUserData($username, $conn);
