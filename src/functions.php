@@ -178,8 +178,6 @@ function inputcheck($sessionArray, $formName) {
         $_SESSION[$sessionArray]['mailinglist'] = 0;
     }
 
-//    var_dump($_SESSION[$sessionArray]);
-
     return true;
 }
 
@@ -432,7 +430,8 @@ function addCustomer($databaseConnection){
         $_SESSION['userinfo']['birthDate'],
         $_SESSION['userinfo']['email'],
         $_SESSION['userinfo']['phone']);
-    return mysqli_stmt_execute($Statement);
+    return false;
+//    return mysqli_stmt_execute($Statement);
 }
 
 function addOrder ($customerID, $userID, $databaseConnection){
@@ -487,7 +486,7 @@ function itemStockUpdate ($databaseConnection){
     }
 }
 
-function processOrder ($userID ,$databaseConnection){
+function processOrder ($userID ,$databaseConnection) {
     //------------------- Indien gedoe, uncomment hier onder en onderaan de functie voor testen -------------------
 //    $Query = "SET foreign_key_checks = 0";
 //    $stmt = mysqli_prepare($databaseConnection, $Query);
@@ -498,7 +497,7 @@ function processOrder ($userID ,$databaseConnection){
     // Hier onder wordt eerst de klant aangemaakt
     if (!addCustomer($databaseConnection)){
         mysqli_rollback($databaseConnection);
-        return;
+        return false;
     }
 
     $customerID = findCustomer($databaseConnection);
@@ -506,32 +505,34 @@ function processOrder ($userID ,$databaseConnection){
     // Hier wordt vervolgens de Order aangemaakt
     if (!addOrder($customerID, $userID, $databaseConnection)) {
         mysqli_rollback($databaseConnection);
-        return;
+        return false;
     }
 
     $orderID = findOrder($databaseConnection);
     // Hier worden de orderregels aangemaakt
     if (!addOrderLine($orderID, $databaseConnection)) {
         mysqli_rollback($databaseConnection);
-        return;
+        return false;
     }
 
     // Hier worden de opslag aangepast
     if (!itemStockUpdate($databaseConnection)) {
         mysqli_rollback($databaseConnection);
-        return;
+        return false;
     }
 
     // Hier wordt de kortingscode behandeld
     if (isset($_SESSION['korting'][0]['uses']) && $_SESSION['korting'][0]['uses'] > 0){
         if (!reduceUses($_SESSION['korting']['naam'], $databaseConnection)){
             mysqli_rollback($databaseConnection);
-            return;
+            return false;
         }
     }
     unset($_SESSION['korting']);
 
     mysqli_commit($databaseConnection);
+
+    return true;
 
     // ------------------- Enable voor testen -------------------
 //    $Query = "SET foreign_key_checks = 1";
