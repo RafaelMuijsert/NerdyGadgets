@@ -430,8 +430,7 @@ function addCustomer($databaseConnection){
         $_SESSION['userinfo']['birthDate'],
         $_SESSION['userinfo']['email'],
         $_SESSION['userinfo']['phone']);
-    return false;
-//    return mysqli_stmt_execute($Statement);
+    return mysqli_stmt_execute($Statement);
 }
 
 function addOrder ($customerID, $userID, $databaseConnection){
