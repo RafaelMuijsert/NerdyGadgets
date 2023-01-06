@@ -74,26 +74,30 @@ function checkCodeDate($kortingscode, $databaseConnection) {
     }
 }
 
+/*
+ *  Create user (registration page)
+ * */
 function createUser($email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $databaseConnection, $lgn, $pwd, $newsletter) {
-
     try {
-        $Query = "
-                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglist)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Setup the query and create a user
+        $Query = "INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglist)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param(
             $Statement,
             "sssssssssssss",
             $userID,
-            $email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode, $newsletter
-        );
+            $email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode, $newsletter);
         mysqli_stmt_execute($Statement);
 
+        // When user has been created, login the created user
         loginUser($lgn, $pwd, $databaseConnection);
     } catch (mysqli_sql_exception $e) {
+
+        // Error log and give user error message
         error_log($e->getMessage());
-//        print $e;
         print ("Er is iets fout gegaan! Check alle gegevens opnieuw!");
+
     }
 
 }
@@ -343,35 +347,43 @@ function loadUserData($username, $conn) {
     Login user and redirect to profile page
 */
 function loginUser($username, $password, $conn) {
-
-    // SQL injection proof
-    $usernameCheck = str_contains($username, '"') || str_contains($username, "'");
-    $pwdCheck = str_contains($password, '"') || str_contains($password, "'");
-
-    if (!$usernameCheck && !$pwdCheck) {
-
-        // Setup Query
-        $Query = "SELECT password FROM webshop_user WHERE email = '$username'";
-        $statement = mysqli_prepare($conn, $Query);
+    try {
+        // Retrieve password from corresponding username
+        $query =  "SELECT password FROM webshop_user WHERE email = ?";
+        $statement = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($statement, "s", $username);
         mysqli_stmt_execute($statement);
         $result = mysqli_stmt_get_result($statement);
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $data =  mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        if(password_verify($password, $data[0]['password'])) {
+        // Compare stored password with given password
+        if(isset($data[0]) && password_verify($password, $data[0]['password'])) {\
+
+            // Load all unnecessary data & change loggedIn status to true
             loadUserData($username, $conn);
             $_SESSION['isLoggedIn'] = true;
+
+            // Remove unnecessary data in Session
             unset($_SESSION['login']);
             unset($_SESSION['registration']);
+
+            // Redirect user to account page
             echo "<script>window.location.replace('./account.php')</script>";
             return 1;
+
         } else {
+            // Return error message
             echo "<a style='color: red'><p>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</p></p></a>";
             return 0;
-        }
-    }
 
-    echo "<a style='color: red'><p>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</p></p></a>";
-    return 0;
+        }
+    } catch (mysqli_sql_exception $e) {
+
+        // Return error message
+        echo "<a style='color: red'><p>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</p></p></a>";
+        return 0;
+
+    }
 }
 
 function editUser($firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $userID, $mailinglist, $conn) {
