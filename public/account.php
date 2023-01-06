@@ -17,14 +17,17 @@
 <?php
     session_start();
 
-    if($_SESSION['isLoggedIn'] === false):
-        echo "<script>window.location.replace('./login.php')</script>";
-    endif;
-
     include "../src/functions.php";
     include "../src/form-functions.php";
     include "header.php";
-    include "./blocks/account.php";
+
+    if($_SESSION['isLoggedIn'] === false):
+        echo "<script>window.location.replace('./login.php')</script>";
+        include "./blocks/404.php";
+    else:
+        include "./blocks/account.php";
+    endif;
+
     include "footer.php";
 ?>
 
