@@ -74,26 +74,30 @@ function checkCodeDate($kortingscode, $databaseConnection) {
     }
 }
 
+/*
+ *  Create user (registration page)
+ * */
 function createUser($email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $databaseConnection, $lgn, $pwd, $newsletter) {
-
     try {
-        $Query = "
-                    INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglist)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        // Setup the query and create a user
+        $Query = "INSERT INTO webshop_user (id, email, password, voornaam, tussenvoegsel, achternaam, geboortedatum, telefoonnummer, stad, straat, huisnummer, postcode, mailinglist)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $Statement = mysqli_prepare($databaseConnection, $Query);
         mysqli_stmt_bind_param(
             $Statement,
             "sssssssssssss",
             $userID,
-            $email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode, $newsletter
-        );
+            $email, $password, $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode, $newsletter);
         mysqli_stmt_execute($Statement);
 
+        // When user has been created, login the created user
         loginUser($lgn, $pwd, $databaseConnection);
     } catch (mysqli_sql_exception $e) {
+
+        // Error log and give user error message
         error_log($e->getMessage());
-//        print $e;
         print ("Er is iets fout gegaan! Check alle gegevens opnieuw!");
+
     }
 
 }
@@ -173,8 +177,6 @@ function inputcheck($sessionArray, $formName) {
     if(!isset($_SESSION[$sessionArray]['mailinglist']) || empty($_SESSION[$sessionArray]['mailinglist'])) {
         $_SESSION[$sessionArray]['mailinglist'] = 0;
     }
-
-//    var_dump($_SESSION[$sessionArray]);
 
     return true;
 }
@@ -343,35 +345,43 @@ function loadUserData($username, $conn) {
     Login user and redirect to profile page
 */
 function loginUser($username, $password, $conn) {
-
-    // SQL injection proof
-    $usernameCheck = str_contains($username, '"') || str_contains($username, "'");
-    $pwdCheck = str_contains($password, '"') || str_contains($password, "'");
-
-    if (!$usernameCheck && !$pwdCheck) {
-
-        // Setup Query
-        $Query = "SELECT password FROM webshop_user WHERE email = '$username'";
-        $statement = mysqli_prepare($conn, $Query);
+    try {
+        // Retrieve password from corresponding username
+        $query =  "SELECT password FROM webshop_user WHERE email = ?";
+        $statement = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($statement, "s", $username);
         mysqli_stmt_execute($statement);
         $result = mysqli_stmt_get_result($statement);
-        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $data =  mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        if(password_verify($password, $data[0]['password'])) {
+        // Compare stored password with given password
+        if(isset($data[0]) && password_verify($password, $data[0]['password'])) {
+
+            // Load all unnecessary data & change loggedIn status to true
             loadUserData($username, $conn);
             $_SESSION['isLoggedIn'] = true;
+
+            // Remove unnecessary data in Session
             unset($_SESSION['login']);
             unset($_SESSION['registration']);
+
+            // Redirect user to account page
             echo "<script>window.location.replace('./account.php')</script>";
             return 1;
+
         } else {
+            // Return error message
             echo "<a style='color: red'><p>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</p></p></a>";
             return 0;
-        }
-    }
 
-    echo "<a style='color: red'><p>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</p></p></a>";
-    return 0;
+        }
+    } catch (mysqli_sql_exception $e) {
+
+        // Return error message
+        echo "<a style='color: red'><p>Gebruikersnaam of wachtwoord is incorrect, probeer het nog een keer.</p></p></a>";
+        return 0;
+
+    }
 }
 
 function editUser($firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $userID, $mailinglist, $conn) {
@@ -475,7 +485,7 @@ function itemStockUpdate ($databaseConnection){
     }
 }
 
-function processOrder ($userID ,$databaseConnection){
+function processOrder ($userID ,$databaseConnection) {
     //------------------- Indien gedoe, uncomment hier onder en onderaan de functie voor testen -------------------
 //    $Query = "SET foreign_key_checks = 0";
 //    $stmt = mysqli_prepare($databaseConnection, $Query);
@@ -486,7 +496,7 @@ function processOrder ($userID ,$databaseConnection){
     // Hier onder wordt eerst de klant aangemaakt
     if (!addCustomer($databaseConnection)){
         mysqli_rollback($databaseConnection);
-        return;
+        return false;
     }
 
     $customerID = findCustomer($databaseConnection);
@@ -494,32 +504,34 @@ function processOrder ($userID ,$databaseConnection){
     // Hier wordt vervolgens de Order aangemaakt
     if (!addOrder($customerID, $userID, $databaseConnection)) {
         mysqli_rollback($databaseConnection);
-        return;
+        return false;
     }
 
     $orderID = findOrder($databaseConnection);
     // Hier worden de orderregels aangemaakt
     if (!addOrderLine($orderID, $databaseConnection)) {
         mysqli_rollback($databaseConnection);
-        return;
+        return false;
     }
 
     // Hier worden de opslag aangepast
     if (!itemStockUpdate($databaseConnection)) {
         mysqli_rollback($databaseConnection);
-        return;
+        return false;
     }
 
     // Hier wordt de kortingscode behandeld
     if (isset($_SESSION['korting'][0]['uses']) && $_SESSION['korting'][0]['uses'] > 0){
         if (!reduceUses($_SESSION['korting']['naam'], $databaseConnection)){
             mysqli_rollback($databaseConnection);
-            return;
+            return false;
         }
     }
     unset($_SESSION['korting']);
 
     mysqli_commit($databaseConnection);
+
+    return true;
 
     // ------------------- Enable voor testen -------------------
 //    $Query = "SET foreign_key_checks = 1";

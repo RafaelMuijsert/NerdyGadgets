@@ -137,14 +137,15 @@
                         if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
                             $userID = $_SESSION['account']['id'];
                         endif;
-                        processOrder($userID, $databaseConnection);
-                        $_SESSION['userinfo'] = '';
-                        $_SESSION['cart'] = [];
-                        ?>
+                        $bool = processOrder($userID, $databaseConnection);
 
-                        <script>
-                            window.location.replace('https://www.ideal.nl/demo/qr/?app=ideal');
-                        </script>
+                        if($bool):
+                            $_SESSION['userinfo'] = '';
+                            $_SESSION['cart'] = []; ?>
+                            <script>
+                                window.location.replace('https://www.ideal.nl/demo/qr/?app=ideal');
+                            </script>
+                        <?php endif; ?>
                     <?php endif; ?>
                 </div>
             </div>

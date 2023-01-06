@@ -29,13 +29,8 @@ function connectToDatabase() {
 
 function getHeaderStockGroups($databaseConnection) {
     $Query = "
-                SELECT StockGroupID, StockGroupName, ImagePath
-                FROM stockgroups 
-                WHERE StockGroupID IN (
-                                        SELECT StockGroupID 
-                                        FROM stockitemstockgroups
-                                        ) AND ImagePath IS NOT NULL
-                ORDER BY StockGroupID ASC";
+                SELECT *
+                FROM stock_groups";
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_execute($Statement);
     $HeaderStockGroups = mysqli_stmt_get_result($Statement);
