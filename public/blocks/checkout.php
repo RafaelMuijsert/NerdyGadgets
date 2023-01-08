@@ -137,7 +137,7 @@
                         if(isset($_SESSION['isLoggedIn']) && $_SESSION['isLoggedIn']):
                             $userID = $_SESSION['account']['id'];
                         endif;
-                        $bool = processOrder($userID, $databaseConnection);
+                        $bool = processOrder($userID, $databaseConnectionWriteAccess);
 
                         if($bool):
                             $_SESSION['userinfo'] = '';

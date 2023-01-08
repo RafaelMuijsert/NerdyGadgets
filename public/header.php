@@ -2,12 +2,13 @@
     setlocale(LC_TIME, 'nl_NL');
 
     include "../src/database.php";
-    $databaseConnection = connectToDatabase();
+    $databaseConnection = connectToDatabase(false);
+    $databaseConnectionWriteAccess = connectToDatabase(true);
     $submitted = false;
     if(!isset($_SESSION['cart'])) {
         $_SESSION['cart'] = [];
     }
-    $cartUpdate = updateShoppingCart($databaseConnection);
+    $cartUpdate = updateShoppingCart($databaseConnectionWriteAccess);
     $itemsInCart = count($_SESSION['cart']);
     $itemsInCart = ($itemsInCart == 0) ? '' : "+$itemsInCart";
 ?>

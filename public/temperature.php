@@ -1,6 +1,6 @@
 <?php
 require "../src/database.php";
 
-$connection = connectToDatabase();
+$connection = connectToDatabase(false);
 $temperature = getColdroomTemperature($connection);
 echo $temperature;
