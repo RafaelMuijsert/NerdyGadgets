@@ -1,14 +1,18 @@
 <?php
 require __DIR__ . '/environment.php';
 require __DIR__ . '/../vendor/autoload.php';
-function connectToDatabase() {
+function connectToDatabase($writeAccess) {
     $connection = null;
+
+    $databaseUser = ($writeAccess) ? getEnvironmentVariable('DB_USER_WRITE') : getEnvironmentVariable('DB_USER');
+    $databasePassword = ($writeAccess) ? getEnvironmentVariable('DB_PASSWORD_WRITE') : getEnvironmentVariable('DB_PASSWORD');
+
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT); // Set MySQLi to throw exceptions
     try {
         $connection = mysqli_connect(
             getEnvironmentVariable('DB_HOST'),
-            getEnvironmentVariable('DB_USER'),
-            getEnvironmentVariable('DB_PASSWORD'),
+            $databaseUser,
+            $databasePassword,
             getEnvironmentVariable('DB_NAME'),
             getEnvironmentVariable('DB_PORT')
         );
@@ -23,6 +27,7 @@ function connectToDatabase() {
         ?><h2>Kon geen verbinding maken met de database.</h2><?php
         die();
     }
+
     $GLOBALS['databaseConnection'] = $connection;
     return $connection;
 }

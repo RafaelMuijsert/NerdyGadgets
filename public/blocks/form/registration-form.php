@@ -26,7 +26,7 @@
                     $_SESSION['registration']['housenumber'],
                     $_SESSION['registration']['postcode'],
                     $_SESSION['registration']['city'],
-                    $databaseConnection,
+                    $databaseConnectionWriteAccess,
                     $username,
                     $pwd,
                     $newsLetter

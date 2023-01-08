@@ -3,6 +3,7 @@ $users = getAllUsers($databaseConnection);
 
 function editInputCheck($sessionArray): bool
 {
+    $sessionArray['postcode'] = filterPostalZip($sessionArray['postcode']);
     if (preg_match('/[0-9\/\\<>]/', $sessionArray['firstname'])) {
 //        print("Voornaam is niet correct ingevuld!");
         print("<div class='alert alert-danger' role='alert'>
@@ -39,7 +40,7 @@ function editInputCheck($sessionArray): bool
             Huisnummer is niet correct ingevuld!
         </div>");
         return false;
-    } elseif(!preg_match("/^[1-9][0-9]{3}(?!SA|SD|SS)[a-zA-Z]{2}$/", $sessionArray['postcode'])) {
+    } elseif(!preg_match("/^[1-9][0-9]{3} (?!SA|SD|SS)[a-zA-Z]{2}$/", $sessionArray['postcode'])) {
 //        print("Postcode is niet correct ingevuld!");
         print("<div class='alert alert-danger' role='alert'>
             Postcode is niet correct ingevuld!
@@ -69,7 +70,7 @@ if (isset($_POST['update'])) {
     $updated = $_POST['edit'];
     $updated['mail-list'] = array_key_exists('mail-list', $updated) ? 1 : 0;
     if (editInputCheck($updated)) {
-        editUser($updated['firstname'], $updated['prefixName'], $updated['surname'], $updated['birthDate'], $updated['phone'], $updated['street'], $updated['housenumber'], $updated['postcode'], $updated['city'], $updated['id'], $updated['mail-list'], $databaseConnection);
+        editUser($updated['firstname'], $updated['prefixName'], $updated['surname'], $updated['birthDate'], $updated['phone'], $updated['street'], $updated['housenumber'], $updated['postcode'], $updated['city'], $updated['id'], $updated['mail-list'], $databaseConnectionWriteAccess);
         $users = getAllUsers($databaseConnection);
     }
 }
@@ -81,7 +82,7 @@ if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) 
 
     if ($deleteID != $_SESSION['account']['id'] && password_verify($password, $hashedPassword)) {
         unset($_SESSION['deleteAccount']['password']);
-        deleteUser($deleteID, $databaseConnection);
+        deleteUser($deleteID, $databaseConnectionWriteAccess);
         print("<div class='alert alert-success' role='alert'>
             Account is verwijderd
         </div>");

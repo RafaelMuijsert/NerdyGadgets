@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['remove'])) {
-    removeDiscountCodes($_POST['remove'], $databaseConnection);
+    removeDiscountCodes($_POST['remove'], $databaseConnectionWriteAccess);
     unset($_POST['remove']);
 }
 if (isset($_POST['VerzendKosten']) && $_POST['VerzendKosten'] == 'Verwerk'){
@@ -12,8 +12,8 @@ if (isset($_POST['VerzendKosten']) && $_POST['VerzendKosten'] == 'Verwerk'){
     if ($_POST['deliveryCosts'] == ''){
         $_POST['deliveryCosts'] = getDeliverycosts($databaseConnection)[1][1];
     }
-    updateDeliveryLimit($_POST['deliveryLimit'], $databaseConnection);
-    updateDeliveryCosts($_POST['deliveryCosts'], $databaseConnection);
+    updateDeliveryLimit($_POST['deliveryLimit'], $databaseConnectionWriteAccess);
+    updateDeliveryCosts($_POST['deliveryCosts'], $databaseConnectionWriteAccess);
     unset($_POST['VerzendKosten']);
 }
 $deliveryCosts = getDeliverycosts($databaseConnection);
@@ -41,7 +41,7 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
                     $waarschuwing = 4;
                 }
                 else {
-                    addDiscountCode($_POST['KortingNaam'], $_POST['KortingProcent'], $_POST['KortingDate'], $_POST['KortingUses'], $databaseConnection);
+                    addDiscountCode($_POST['KortingNaam'], $_POST['KortingProcent'], $_POST['KortingDate'], $_POST['KortingUses'], $databaseConnectionWriteAccess);
                 }
             }
         }
@@ -63,7 +63,7 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
                     $waarschuwing = 4;
                 }
                 else {
-                    updateDiscountCode($_POST['KortingNaam'], $_POST['KortingProcent'], $_POST['KortingDate'], $_POST['KortingUses'], $databaseConnection);
+                    updateDiscountCode($_POST['KortingNaam'], $_POST['KortingProcent'], $_POST['KortingDate'], $_POST['KortingUses'], $databaseConnectionWriteAccess);
                 }
             }
         }
@@ -73,11 +73,11 @@ if (isset($_POST['KortingNaam']) && isset($_POST['KortingProcent'])) {
 if (isset($_POST['cleanUp']) && $_POST['cleanUp'] == 'Verwijder ongeldige codes'){
     foreach (discountCodes($databaseConnection) as $key){
         if ($key['uses'] == 0 && !($key['uses'] == '')){
-            removeDiscountCodes($key['kortingID'], $databaseConnection);
+            removeDiscountCodes($key['kortingID'], $databaseConnectionWriteAccess);
         }
         $datum = date("Y-m-d");
         if (strtotime($key['geldigtot']) < strtotime($datum) && !($key['geldigtot'] == '')){
-            removeDiscountCodes($key['kortingID'], $databaseConnection);
+            removeDiscountCodes($key['kortingID'], $databaseConnectionWriteAccess);
         }
     }
 }
