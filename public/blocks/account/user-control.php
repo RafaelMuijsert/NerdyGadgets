@@ -54,10 +54,6 @@ function editInputCheck($sessionArray): bool
         return false;
     }
 
-    if(empty($sessionArray['birthDate'])) {
-        $sessionArray['birthDate'] = NULL;
-    }
-
     return true;
 }
 

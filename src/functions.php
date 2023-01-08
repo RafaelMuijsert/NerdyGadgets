@@ -385,6 +385,15 @@ function loginUser($username, $password, $conn) {
 }
 
 function editUser($firstname, $prefixName, $surname, $birthDate, $phone, $street, $housenumber, $postcode, $city, $userID, $mailinglist, $conn) {
+
+    if(empty($birthDate)) {
+        $birthDate = NULL;
+    }
+
+    if(empty($phone)) {
+        $phone = NULL;
+    }
+
     try {
         $stmt = $conn->prepare("UPDATE webshop_user SET voornaam = ?, tussenvoegsel = ?, achternaam = ?, geboortedatum = ?, telefoonnummer = ?, stad = ?, straat = ?, huisnummer = ?, postcode = ?, mailinglist = ? WHERE id = ?");
         $stmt->bind_param("sssssssssss", $firstname, $prefixName, $surname, $birthDate, $phone, $city, $street, $housenumber, $postcode, $mailinglist, $userID);
