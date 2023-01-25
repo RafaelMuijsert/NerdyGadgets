@@ -296,10 +296,11 @@ function getOrderHistory($userID, $conn) {
                 JOIN webshop_orderregel AS R ON O.OrderID=R.OrderID 
                 JOIN stockitems AS A ON A.StockItemID=R.ArtikelID
                 LEFT JOIN stockitemimages AS I ON I.StockItemID=A.StockItemID
-                WHERE userID = '$userID'
+                WHERE userID = ?
                 GROUP BY O.OrderID, ArtikelID
                 ORDER BY datum DESC";
     $smt = mysqli_prepare($conn, $Query);
+    mysqli_stmt_bind_param($smt, 'i', $userID);
     mysqli_stmt_execute($smt);
     $result = mysqli_stmt_get_result($smt);
     $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -329,8 +330,9 @@ function getOrderStatus($date) {
 */
 function loadUserData($username, $conn) {
     $_SESSION['account'] = [];
-    $Query = "SELECT * FROM webshop_user WHERE email = '$username'";
+    $Query = "SELECT * FROM webshop_user WHERE email = ?";
     $statement = mysqli_prepare($conn, $Query);
+    mysqli_stmt_bind_param($statement, 's', $username);
     mysqli_stmt_execute($statement);
     $result = mysqli_stmt_get_result($statement);
     $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -400,13 +402,14 @@ function editUser($firstname, $prefixName, $surname, $birthDate, $phone, $street
         $stmt->execute();
     } catch (mysqli_sql_exception $e) {
         echo "<a style='color: red'><p>De aangepaste gegevens voldoen niet aan de gewenste eisen. Vul de velden opnieuw in.</p></p></a>";
-                        print("<p>$e</p>");
+//        print("<p>$e</p>");
     }
 }
 
 function getUser($userID, $databaseConnection) {
-    $query = "SELECT * FROM webshop_user WHERE id = '$userID'";
+    $query = "SELECT * FROM webshop_user WHERE id = ?";
     $stmt = mysqli_prepare($databaseConnection, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $userID);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -421,8 +424,9 @@ function getAllUsers($databaseConnection) {
 }
 
 function deleteUser($userID, $databaseConnection) {
-    $query = "DELETE FROM webshop_user WHERE id = '$userID'";
+    $query = "DELETE FROM webshop_user WHERE id = ?";
     $stmt = mysqli_prepare($databaseConnection, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $userID);
     mysqli_stmt_execute($stmt);
 }
 

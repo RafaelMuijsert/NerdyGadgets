@@ -3,51 +3,42 @@ $users = getAllUsers($databaseConnection);
 
 function editInputCheck($sessionArray): bool
 {
-    $sessionArray['postcode'] = filterPostalZip($sessionArray['postcode']);
     if (preg_match('/[0-9\/\\<>]/', $sessionArray['firstname'])) {
-//        print("Voornaam is niet correct ingevuld!");
         print("<div class='alert alert-danger' role='alert'>
             Voornaam is niet correct ingevuld!
         </div>");
         return false;
     } elseif (preg_match('/[0-9\/\\<>]/', $sessionArray['prefixName'])) {
-//        print("Tussenvoegsel is niet correct ingevuld!");
         print("<div class='alert alert-danger' role='alert'>
             Tussenvoegsel is niet correct ingevuld!
         </div>");
         return false;
     } elseif (preg_match('/[0-9\/\\<>]/', $sessionArray['surname'])) {
-//        print("Achternaam is niet correct ingevuld!");
         print("<div class='alert alert-danger' role='alert'>
             Achternaam is niet correct ingevuld!
         </div>");
         return false;
     } elseif (validate_phone_number($sessionArray['phone'])) {
-//        print("Telefoonnummer is niet correct ingevuld!");
         print("<div class='alert alert-danger' role='alert'>
             Telefoonnummer is niet correct ingevuld!
         </div>");
         return false;
     } elseif (preg_match('/[0-9\/\\<>]/', $sessionArray['street'])) {
-//        print("Straatnaam is niet correct ingevuld!");
         print("<div class='alert alert-danger' role='alert'>
             Straatnaam is niet correct ingevuld!
         </div>");
         return false;
     } elseif (!preg_match('/^[0-9]{1,3}[a-zA-Z]?$/', $sessionArray['housenumber'])) {
-//        print("Huisnummer is niet correct ingevuld!");
         print("<div class='alert alert-danger' role='alert'>
             Huisnummer is niet correct ingevuld!
         </div>");
         return false;
     } elseif(!preg_match("/^[1-9][0-9]{3} (?!SA|SD|SS)[a-zA-Z]{2}$/", $sessionArray['postcode'])) {
-//        print("Postcode is niet correct ingevuld!");
         print("<div class='alert alert-danger' role='alert'>
             Postcode is niet correct ingevuld!
         </div>");
         return false;
     } elseif (preg_match('/[0-9\/\\<>]/', $sessionArray['city'])) {
-//        print("Stad is niet correct ingevuld!");
         print("<div class='alert alert-danger' role='alert'>
             Stad is niet correct ingevuld!
         </div>");
@@ -64,6 +55,7 @@ if (isset($_POST['deleteAccount']['password'])) {
 
 if (isset($_POST['update'])) {
     $updated = $_POST['edit'];
+    $updated['postcode'] = filterPostalZip($updated['postcode']);
     $updated['mail-list'] = array_key_exists('mail-list', $updated) ? 1 : 0;
     if (editInputCheck($updated)) {
         editUser($updated['firstname'], $updated['prefixName'], $updated['surname'], $updated['birthDate'], $updated['phone'], $updated['street'], $updated['housenumber'], $updated['postcode'], $updated['city'], $updated['id'], $updated['mail-list'], $databaseConnectionWriteAccess);
@@ -152,8 +144,6 @@ if (isset($_POST['deleteID']) && isset($_SESSION['deleteAccount']['password'])) 
                 <div class="form__form-row form__form-row--100">
                     <input type="submit" name="update" value="Opslaan" class="btn btn--primary">
                 </div>
-
-<!--                <input type="email" name="edit[email]" value="--><?php //= @$userResult[0]['email'] ?><!--" placeholder="Email">-->
             </form>
         <?php endif; ?>
 
