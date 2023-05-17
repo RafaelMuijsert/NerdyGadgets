@@ -44,7 +44,7 @@ It is recommended that you copy the .env.example file found in the project root.
 version: "3.3"
 services:
   nerdygadgets:
-    build: 'https://github.com/hemmeDev/NerdyGadgets.git#main'
+    build: 'https://github.com/RafaelMuijsert/NerdyGadgets.git#main'
     restart: always
     ports:
       - 80:80
@@ -56,7 +56,7 @@ services:
 version: "3.3"
 services:
   nerdygadgets:
-    build: 'https://github.com/hemmeDev/NerdyGadgets.git#main'
+    build: 'https://github.com/RafaelMuijsert/NerdyGadgets.git#main'
     restart: always
     ports:
       - 80:80
