@@ -1,3 +1,6 @@
+<?php
+include_once("../src/environment.php");
+?>
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -34,7 +37,7 @@
                             <a href="newsletter.php"> Nieuwsbrief </a>
                             <a href="contact.php"> Contact</a>
                         </ul>
-                        <div><a href="/">©Nerdygadgets 2022</a></div>
+                        <div><a href="/">©Nerdygadgets 2023 - <?=getEnvironmentVariable("WEB_SERVER_NAME")?></a></div>
                     </div>
                 </div>
             </div>
