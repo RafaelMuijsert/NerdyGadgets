@@ -127,6 +127,16 @@ function getStockItemImage($id, $databaseConnection) {
     return $R;
 }
 
+function getDatabaseHostname($databaseConnection) {
+    $Query = "SELECT @@HOSTNAME";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_execute($Statement);
+    $R = mysqli_stmt_get_result($Statement);
+    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
+    return $R[0]['@@HOSTNAME'];
+}
+
 function cartUpdateRequested() {
     return isset($_POST['id']);
 }
